@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>Ali Ouzemmad | Votre Guide Personnel - Adventure Treks</title>
+    <meta name="description" content="Découvrez Ali Ouzemmad, votre guide expert natif de la Vallée des Roses. Plus de 30 ans d'expérience en trekking Atlas et désert marocain.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Ali Ouzemmad - Guide Expert Maroc | Adventure Treks">
+    <meta property="og:description" content="Guide natif de la Vallée des Roses avec 30+ ans d'expérience. Trekking, randonnées et circuits personnalisés.">
+    <meta property="og:image" content="https://drive.google.com/thumbnail?id=1Fw1BTZpMENtlt-RdZ6cAz24ncu1can4s&sz=w1200">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <i class="fas fa-mountain"></i>
+                <span>Adventure Treks</span>
+            </div>
+            <div class="preloader-bar">
+                <div class="preloader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span class="badge-certified">
+                    <i class="fas fa-shield-alt"></i>
+                    <span data-i18n="certified_guide">Guide Certifié • 30+ ans</span>
+                </span>
+            </div>
+            <div class="top-bar-right">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="fr" aria-label="Passer en Français">
+                        <span>FR</span>
+                    </button>
+                    <button class="lang-btn" data-lang="en" aria-label="Switch to English">
+                        <span>EN</span>
+                    </button>
+                </div>
+                <div class="social-mini">
+                    <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/212661796117" target="_blank" rel="noopener" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-mountain-sun"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">Adventure Treks</span>
+                        <span class="logo-subtitle">avec Ali</span>
+                    </div>
+                </a>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link" data-i18n="nav_home">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="guide.html" class="nav-link active" data-i18n="nav_guide">Votre Guide</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="treks.html" class="nav-link" data-i18n="nav_treks">Randonnées</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="treks.html#short" data-i18n="nav_short">2-6 Jours</a></li>
+                            <li><a href="treks.html#medium" data-i18n="nav_medium">7-11 Jours</a></li>
+                            <li><a href="treks.html#long" data-i18n="nav_long">12-15 Jours</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Galerie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="reviews.html" class="nav-link" data-i18n="nav_reviews">Avis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a>
+                    </li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <a href="booking.html" class="btn btn-primary btn-sm">
+                        <i class="fab fa-whatsapp"></i>
+                        <span data-i18n="book_now">Réserver</span>
+                    </a>
+                    <button class="hamburger" id="hamburger" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <nav class="breadcrumb-nav">
+                <a href="../index.html" data-i18n="nav_home">Accueil</a>
+                <span class="separator">›</span>
+                <span class="current" data-i18n="nav_guide">Votre Guide</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="guide_page_title">Votre Guide Personnel</h1>
+            <p data-i18n="guide_page_subtitle">Découvrez l'histoire d'Ali, votre guide expert natif de la Vallée des Roses</p>
+        </div>
+    </section>
+
+    <!-- Guide Profile Section -->
+    <section class="section guide-profile-section">
+        <div class="container">
+            <div class="guide-profile-wrapper" data-aos="fade-up">
+                <div class="guide-profile-main">
+                    <div class="guide-photo-container">
+                        <img src="https://drive.google.com/thumbnail?id=1Fw1BTZpMENtlt-RdZ6cAz24ncu1can4s&sz=w800" 
+                             alt="Ali Ouzemmad - Guide Expert Maroc"
+                             class="guide-profile-photo"
+                             loading="lazy">
+                        <div class="guide-experience-badge">
+                            <span class="years">30+</span>
+                            <span class="label" data-i18n="stat_years">Ans d'expérience</span>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-info-detailed">
+                        <div class="guide-name-section">
+                            <h2 class="guide-full-name">Ali Ouzemmad</h2>
+                            <p class="guide-title-profession" data-i18n="certified_guide">Guide Expert Local - 30+ ans d'expérience</p>
+                            <p class="guide-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Vallée des Roses - Ouarzazate, Maroc
+                            </p>
+                        </div>
+                        
+                        <div class="guide-quick-stats">
+                            <div class="quick-stat">
+                                <i class="fas fa-language"></i>
+                                <div>
+                                    <strong>Langues</strong>
+                                    <span>Français • English • العربية • ⵜⴰⵎⴰⵣⵉⵖⵜ</span>
+                                </div>
+                            </div>
+                            <div class="quick-stat">
+                                <i class="fas fa-users"></i>
+                                <div>
+                                    <strong>Groupes</strong>
+                                    <span>2 à 12 personnes</span>
+                                </div>
+                            </div>
+                            <div class="quick-stat">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <strong>Disponibilité</strong>
+                                    <span>Toute l'année</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="guide-cta-buttons">
+                            <a href="https://wa.me/212661796117?text=Bonjour%20Ali" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+                                <i class="fab fa-whatsapp"></i>
+                                Contacter Ali directement
+                            </a>
+                            <a href="booking.html" class="btn btn-outline btn-lg">
+                                <i class="fas fa-calendar-check"></i>
+                                Réserver une randonnée
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mon Histoire Section -->
+    <section class="section my-story-section" id="my-story">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">Histoire</span>
+                <h2 class="section-title" data-i18n="my_story_title">Mon Histoire</h2>
+                <p class="section-subtitle">Guide né dans la Vallée des Roses</p>
+            </div>
+            
+            <div class="story-content">
+                <div class="story-block" data-aos="fade-up">
+                    <div class="story-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="story-text">
+                        <h3>Né dans les montagnes</h3>
+                        <p>Je suis né et j'ai grandi dans la Vallée des Roses, au pied des majestueuses montagnes du Mgoun. Depuis mon plus jeune âge, j'ai parcouru chaque sentier, chaque vallée et chaque sommet de cette région magnifique. La montagne est mon chez-moi, le désert est mon jardin.</p>
+                        <p>Fils de cette terre berbère, j'ai appris à lire les traces dans le sable, à comprendre le langage du vent et à respecter les caprices de la montagne. Ces connaissances, transmises de génération en génération, font de moi un guide qui ne se contente pas de montrer le chemin, mais qui raconte l'histoire de chaque pierre.</p>
+                    </div>
+                </div>
+                
+                <div class="story-block reverse" data-aos="fade-up">
+                    <div class="story-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="story-text">
+                        <h3>La passion comme métier</h3>
+                        <p>Ma passion pour la nature et les rencontres humaines m'a naturellement conduit vers le métier de guide. Depuis plus de 30 ans, j'accompagne des voyageurs du monde entier, partageant avec eux non seulement les paysages époustouflants du Maroc, mais aussi la richesse de notre culture berbère.</p>
+                        <p>Chaque voyage est une nouvelle histoire, chaque rencontre est un enrichissement mutuel. J'ai eu le privilège de guider des familles, des aventuriers solitaires, des groupes d'amis, des photographes, des écrivains... Chacun avec ses attentes, ses rêves et ses défis.</p>
+                    </div>
+                </div>
+                
+                <div class="story-block" data-aos="fade-up">
+                    <div class="story-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="story-text">
+                        <h3>Plus qu'un guide, un ami</h3>
+                        <p>Ce qui me rend le plus fier dans ma carrière, c'est de voir mes clients revenir année après année. Ils ne reviennent pas comme des clients, mais comme des amis. Certains sont venus une première fois il y a 20 ans, et aujourd'hui, je guide leurs enfants.</p>
+                        <p>Je comprends que chaque voyageur est unique : certains cherchent le défi physique, d'autres la contemplation silencieuse, d'autres encore l'immersion culturelle. Mon rôle est de comprendre vos attentes, de respecter votre rythme et de créer l'expérience qui vous correspond.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section class="section expertise-section" id="expertise">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">Expertise</span>
+                <h2 class="section-title">Mes domaines d'expertise</h2>
+                <p class="section-subtitle">30 ans à parcourir ces territoires</p>
+            </div>
+            
+            <div class="expertise-grid">
+                <div class="expertise-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="expertise-image">
+                        <img src="https://drive.google.com/thumbnail?id=17j0rL9qOahrMQ1sjIRD1P0mcy8Cgv3pU&sz=w600" alt="Toubkal" loading="lazy">
+                        <div class="expertise-overlay">
+                            <h4>Toubkal</h4>
+                            <p>4167m - Le toit de l'Afrique du Nord</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="expertise-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="expertise-image">
+                        <img src="https://drive.google.com/thumbnail?id=1NMvh2owxnkTk00whGR7m1WYzWut65I3S&sz=w600" alt="Mgoun" loading="lazy">
+                        <div class="expertise-overlay">
+                            <h4>Mgoun</h4>
+                            <p>4068m - Le géant méconnu</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="expertise-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="expertise-image">
+                        <img src="https://drive.google.com/thumbnail?id=1mfvWu486bDY5Cl7dQIjY2GLL-ZiHT4rF&sz=w600" alt="Merzouga" loading="lazy">
+                        <div class="expertise-overlay">
+                            <h4>Merzouga</h4>
+                            <p>Les dunes dorées du Sahara</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="expertise-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="expertise-image">
+                        <img src="https://drive.google.com/thumbnail?id=1xRX5S_f4Hbg9snrmAoYIxqArNNrallQP&sz=w600" alt="Vallée des Roses" loading="lazy">
+                        <div class="expertise-overlay">
+                            <h4>Vallée des Roses</h4>
+                            <p>Ma vallée natale</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="expertise-list" data-aos="fade-up">
+                <h3>Sommets maîtrisés</h3>
+                <div class="expertise-tags">
+                    <span class="expertise-tag">Toubkal (4167m)</span>
+                    <span class="expertise-tag">Mgoun (4068m)</span>
+                    <span class="expertise-tag">Siroua (3305m)</span>
+                    <span class="expertise-tag">Saghro (2712m)</span>
+                </div>
+                
+                <h3>Vallées et régions</h3>
+                <div class="expertise-tags">
+                    <span class="expertise-tag">Vallée des Roses</span>
+                    <span class="expertise-tag">Vallée du Drâa</span>
+                    <span class="expertise-tag">Gorges de Dades</span>
+                    <span class="expertise-tag">Gorges de Todra</span>
+                    <span class="expertise-tag">Vallée d'Ourika</span>
+                    <span class="expertise-tag">Aït Bougmez</span>
+                    <span class="expertise-tag">Vallée de Tassaout</span>
+                </div>
+                
+                <h3>Déserts</h3>
+                <div class="expertise-tags">
+                    <span class="expertise-tag">Merzouga (Erg Chebbi)</span>
+                    <span class="expertise-tag">Chegaga</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pourquoi Me Choisir Section -->
+    <section class="section why-choose-section" id="why-choose">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge" data-i18n="why_badge">Pourquoi me choisir</span>
+                <h2 class="section-title">Ce qui fait la différence</h2>
+            </div>
+            
+            <div class="why-choose-grid">
+                <div class="why-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="why-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h3>Guide natif des montagnes</h3>
+                    <p>Je connais chaque sentier, chaque source et chaque abri. Je prévois les changements météorologiques et j'adapte le parcours en conséquence.</p>
+                </div>
+                
+                <div class="why-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="why-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3>Compréhension personnalisée</h3>
+                    <p>Chaque voyageur est unique. Je prends le temps de comprendre vos attentes, votre rythme et vos envies pour créer l'expérience parfaite.</p>
+                </div>
+                
+                <div class="why-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="why-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Sécurité absolue</h3>
+                    <p>Votre sécurité est ma priorité. Équipement professionnel, trousse de premiers soins complète et connaissance approfondie du terrain.</p>
+                </div>
+                
+                <div class="why-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="why-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Cuisine traditionnelle</h3>
+                    <p>Je prépare des repas berbères authentiques avec des produits locaux. Le tajine sous les étoiles fait partie de l'expérience.</p>
+                </div>
+                
+                <div class="why-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="why-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Souvenirs inoubliables</h3>
+                    <p>Je connais les meilleurs spots pour les photos, les plus beaux levers de soleil et les moments magiques que vous n'oublierez jamais.</p>
+                </div>
+                
+                <div class="why-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="why-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <h3>Bonne humeur garantie</h3>
+                    <p>L'aventure est aussi une question de plaisir. Je partage des histoires, des chants berbères et beaucoup de rires tout au long du chemin.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-card" data-aos="zoom-in">
+                <div class="cta-content">
+                    <h2>Prêt à vivre l'aventure avec moi ?</h2>
+                    <p>Contactez-moi directement pour créer votre voyage sur mesure. Je vous réponds personnellement.</p>
+                    <div class="cta-buttons">
+                        <a href="https://wa.me/212661796117" class="btn btn-primary btn-lg pulse-animation" target="_blank" rel="noopener">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp
+                        </a>
+                        <a href="booking.html" class="btn btn-outline btn-lg">
+                            <i class="fas fa-calendar-alt"></i>
+                            Demander un circuit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-mountain-sun"></i>
+                        <span>Adventure Treks avec Ali</span>
+                    </div>
+                    <p data-i18n="footer_desc">Votre guide personnel pour des aventures inoubliables dans l'Atlas et le désert marocain.</p>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/212661796117" target="_blank" rel="noopener" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="mailto:aventuretreksmaroc@gmail.com" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 data-i18n="footer_quick_links">Liens rapides</h4>
+                    <ul>
+                        <li><a href="guide.html" data-i18n="nav_guide">Votre Guide</a></li>
+                        <li><a href="treks.html" data-i18n="nav_treks">Randonnées</a></li>
+                        <li><a href="gallery.html" data-i18n="nav_gallery">Galerie</a></li>
+                        <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 data-i18n="footer_contact">Contact</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <span>FR: +212 661-796117</span>
+                                <span>EN: +212 633-652721</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>aventuretreksmaroc@gmail.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Vallée des Roses, Ouarzazate, Maroc</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Adventure Treks avec Ali. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    
+    <script src="../js/config.js" defer></script>
+    <script src="../js/i18n.js" defer></script>
+    <script src="../js/security.js" defer></script>
+    <script src="../js/main.js" defer></script>
+</body>
+</html>
