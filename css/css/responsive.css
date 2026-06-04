@@ -1,0 +1,612 @@
+
+/* ============================================
+   RESPONSIVE CSS - Adventure Treks avec Ali
+   ============================================
+   Mobile-First design pour tous les écrans
+   ============================================ */
+
+/* ============================================
+   LARGE DESKTOP (≥ 1440px)
+   ============================================ */
+@media (min-width: 1440px) {
+    :root {
+        --container-padding: 2rem;
+    }
+    
+    .container {
+        max-width: 1320px;
+    }
+}
+
+/* ============================================
+   DESKTOP (1024px - 1439px)
+   ============================================ */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    :root {
+        --container-padding: 1.5rem;
+    }
+    
+    .container {
+        max-width: 1140px;
+    }
+}
+
+/* ============================================
+   TABLET LANDSCAPE (768px - 1023px)
+   ============================================ */
+@media (max-width: 1023px) and (min-width: 768px) {
+    :root {
+        --text-5xl: 2.5rem;
+        --text-6xl: 3rem;
+        --container-padding: 1.25rem;
+    }
+    
+    .container {
+        max-width: 960px;
+    }
+    
+    .hero {
+        min-height: 80vh;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8);
+    }
+    
+    .treks-slider .swiper-slide {
+        width: 350px;
+    }
+}
+
+/* ============================================
+   TABLET PORTRAIT & SMALL TABLET (576px - 767px)
+   ============================================ */
+@media (max-width: 767px) and (min-width: 576px) {
+    :root {
+        --text-4xl: 2rem;
+        --text-5xl: 2rem;
+        --text-6xl: 2.5rem;
+        --container-padding: 1rem;
+    }
+    
+    .container {
+        max-width: 720px;
+    }
+    
+    .hero {
+        min-height: 70vh;
+    }
+    
+    .hero-stats {
+        gap: var(--space-6);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+    }
+    
+    .page-header h1 {
+        font-size: var(--text-3xl);
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        flex-direction: column;
+        padding: var(--space-6);
+        gap: var(--space-2);
+        box-shadow: var(--shadow-xl);
+        transform: translateX(-100%);
+        transition: transform var(--transition-base);
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+    }
+    
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        padding-left: var(--space-4);
+    }
+    
+    .treks-slider .swiper-slide {
+        width: 300px;
+    }
+}
+
+/* ============================================
+   MOBILE LARGE (425px - 575px)
+   ============================================ */
+@media (max-width: 575px) and (min-width: 425px) {
+    :root {
+        --text-3xl: 1.75rem;
+        --text-4xl: 1.75rem;
+        --text-5xl: 2rem;
+        --text-6xl: 2rem;
+        --container-padding: 1rem;
+    }
+    
+    .hero {
+        min-height: 90vh;
+    }
+    
+    .hero-title .title-line {
+        font-size: var(--text-4xl);
+    }
+    
+    .hero-title .title-highlight {
+        font-size: var(--text-5xl);
+    }
+    
+    .hero-description {
+        font-size: var(--text-base);
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+    }
+    
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: var(--space-4);
+    }
+    
+    .stat-number {
+        font-size: var(--text-2xl);
+    }
+    
+    .section {
+        padding: var(--space-10) 0;
+    }
+    
+    .section-title {
+        font-size: var(--text-3xl);
+    }
+    
+    .section-subtitle {
+        font-size: var(--text-base);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+    
+    .feature-card {
+        padding: var(--space-6);
+    }
+    
+    .cta-card {
+        padding: var(--space-6) var(--space-4);
+    }
+    
+    .cta-content h2 {
+        font-size: var(--text-2xl);
+    }
+    
+    .treks-slider .swiper-slide {
+        width: 280px;
+    }
+    
+    .trek-image {
+        height: 200px;
+    }
+    
+    .footer {
+        padding: var(--space-10) 0 var(--space-6);
+    }
+    
+    .page-header {
+        padding: var(--space-8) 0;
+    }
+    
+    .page-header h1 {
+        font-size: var(--text-3xl);
+    }
+    
+    .breadcrumb-nav {
+        font-size: var(--text-xs);
+    }
+}
+
+/* ============================================
+   MOBILE SMALL (320px - 424px)
+   ============================================ */
+@media (max-width: 424px) {
+    :root {
+        --text-base: 0.9375rem;
+        --text-lg: 1rem;
+        --text-xl: 1.125rem;
+        --text-2xl: 1.25rem;
+        --text-3xl: 1.5rem;
+        --text-4xl: 1.5rem;
+        --text-5xl: 1.75rem;
+        --text-6xl: 1.75rem;
+        --container-padding: 0.875rem;
+    }
+    
+    .top-bar {
+        font-size: var(--text-xs);
+    }
+    
+    .top-bar .container {
+        flex-direction: column;
+        gap: var(--space-2);
+        text-align: center;
+    }
+    
+    .top-bar-right {
+        justify-content: center;
+    }
+    
+    .logo-icon {
+        width: 35px;
+        height: 35px;
+        font-size: var(--text-base);
+    }
+    
+    .logo-text .logo-title {
+        font-size: var(--text-base);
+    }
+    
+    .logo-text .logo-subtitle {
+        font-size: 0.625rem;
+    }
+    
+    .hero {
+        min-height: 100vh;
+    }
+    
+    .hero-badge {
+        font-size: var(--text-xs);
+        padding: var(--space-1) var(--space-3);
+    }
+    
+    .hero-title .title-line {
+        font-size: var(--text-4xl);
+    }
+    
+    .hero-title .title-highlight {
+        font-size: var(--text-5xl);
+    }
+    
+    .hero-description {
+        font-size: var(--text-sm);
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+    }
+    
+    .hero-cta .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        justify-content: center;
+    }
+    
+    .stat-item {
+        flex: 0 0 calc(50% - var(--space-3));
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: var(--text-xl);
+    }
+    
+    .stat-label {
+        font-size: var(--text-xs);
+    }
+    
+    .hero-scroll {
+        bottom: var(--space-4);
+        font-size: var(--text-xs);
+    }
+    
+    .section {
+        padding: var(--space-8) 0;
+    }
+    
+    .section-header {
+        margin-bottom: var(--space-10);
+    }
+    
+    .section-badge {
+        font-size: var(--text-xs);
+        padding: var(--space-1) var(--space-3);
+    }
+    
+    .section-title {
+        font-size: var(--text-3xl);
+    }
+    
+    .section-subtitle {
+        font-size: var(--text-sm);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+    
+    .feature-card {
+        padding: var(--space-4);
+    }
+    
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: var(--text-xl);
+    }
+    
+    .feature-card h3 {
+        font-size: var(--text-lg);
+    }
+    
+    .feature-card p {
+        font-size: var(--text-sm);
+    }
+    
+    .treks-slider .swiper-slide {
+        width: 260px;
+    }
+    
+    .trek-image {
+        height: 180px;
+    }
+    
+    .trek-body {
+        padding: var(--space-4);
+    }
+    
+    .trek-title {
+        font-size: var(--text-lg);
+    }
+    
+    .trek-features li {
+        font-size: var(--text-xs);
+    }
+    
+    .cta-card {
+        padding: var(--space-6) var(--space-3);
+    }
+    
+    .cta-content h2 {
+        font-size: var(--text-xl);
+    }
+    
+    .cta-content p {
+        font-size: var(--text-sm);
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+    }
+    
+    .cta-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .cta-info {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-3);
+    }
+    
+    .cta-info p {
+        font-size: var(--text-xs);
+    }
+    
+    .footer {
+        padding: var(--space-8) 0 var(--space-4);
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+    }
+    
+    .footer-logo {
+        font-size: var(--text-lg);
+    }
+    
+    .footer-col h4 {
+        font-size: var(--text-base);
+    }
+    
+    .footer-col p,
+    .footer-col ul li a,
+    .footer-contact li {
+        font-size: var(--text-sm);
+    }
+    
+    .footer-bottom {
+        font-size: var(--text-xs);
+    }
+    
+    .page-header {
+        padding: var(--space-6) 0;
+    }
+    
+    .page-header h1 {
+        font-size: var(--text-2xl);
+    }
+    
+    .page-header p {
+        font-size: var(--text-sm);
+    }
+    
+    .breadcrumb {
+        padding: var(--space-2) 0;
+    }
+    
+    .breadcrumb-nav {
+        font-size: var(--text-xs);
+    }
+    
+    .btn {
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--text-sm);
+    }
+    
+    .btn-lg {
+        padding: var(--space-3) var(--space-6);
+        font-size: var(--text-base);
+    }
+    
+    .modal {
+        padding: var(--space-4);
+        width: 95%;
+    }
+    
+    .modal-title {
+        font-size: var(--text-xl);
+    }
+    
+    .whatsapp-float {
+        width: 45px;
+        height: 45px;
+        font-size: var(--text-lg);
+        bottom: var(--space-3);
+        left: var(--space-3);
+    }
+    
+    .scroll-to-top {
+        width: 35px;
+        height: 35px;
+        font-size: var(--text-base);
+        bottom: var(--space-3);
+        right: var(--space-3);
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE FIXES
+   ============================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: var(--space-16) 0;
+    }
+    
+    .hero-content {
+        padding: var(--space-10) 0;
+    }
+    
+    .hero-scroll {
+        display: none;
+    }
+}
+
+/* ============================================
+   HIGH DPI SCREENS
+   ============================================ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hero-bg-img,
+    .trek-image img,
+    .card-image img {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .header,
+    .footer,
+    .whatsapp-float,
+    .scroll-to-top,
+    .preloader,
+    .cookie-banner,
+    .hero-scroll,
+    .nav-actions,
+    .social-mini {
+        display: none !important;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+        color: #000;
+    }
+    
+    .hero {
+        min-height: auto;
+        padding: 2rem 0;
+    }
+    
+    .hero-overlay {
+        background: none;
+    }
+    
+    .hero-title,
+    .hero-description,
+    .stat-item,
+    .hero-scroll {
+        color: #000 !important;
+    }
+    
+    .title-highlight {
+        color: #000 !important;
+    }
+    
+    .section {
+        padding: 1rem 0;
+        page-break-inside: avoid;
+    }
+    
+    a {
+        text-decoration: underline;
+    }
+    
+    .btn {
+        border: 1px solid #000;
+    }
+}
+
+/* ============================================
+   DARK MODE SUPPORT
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+    /* Dark mode styles can be added here if needed */
+    /* For now, we keep the light theme as default */
+}
