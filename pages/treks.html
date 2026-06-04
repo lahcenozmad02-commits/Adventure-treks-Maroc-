@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>Randonnées et Treks | Adventure Treks avec Ali</title>
+    <meta name="description" content="Découvrez toutes nos randonnées : Toubkal, Mgoun, Vallée des Roses, désert Merzouga. Circuits de 4 à 15 jours avec guide personnel.">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <style>
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-8);
+            flex-wrap: wrap;
+            position: sticky;
+            top: 80px;
+            z-index: 10;
+            background: var(--white);
+            padding: var(--space-4) 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .filter-btn {
+            padding: var(--space-3) var(--space-6);
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-full);
+            background: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: var(--text-sm);
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .trek-detail-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-6);
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            transition: all var(--transition-base);
+        }
+        
+        .trek-detail-card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-3px);
+        }
+        
+        .trek-detail-image {
+            position: relative;
+            min-height: 300px;
+        }
+        
+        .trek-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .trek-detail-body {
+            padding: var(--space-6);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .trek-detail-body h3 {
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-2);
+        }
+        
+        .trek-meta {
+            display: flex;
+            gap: var(--space-4);
+            flex-wrap: wrap;
+            margin-bottom: var(--space-4);
+        }
+        
+        .trek-meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--text-sm);
+            color: var(--dark-gray);
+            background: var(--off-white);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+        }
+        
+        .trek-meta-item i {
+            color: var(--primary);
+        }
+        
+        .trek-detail-features {
+            flex: 1;
+            margin-bottom: var(--space-4);
+        }
+        
+        .trek-detail-features li {
+            padding: var(--space-1) 0;
+            font-size: var(--text-sm);
+        }
+        
+        @media (max-width: 768px) {
+            .trek-detail-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .trek-detail-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <i class="fas fa-mountain"></i>
+                <span>Adventure Treks</span>
+            </div>
+            <div class="preloader-bar"><div class="preloader-progress"></div></div>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span class="badge-certified"><i class="fas fa-shield-alt"></i> Guide Certifié • 30+ ans</span>
+            </div>
+            <div class="top-bar-right">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+                <div class="social-mini">
+                    <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-mountain-sun"></i></div>
+                    <div class="logo-text">
+                        <span class="logo-title">Adventure Treks</span>
+                        <span class="logo-subtitle">avec Ali</span>
+                    </div>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="../index.html" class="nav-link">Accueil</a></li>
+                    <li><a href="guide.html" class="nav-link">Votre Guide</a></li>
+                    <li><a href="treks.html" class="nav-link active">Randonnées</a></li>
+                    <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+                    <li><a href="reviews.html" class="nav-link">Avis</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="booking.html" class="btn btn-primary btn-sm"><i class="fab fa-whatsapp"></i> Réserver</a>
+                    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <nav class="breadcrumb-nav">
+                <a href="../index.html">Accueil</a>
+                <span class="separator">›</span>
+                <span class="current">Randonnées</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Randonnées avec Votre Guide</h1>
+            <p>Des circuits pour tous les niveaux, de 4 à 15 jours</p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all">Toutes</button>
+        <button class="filter-btn" data-filter="short" id="short">2-6 Jours</button>
+        <button class="filter-btn" data-filter="medium" id="medium">7-11 Jours</button>
+        <button class="filter-btn" data-filter="long" id="long">12-15 Jours</button>
+    </div>
+
+    <!-- Treks Section -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+            <!-- Trek 1: Toubkal -->
+            <div class="trek-detail-card" data-category="short" id="toubkal" data-aos="fade-up">
+                <div class="trek-detail-image">
+                    <img src="https://drive.google.com/thumbnail?id=17j0rL9qOahrMQ1sjIRD1P0mcy8Cgv3pU&sz=w800" alt="Toubkal" loading="lazy">
+                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">4 Jours</span>
+                </div>
+                <div class="trek-detail-body">
+                    <h3>Toubkal Express avec Ali</h3>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
+                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
+                        Haut Atlas - Massif du Toubkal
+                    </p>
+                    <div class="trek-meta">
+                        <span class="trek-meta-item"><i class="fas fa-mountain"></i> 4167m</span>
+                        <span class="trek-meta-item"><i class="fas fa-clock"></i> 4-5h/jour</span>
+                        <span class="trek-meta-item"><i class="fas fa-signal"></i> Modéré</span>
+                        <span class="trek-meta-item"><i class="fas fa-map-pin"></i> Départ Marrakech</span>
+                    </div>
+                    <ul class="trek-detail-features">
+                        <li>✅ Ascension du Jbel Toubkal (4167m), le plus haut sommet d'Afrique du Nord</li>
+                        <li>✅ Vallée d'Ourika et cascades de Setti Fatma</li>
+                        <li>✅ Col de Tizi n'Ouagane avec vues panoramiques</li>
+                        <li>✅ Villages traditionnels d'Imlil et Armed</li>
+                        <li>✅ Accompagnement personnalisé avec Ali</li>
+                    </ul>
+                    <div style="margin-top:auto;">
+                        <a href="booking.html" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i> Réserver ce circuit
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trek 2: Vallée des Roses -->
+            <div class="trek-detail-card" data-category="short" id="vallee-roses" data-aos="fade-up">
+                <div class="trek-detail-image">
+                    <img src="https://drive.google.com/thumbnail?id=1xRX5S_f4Hbg9snrmAoYIxqArNNrallQP&sz=w800" alt="Vallée des Roses" loading="lazy">
+                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">5 Jours</span>
+                </div>
+                <div class="trek-detail-body">
+                    <h3>Vallée des Roses avec Guide Personnel</h3>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
+                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
+                        Drâa-Tafilalet - Kelaat M'gouna
+                    </p>
+                    <div class="trek-meta">
+                        <span class="trek-meta-item"><i class="fas fa-clock"></i> 4-5h/jour</span>
+                        <span class="trek-meta-item"><i class="fas fa-signal"></i> Facile à Modéré</span>
+                        <span class="trek-meta-item"><i class="fas fa-car"></i> Transport inclus</span>
+                    </div>
+                    <ul class="trek-detail-features">
+                        <li>✅ Découverte de la Vallée des Roses, région natale d'Ali</li>
+                        <li>✅ Visite des coopératives de rose et distillation</li>
+                        <li>✅ Gorges de Dades et Todra</li>
+                        <li>✅ Rencontre avec la population locale berbère</li>
+                        <li>✅ Paysages spectaculaires et kasbahs</li>
+                    </ul>
+                    <div style="margin-top:auto;">
+                        <a href="booking.html" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i> Réserver ce circuit
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trek 3: Mgoun -->
+            <div class="trek-detail-card" data-category="medium" id="mgoun" data-aos="fade-up">
+                <div class="trek-detail-image">
+                    <img src="https://drive.google.com/thumbnail?id=1NMvh2owxnkTk00whGR7m1WYzWut65I3S&sz=w800" alt="Mgoun" loading="lazy">
+                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">8 Jours</span>
+                </div>
+                <div class="trek-detail-body">
+                    <h3>Grand Mgoun avec Votre Guide</h3>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
+                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
+                        Massif du Mgoun - Haut Atlas
+                    </p>
+                    <div class="trek-meta">
+                        <span class="trek-meta-item"><i class="fas fa-mountain"></i> 4068m</span>
+                        <span class="trek-meta-item"><i class="fas fa-clock"></i> 5-6h/jour</span>
+                        <span class="trek-meta-item"><i class="fas fa-signal"></i> Difficile</span>
+                        <span class="trek-meta-item"><i class="fas fa-campground"></i> Bivouac</span>
+                    </div>
+                    <ul class="trek-detail-features">
+                        <li>✅ Ascension du Jbel Mgoun (4068m)</li>
+                        <li>✅ Vallée d'Aït Bougmez "Vallée Heureuse"</li>
+                        <li>✅ Gorges d'Aït Toumert et Tichki</li>
+                        <li>✅ Villages berbères authentiques</li>
+                        <li>✅ Nuits sous les étoiles en bivouac</li>
+                    </ul>
+                    <div style="margin-top:auto;">
+                        <a href="booking.html" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i> Réserver ce circuit
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trek 4: Atlas & Désert -->
+            <div class="trek-detail-card" data-category="medium" id="atlas-desert" data-aos="fade-up">
+                <div class="trek-detail-image">
+                    <img src="https://drive.google.com/thumbnail?id=1mfvWu486bDY5Cl7dQIjY2GLL-ZiHT4rF&sz=w800" alt="Atlas & Désert" loading="lazy">
+                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">10 Jours</span>
+                </div>
+                <div class="trek-detail-body">
+                    <h3>Atlas & Désert avec Guide Personnel</h3>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
+                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
+                        Haut Atlas - Vallée du Drâa - Merzouga
+                    </p>
+                    <div class="trek-meta">
+                        <span class="trek-meta-item"><i class="fas fa-clock"></i> 4-6h/jour</span>
+                        <span class="trek-meta-item"><i class="fas fa-signal"></i> Modéré</span>
+                        <span class="trek-meta-item"><i class="fas fa-car"></i> Transport inclus</span>
+                    </div>
+                    <ul class="trek-detail-features">
+                        <li>✅ Massif du Mgoun et Vallée des Roses</li>
+                        <li>✅ Oasis de Skoura et Fint</li>
+                        <li>✅ Vallée du Drâa et ses palmeraies</li>
+                        <li>✅ Kasbahs et villages fortifiés</li>
+                        <li>✅ Dunes de Merzouga (optionnel)</li>
+                    </ul>
+                    <div style="margin-top:auto;">
+                        <a href="booking.html" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i> Réserver ce circuit
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trek 5: Expédition Drâa -->
+            <div class="trek-detail-card" data-category="long" id="expedition-draa" data-aos="fade-up">
+                <div class="trek-detail-image">
+                    <img src="https://drive.google.com/thumbnail?id=1Gzz6GCVzomb5EDBA4M-aFRqrfVr9rmAk&sz=w800" alt="Expédition Drâa" loading="lazy">
+                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">12 Jours</span>
+                </div>
+                <div class="trek-detail-body">
+                    <h3>Expédition Drâa avec Votre Guide</h3>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
+                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
+                        Région Complète Drâa-Tafilalet
+                    </p>
+                    <div class="trek-meta">
+                        <span class="trek-meta-item"><i class="fas fa-mountain"></i> 4068m max</span>
+                        <span class="trek-meta-item"><i class="fas fa-clock"></i> 5-6h/jour</span>
+                        <span class="trek-meta-item"><i class="fas fa-sun"></i> Désert intégral</span>
+                    </div>
+                    <ul class="trek-detail-features">
+                        <li>✅ Ascension complète du Mgoun avec votre guide</li>
+                        <li>✅ Traversée Gorges de Dades et Todra</li>
+                        <li>✅ 2 nuits désert de Merzouga</li>
+                        <li>✅ Oasis de Fint, Zagora et Tazzarine</li>
+                        <li>✅ Vallée du Drâa et ses ksours</li>
+                        <li>✅ Visite sites historiques et culturels</li>
+                    </ul>
+                    <div style="margin-top:auto;">
+                        <a href="booking.html" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i> Demander le programme détaillé
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trek 6: Grand Sud -->
+            <div class="trek-detail-card" data-category="long" id="grand-sud" data-aos="fade-up">
+                <div class="trek-detail-image">
+                    <img src="https://drive.google.com/thumbnail?id=1VwbEvHSQFA8L2yciQ6lN8zh3oaT6cHPh&sz=w800" alt="Grand Sud" loading="lazy">
+                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">15 Jours</span>
+                </div>
+                <div class="trek-detail-body">
+                    <h3>Grand Sud Marocain avec Guide Personnel</h3>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
+                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
+                        Drâa-Tafilalet + Extensions
+                    </p>
+                    <div class="trek-meta">
+                        <span class="trek-meta-item"><i class="fas fa-clock"></i> 4-6h/jour</span>
+                        <span class="trek-meta-item"><i class="fas fa-image"></i> Multi-paysages</span>
+                        <span class="trek-meta-item"><i class="fas fa-car"></i> Transport privé</span>
+                    </div>
+                    <ul class="trek-detail-features">
+                        <li>✅ Circuit complet Drâa-Tafilalet avec votre guide</li>
+                        <li>✅ Extension Ouarzazate & Aït Benhaddou</li>
+                        <li>✅ Désert de Chegaga optionnel</li>
+                        <li>✅ Vallée du Ziz et palmeraies</li>
+                        <li>✅ Rencontres culturelles approfondies</li>
+                        <li>✅ Programme entièrement personnalisable</li>
+                    </ul>
+                    <div style="margin-top:auto;">
+                        <a href="booking.html" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i> Demander un devis personnalisé
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo"><i class="fas fa-mountain-sun"></i><span>Adventure Treks avec Ali</span></div>
+                    <p>Votre guide personnel pour des aventures inoubliables dans l'Atlas et le désert marocain.</p>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                        <a href="mailto:aventuretreksmaroc@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="guide.html">Votre Guide</a></li>
+                        <li><a href="treks.html">Randonnées</a></li>
+                        <li><a href="gallery.html">Galerie</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone"></i><div><span>FR: +212 661-796117</span><span>EN: +212 633-652721</span></div></li>
+                        <li><i class="fas fa-envelope"></i><span>aventuretreksmaroc@gmail.com</span></li>
+                        <li><i class="fas fa-map-marker-alt"></i><span>Vallée des Roses, Ouarzazate, Maroc</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2024 Adventure Treks avec Ali. Tous droits réservés.</p></div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="../js/config.js" defer></script>
+    <script src="../js/i18n.js" defer></script>
+    <script src="../js/security.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    
+    <script>
+        // Filtrage des randonnées
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const trekCards = document.querySelectorAll('.trek-detail-card');
+            
+            // Vérifier si un hash est présent dans l'URL
+            const hash = window.location.hash;
+            if (hash) {
+                const filter = hash.replace('#', '');
+                activateFilter(filter);
+            }
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    activateFilter(filter);
+                    
+                    // Mettre à jour l'URL
+                    if (filter === 'all') {
+                        history.pushState(null, null, 'treks.html');
+                    } else {
+                        history.pushState(null, null, `treks.html#${filter}`);
+                    }
+                });
+            });
+            
+            function activateFilter(filter) {
+                // Mettre à jour les boutons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                const activeBtn = document.querySelector(`[data-filter="${filter}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+                
+                // Filtrer les cartes
+                trekCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'grid';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
