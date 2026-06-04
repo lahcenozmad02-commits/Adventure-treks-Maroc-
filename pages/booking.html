@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>Réserver une Randonnée | Adventure Treks avec Ali</title>
+    <meta name="description" content="Réservez votre randonnée personnalisée avec Ali. Circuit sur mesure, prix tout compris. Contact direct WhatsApp pour créer votre aventure.">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <style>
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-8);
+            align-items: start;
+        }
+        
+        .booking-form-wrapper {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .booking-info {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .info-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-6);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .info-card h4 {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            color: var(--primary);
+            margin-bottom: var(--space-3);
+        }
+        
+        .price-note {
+            background: #FFF8E1;
+            border: 1px solid #FFE082;
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            margin: var(--space-4) 0;
+        }
+        
+        .trek-select-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            padding: var(--space-4);
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .trek-select-card:hover,
+        .trek-select-card.selected {
+            border-color: var(--primary);
+            background: rgba(46, 125, 50, 0.03);
+        }
+        
+        .trek-select-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+        }
+        
+        .trek-select-card .trek-info {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .booking-info {
+                position: static;
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <i class="fas fa-mountain"></i>
+                <span>Adventure Treks</span>
+            </div>
+            <div class="preloader-bar">
+                <div class="preloader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span class="badge-certified">
+                    <i class="fas fa-shield-alt"></i>
+                    <span data-i18n="certified_guide">Guide Certifié • 30+ ans</span>
+                </span>
+            </div>
+            <div class="top-bar-right">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+                <div class="social-mini">
+                    <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-mountain-sun"></i></div>
+                    <div class="logo-text">
+                        <span class="logo-title">Adventure Treks</span>
+                        <span class="logo-subtitle">avec Ali</span>
+                    </div>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="../index.html" class="nav-link">Accueil</a></li>
+                    <li><a href="guide.html" class="nav-link">Votre Guide</a></li>
+                    <li><a href="treks.html" class="nav-link">Randonnées</a></li>
+                    <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+                    <li><a href="reviews.html" class="nav-link">Avis</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="booking.html" class="btn btn-primary btn-sm active">
+                        <i class="fab fa-whatsapp"></i> Réserver
+                    </a>
+                    <button class="hamburger" id="hamburger" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <nav class="breadcrumb-nav">
+                <a href="../index.html">Accueil</a>
+                <span class="separator">›</span>
+                <span class="current">Réserver</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="booking_title">Réservez votre aventure</h1>
+            <p data-i18n="booking_subtitle">Remplissez le formulaire et je vous contacterai personnellement</p>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="section">
+        <div class="container">
+            <div class="booking-container">
+                <!-- Formulaire -->
+                <div class="booking-form-wrapper" data-aos="fade-up">
+                    <form id="bookingForm" class="booking-form">
+                        <!-- Choix du circuit -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span data-i18n="booking_form_trek">Choisir le circuit</span> <span class="required">*</span>
+                            </label>
+                            <div class="trek-options">
+                                <label class="trek-select-card">
+                                    <input type="radio" name="trek" value="toubkal" style="display:none;">
+                                    <img src="https://drive.google.com/thumbnail?id=17j0rL9qOahrMQ1sjIRD1P0mcy8Cgv3pU&sz=w200" alt="Toubkal" loading="lazy">
+                                    <div class="trek-info">
+                                        <strong>Toubkal Express</strong>
+                                        <p style="font-size:0.85rem;color:var(--dark-gray);">4 jours • 4167m</p>
+                                    </div>
+                                    <i class="fas fa-check-circle" style="color:var(--primary);display:none;"></i>
+                                </label>
+                                
+                                <label class="trek-select-card">
+                                    <input type="radio" name="trek" value="vallee-roses" style="display:none;">
+                                    <img src="https://drive.google.com/thumbnail?id=1xRX5S_f4Hbg9snrmAoYIxqArNNrallQP&sz=w200" alt="Vallée des Roses" loading="lazy">
+                                    <div class="trek-info">
+                                        <strong>Vallée des Roses</strong>
+                                        <p style="font-size:0.85rem;color:var(--dark-gray);">5 jours • Drâa-Tafilalet</p>
+                                    </div>
+                                    <i class="fas fa-check-circle" style="color:var(--primary);display:none;"></i>
+                                </label>
+                                
+                                <label class="trek-select-card">
+                                    <input type="radio" name="trek" value="mgoun" style="display:none;">
+                                    <img src="https://drive.google.com/thumbnail?id=1NMvh2owxnkTk00whGR7m1WYzWut65I3S&sz=w200" alt="Mgoun" loading="lazy">
+                                    <div class="trek-info">
+                                        <strong>Grand Mgoun</strong>
+                                        <p style="font-size:0.85rem;color:var(--dark-gray);">8 jours • 4068m</p>
+                                    </div>
+                                    <i class="fas fa-check-circle" style="color:var(--primary);display:none;"></i>
+                                </label>
+                                
+                                <label class="trek-select-card">
+                                    <input type="radio" name="trek" value="atlas-desert" style="display:none;">
+                                    <img src="https://drive.google.com/thumbnail?id=1mfvWu486bDY5Cl7dQIjY2GLL-ZiHT4rF&sz=w200" alt="Atlas & Désert" loading="lazy">
+                                    <div class="trek-info">
+                                        <strong>Atlas & Désert</strong>
+                                        <p style="font-size:0.85rem;color:var(--dark-gray);">10 jours • Atlas & Merzouga</p>
+                                    </div>
+                                    <i class="fas fa-check-circle" style="color:var(--primary);display:none;"></i>
+                                </label>
+                                
+                                <label class="trek-select-card">
+                                    <input type="radio" name="trek" value="custom" style="display:none;">
+                                    <div class="trek-info">
+                                        <strong>Circuit entièrement personnalisé</strong>
+                                        <p style="font-size:0.85rem;color:var(--dark-gray);">Vous décidez de tout</p>
+                                    </div>
+                                    <i class="fas fa-check-circle" style="color:var(--primary);display:none;"></i>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Nombre de voyageurs et niveau -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="travelers">
+                                    <span data-i18n="booking_form_travelers">Nombre de voyageurs</span> <span class="required">*</span>
+                                </label>
+                                <input type="number" id="travelers" name="travelers" class="form-input" 
+                                       min="2" max="12" required placeholder="2 à 12 personnes"
+                                       data-validate="travelers">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="fitnessLevel">
+                                    <span data-i18n="booking_form_level">Niveau de forme physique</span> <span class="required">*</span>
+                                </label>
+                                <select id="fitnessLevel" name="fitness" class="form-select" required>
+                                    <option value="">Choisir le niveau</option>
+                                    <option value="beginner">Débutant - 3-4h marche/jour</option>
+                                    <option value="intermediate">Intermédiaire - 4-5h marche/jour</option>
+                                    <option value="advanced">Avancé - 5-6h marche/jour</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Dates proposées -->
+                        <div class="form-group">
+                            <label class="form-label" for="dates">
+                                <span data-i18n="booking_form_dates">Dates proposées</span> <span class="required">*</span>
+                            </label>
+                            <input type="text" id="dates" name="dates" class="form-input" 
+                                   required placeholder="Ex: 15-20 Mars 2025 ou flexible">
+                        </div>
+                        
+                        <!-- Langue de communication -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span data-i18n="booking_form_language">Langue de communication préférée</span> <span class="required">*</span>
+                            </label>
+                            <div class="form-row">
+                                <label class="trek-select-card" style="flex:1;">
+                                    <input type="radio" name="language" value="fr" style="display:none;" required>
+                                    <div class="trek-info">
+                                        <strong>🇫🇷 Français</strong>
+                                    </div>
+                                    <i class="fas fa-check-circle" style="color:var(--primary);display:none;"></i>
+                                </label>
+                                <label class="trek-select-card" style="flex:1;">
+                                    <input type="radio" name="language" value="en" style="display:none;">
+                                    <div class="trek-info">
+                                        <strong>🇬🇧 English</strong>
+                                    </div>
+                                    <i class="fas fa-check-circle" style="color:var(--primary);display:none;"></i>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Informations personnelles -->
+                        <h4 style="margin: var(--space-6) 0 var(--space-4); color: var(--dark);">
+                            <i class="fas fa-user"></i> Vos coordonnées
+                        </h4>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="fullName">
+                                <span data-i18n="booking_form_name">Votre nom complet</span> <span class="required">*</span>
+                            </label>
+                            <input type="text" id="fullName" name="fullName" class="form-input" 
+                                   required placeholder="Votre nom et prénom"
+                                   data-validate="name">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="email">
+                                    <span data-i18n="booking_form_email">Email</span> <span class="required">*</span>
+                                </label>
+                                <input type="email" id="email" name="email" class="form-input" 
+                                       required placeholder="votre@email.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="phone">
+                                    <span data-i18n="booking_form_phone">Téléphone</span> <span class="required">*</span>
+                                </label>
+                                <input type="tel" id="phone" name="phone" class="form-input" 
+                                       required placeholder="+212 6XX-XXXXXX"
+                                       data-validate="phone">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="country">
+                                <span data-i18n="booking_form_country">Pays de résidence</span>
+                            </label>
+                            <input type="text" id="country" name="country" class="form-input" 
+                                   placeholder="Votre pays">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="specialRequests">
+                                <span data-i18n="booking_form_special">Demandes spéciales</span>
+                            </label>
+                            <textarea id="specialRequests" name="specialRequests" class="form-textarea" 
+                                      rows="4" placeholder="Allergies, préférences alimentaires, demandes particulières..."
+                                      data-validate="message"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg btn-block pulse-animation">
+                            <i class="fab fa-whatsapp"></i>
+                            <span data-i18n="booking_form_submit">Envoyer la demande à Ali</span>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Informations -->
+                <div class="booking-info" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-card">
+                        <h4><i class="fas fa-euro-sign"></i> Prix et Paiement</h4>
+                        <p><strong>Tout compris :</strong> guidage, transport, hébergement, repas, équipement</p>
+                        <div class="price-note">
+                            <p><strong>📋 Acompte :</strong> 30% à la réservation</p>
+                            <p><strong>💰 Solde :</strong> Pendant ou après la randonnée</p>
+                        </div>
+                        <p style="font-size:0.85rem;color:var(--dark-gray);">
+                            Le prix varie selon le circuit, le nombre de personnes et le niveau de confort souhaité.
+                            Nous en discuterons ensemble sur WhatsApp.
+                        </p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4><i class="fas fa-check-circle"></i> Ce qui est inclus</h4>
+                        <ul style="list-style:none;padding:0;">
+                            <li style="padding:var(--space-1) 0;">✅ Guide personnel (Ali)</li>
+                            <li style="padding:var(--space-1) 0;">✅ Transport depuis votre arrivée</li>
+                            <li style="padding:var(--space-1) 0;">✅ Hébergement (gîtes/bivouacs)</li>
+                            <li style="padding:var(--space-1) 0;">✅ Tous les repas</li>
+                            <li style="padding:var(--space-1) 0;">✅ Équipement de camping</li>
+                            <li style="padding:var(--space-1) 0;">✅ Mulets pour les bagages</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4><i class="fas fa-clock"></i> Prochaines étapes</h4>
+                        <ol style="padding-left:var(--space-4);">
+                            <li style="padding:var(--space-1) 0;">Vous remplissez ce formulaire</li>
+                            <li style="padding:var(--space-1) 0;">La conversation s'ouvre sur WhatsApp</li>
+                            <li style="padding:var(--space-1) 0;">Nous finalisons les détails ensemble</li>
+                            <li style="padding:var(--space-1) 0;">Vous versez l'acompte de 30%</li>
+                            <li style="padding:var(--space-1) 0;">Vous préparez votre aventure !</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="info-card" style="background:#E8F5E9;border-left-color:#25D366;">
+                        <h4><i class="fab fa-whatsapp" style="color:#25D366;"></i> Besoin d'aide ?</h4>
+                        <p>Contactez-moi directement :</p>
+                        <a href="https://wa.me/212661796117" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">
+                            <i class="fab fa-whatsapp"></i> +212 661-796117
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-mountain-sun"></i>
+                        <span>Adventure Treks avec Ali</span>
+                    </div>
+                    <p>Votre guide personnel pour des aventures inoubliables dans l'Atlas et le désert marocain.</p>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                        <a href="mailto:aventuretreksmaroc@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="guide.html">Votre Guide</a></li>
+                        <li><a href="treks.html">Randonnées</a></li>
+                        <li><a href="gallery.html">Galerie</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone"></i><div><span>FR: +212 661-796117</span><span>EN: +212 633-652721</span></div></li>
+                        <li><i class="fas fa-envelope"></i><span>aventuretreksmaroc@gmail.com</span></li>
+                        <li><i class="fas fa-map-marker-alt"></i><span>Vallée des Roses, Ouarzazate, Maroc</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Adventure Treks avec Ali. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="../js/config.js" defer></script>
+    <script src="../js/i18n.js" defer></script>
+    <script src="../js/security.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    
+    <script>
+        // Gestion des cartes de sélection
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.trek-select-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (radio) {
+                        radio.checked = true;
+                        
+                        // Mettre à jour le style
+                        const group = this.closest('.trek-options, .form-row');
+                        if (group) {
+                            group.querySelectorAll('.trek-select-card').forEach(c => {
+                                c.classList.remove('selected');
+                                const icon = c.querySelector('.fa-check-circle');
+                                if (icon) icon.style.display = 'none';
+                            });
+                        }
+                        
+                        this.classList.add('selected');
+                        const icon = this.querySelector('.fa-check-circle');
+                        if (icon) icon.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Gestion du formulaire de réservation
+            document.getElementById('bookingForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validation
+                const validation = Security.validateForm(this);
+                if (!validation.isValid) {
+                    return;
+                }
+                
+                // Récupération des données
+                const formData = new FormData(this);
+                const trek = formData.get('trek');
+                const travelers = formData.get('travelers');
+                const fitness = formData.get('fitness');
+                const dates = formData.get('dates');
+                const language = formData.get('language');
+                const fullName = formData.get('fullName');
+                const email = formData.get('email');
+                const phone = formData.get('phone');
+                const country = formData.get('country');
+                const specialRequests = formData.get('specialRequests');
+                
+                // Déterminer le numéro WhatsApp selon la langue
+                const phoneNumber = language === 'en' ? '+212633652721' : '+212661796117';
+                
+                // Création du message WhatsApp
+                const message = `Bonjour Ali,%0A%0A
+Je souhaite réserver une randonnée :%0A
+• Circuit : ${trek}%0A
+• Voyageurs : ${travelers}%0A
+• Niveau : ${fitness}%0A
+• Dates : ${dates}%0A
+• Langue : ${language === 'en' ? 'English' : 'Français'}%0A%0A
+Mes coordonnées :%0A
+• Nom : ${fullName}%0A
+• Email : ${email}%0A
+• Téléphone : ${phone}%0A
+• Pays : ${country}%0A%0A
+Demandes spéciales : ${specialRequests || 'Aucune'}%0A%0A
+Merci de me recontacter !`;
+                
+                // Ouvrir WhatsApp
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+                
+                // Afficher un message de succès
+                alert('✅ Votre demande a été envoyée ! La conversation WhatsApp s\'ouvre. Ali vous répondra personnellement dans les 24h.');
+            });
+        });
+    </script>
+</body>
+</html>
