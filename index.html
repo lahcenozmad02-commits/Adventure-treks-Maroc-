@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ============================================
+         SEO META TAGS
+    ============================================ -->
+    <title>Adventure Treks avec Ali | Guide Expert Maroc - Trekking Atlas & Désert</title>
+    <meta name="description" content="Ali Ouzemmad, votre guide personnel avec 30+ ans d'expérience. Trekking Toubkal, randonnée Mgoun, circuits désert Merzouga. Guide natif de la Vallée des Roses.">
+    <meta name="keywords" content="guide maroc, trekking atlas, désert merzouga, ali ouzemmad, guide francophone, randonnée maroc, vallée des roses, toubkal, mgoun">
+    <meta name="author" content="Ali Ouzemmad">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://adventure-treks.vercel.app/">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Adventure Treks avec Ali - Guide Expert Maroc">
+    <meta property="og:description" content="Votre guide personnel pour trekking dans l'Atlas et randonnées désert - 30+ ans d'expérience">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adventure-treks.vercel.app/">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:image" content="https://drive.google.com/thumbnail?id=1LyV1EX4GYyTv0YGQOimZqNjNLcaUqNZF&sz=w1200">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Adventure Treks avec Ali">
+    <meta name="twitter:description" content="Guide expert 30+ ans - Trekking Atlas & Désert Maroc">
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TouristInformationCenter",
+        "name": "Adventure Treks avec Ali",
+        "description": "Guide expert pour trekking dans l'Atlas et randonnées dans le désert Marocain",
+        "employee": {
+            "@type": "Person",
+            "name": "Ali Ouzemmad",
+            "jobTitle": "Guide de montagne et désert",
+            "description": "Guide expert natif de la Vallée des Roses avec plus de 30 ans d'expérience",
+            "telephone": "+212661796117",
+            "address": {
+                "@type": "PostalAddress",
+                "addressRegion": "Vallée des Roses - Ouarzazate",
+                "addressCountry": "MA"
+            }
+        },
+        "areaServed": ["Toubkal", "Mgoun", "Merzouga", "Vallée des Roses", "Dades", "Todra"],
+        "availableLanguage": ["French", "English"]
+    }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <meta name="theme-color" content="#2E7D32">
+    
+    <style>
+        /* تدرجات لونية للرحلات */
+        .trek-gradient-toubkal {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2E5A88 30%, #4A90D9 60%, #87CEEB 100%);
+        }
+        .trek-gradient-roses {
+            background: linear-gradient(135deg, #8B2252 0%, #C71585 30%, #E8A0BF 60%, #FADADD 100%);
+        }
+        .trek-gradient-mgoun {
+            background: linear-gradient(135deg, #3E2723 0%, #5D4037 30%, #8B4513 60%, #D2691E 100%);
+        }
+        .trek-gradient-desert {
+            background: linear-gradient(135deg, #E65100 0%, #F57C00 30%, #FFB74D 60%, #FFE0B2 100%);
+        }
+        
+        .trek-gradient-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .trek-gradient-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200"><path fill="rgba(255,255,255,0.05)" d="M0 100 Q50 50 100 100 Q150 150 200 100 Q250 50 300 100 Q350 150 400 100 L400 200 L0 200 Z"/></svg>');
+            background-size: cover;
+        }
+        
+        .trek-gradient-placeholder i {
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <i class="fas fa-mountain"></i>
+                <span>Adventure Treks</span>
+            </div>
+            <div class="preloader-bar"><div class="preloader-progress"></div></div>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span class="badge-certified"><i class="fas fa-shield-alt"></i> <span data-i18n="certified_guide">Guide Certifié • 30+ ans</span></span>
+            </div>
+            <div class="top-bar-right">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="fr" aria-label="Passer en Français"><span>FR</span></button>
+                    <button class="lang-btn" data-lang="en" aria-label="Switch to English"><span>EN</span></button>
+                </div>
+                <div class="social-mini">
+                    <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/212661796117" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-mountain-sun"></i></div>
+                    <div class="logo-text"><span class="logo-title">Adventure Treks</span><span class="logo-subtitle">avec Ali</span></div>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item"><a href="index.html" class="nav-link active" data-i18n="nav_home">Accueil</a></li>
+                    <li class="nav-item"><a href="pages/guide.html" class="nav-link" data-i18n="nav_guide">Votre Guide</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="pages/treks.html" class="nav-link" data-i18n="nav_treks">Randonnées</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="pages/treks.html#short" data-i18n="nav_short">2-6 Jours</a></li>
+                            <li><a href="pages/treks.html#medium" data-i18n="nav_medium">7-11 Jours</a></li>
+                            <li><a href="pages/treks.html#long" data-i18n="nav_long">12-15 Jours</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="pages/gallery.html" class="nav-link" data-i18n="nav_gallery">Galerie</a></li>
+                    <li class="nav-item"><a href="pages/reviews.html" class="nav-link" data-i18n="nav_reviews">Avis</a></li>
+                    <li class="nav-item"><a href="pages/contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="pages/booking.html" class="btn btn-primary btn-sm"><i class="fab fa-whatsapp"></i> <span data-i18n="book_now">Réserver</span></a>
+                    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <img src="https://drive.google.com/thumbnail?id=1LyV1EX4GYyTv0YGQOimZqNjNLcaUqNZF&sz=w2000" alt="Trekking dans l'Atlas Marocain" class="hero-bg-img" loading="eager">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="container">
+                <div class="hero-text" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="hero-badge"><i class="fas fa-star"></i> <span data-i18n="hero_badge">Guide Expert Local</span></div>
+                    <h1 class="hero-title">
+                        <span class="title-line" data-i18n="hero_title_1">Adventure Treks</span>
+                        <span class="title-line title-highlight" data-i18n="hero_title_2">avec Ali</span>
+                    </h1>
+                    <p class="hero-description" data-i18n="hero_desc">Votre guide personnel natif de la Vallée des Roses. Plus de 30 ans à vous faire découvrir les merveilles de l'Atlas et du désert marocain.</p>
+                    <div class="hero-cta">
+                        <a href="pages/booking.html" class="btn btn-primary btn-lg pulse-animation"><i class="fab fa-whatsapp"></i> <span data-i18n="hero_cta_primary">Circuit Personnalisé</span></a>
+                        <a href="pages/guide.html" class="btn btn-outline btn-lg"><i class="fas fa-user"></i> <span data-i18n="hero_cta_secondary">Découvrir Ali</span></a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item"><span class="stat-number">30+</span><span class="stat-label" data-i18n="stat_years">Ans d'expérience</span></div>
+                        <div class="stat-item"><span class="stat-number">1000+</span><span class="stat-label" data-i18n="stat_clients">Clients satisfaits</span></div>
+                        <div class="stat-item"><span class="stat-number">50+</span><span class="stat-label" data-i18n="stat_treks">Itinéraires uniques</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll"><span data-i18n="scroll_down">Défiler</span><i class="fas fa-chevron-down"></i></div>
+    </section>
+
+    <!-- Why Choose Ali Section -->
+    <section class="section why-us" id="why-us">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge" data-i18n="why_badge">Pourquoi me choisir</span>
+                <h2 class="section-title" data-i18n="why_title">Votre guide, pas juste un guide</h2>
+                <p class="section-subtitle" data-i18n="why_subtitle">Une expérience authentique avec un expert local qui connaît chaque sentier, chaque pierre et chaque histoire de ces montagnes</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100"><div class="feature-icon"><i class="fas fa-home"></i></div><h3 data-i18n="feature_1_title">Guide natif de la région</h3><p data-i18n="feature_1_desc">Né et grandi dans la Vallée des Roses, je connais les montagnes, les sentiers secrets et les changements météorologiques mieux que personne</p></div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200"><div class="feature-icon"><i class="fas fa-medal"></i></div><h3 data-i18n="feature_2_title">30 ans d'expertise</h3><p data-i18n="feature_2_desc">Trois décennies à guider des voyageurs du monde entier, à créer des souvenirs inoubliables et à garantir votre sécurité</p></div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300"><div class="feature-icon"><i class="fas fa-heart"></i></div><h3 data-i18n="feature_3_title">Expérience humaine</h3><p data-i18n="feature_3_desc">Je comprends vos attentes, respecte votre rythme et m'adapte à vos envies. Plus qu'un guide, je deviens votre ami au Maroc</p></div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3 data-i18n="feature_4_title">Sécurité et confiance</h3><p data-i18n="feature_4_desc">Votre sécurité est ma priorité absolue. Équipement professionnel, premiers soins et connaissance approfondie du terrain</p></div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500"><div class="feature-icon"><i class="fas fa-globe-africa"></i></div><h3 data-i18n="feature_5_title">Culture authentique</h3><p data-i18n="feature_5_desc">Plongez dans la culture berbère authentique, rencontrez les populations locales et découvrez des traditions millénaires</p></div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600"><div class="feature-icon"><i class="fas fa-user-shield"></i></div><h3 data-i18n="feature_6_title">Respect de votre intimité</h3><p data-i18n="feature_6_desc">Je respecte votre espace personnel et votre vie privée. Votre confort et votre tranquillité sont essentiels</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Treks Section -->
+    <section class="section featured-treks" id="featured-treks">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge" data-i18n="treks_badge">Aventures</span>
+                <h2 class="section-title" data-i18n="treks_title">Nos randonnées populaires</h2>
+                <p class="section-subtitle" data-i18n="treks_subtitle">Des circuits pour tous les niveaux, de 4 à 15 jours, dans les plus beaux paysages du Maroc</p>
+            </div>
+            
+            <div class="treks-slider swiper" data-aos="fade-up" data-aos-delay="200">
+                <div class="swiper-wrapper">
+                    
+                    <!-- Trek 1: Toubkal -->
+                    <div class="swiper-slide">
+                        <div class="trek-card">
+                            <div class="trek-image trek-gradient-toubkal">
+                                <div class="trek-gradient-placeholder"><i class="fas fa-mountain"></i></div>
+                                <span class="trek-duration">4 Jours</span>
+                                <span class="trek-badge" data-i18n="trek_popular">Populaire</span>
+                            </div>
+                            <div class="trek-body">
+                                <h3 class="trek-title">Toubkal Express avec Ali</h3>
+                                <p class="trek-region"><i class="fas fa-map-marker-alt"></i> Haut Atlas • 4167m</p>
+                                <ul class="trek-features">
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_toubkal_f1">Ascension du plus haut sommet d'Afrique du Nord</span></li>
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_toubkal_f2">Vallée d'Ourika et villages berbères</span></li>
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_toubkal_f3">4-5h de marche par jour</span></li>
+                                </ul>
+                                <div class="trek-footer">
+                                    <a href="pages/booking.html" class="btn btn-primary btn-block"><i class="fab fa-whatsapp"></i> <span data-i18n="trek_book">Réserver</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trek 2: Vallée des Roses -->
+                    <div class="swiper-slide">
+                        <div class="trek-card">
+                            <div class="trek-image trek-gradient-roses">
+                                <div class="trek-gradient-placeholder"><i class="fas fa-leaf"></i></div>
+                                <span class="trek-duration">5 Jours</span>
+                            </div>
+                            <div class="trek-body">
+                                <h3 class="trek-title">Vallée des Roses avec Ali</h3>
+                                <p class="trek-region"><i class="fas fa-map-marker-alt"></i> Drâa-Tafilalet • Kelaat M'gouna</p>
+                                <ul class="trek-features">
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_roses_f1">Découverte de la vallée natale d'Ali</span></li>
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_roses_f2">Coopératives de rose et traditions locales</span></li>
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_roses_f3">Gorges de Dades et Todra</span></li>
+                                </ul>
+                                <div class="trek-footer">
+                                    <a href="pages/booking.html" class="btn btn-primary btn-block"><i class="fab fa-whatsapp"></i> <span data-i18n="trek_book">Réserver</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trek 3: Mgoun -->
+                    <div class="swiper-slide">
+                        <div class="trek-card">
+                            <div class="trek-image trek-gradient-mgoun">
+                                <div class="trek-gradient-placeholder"><i class="fas fa-hiking"></i></div>
+                                <span class="trek-duration">8 Jours</span>
+                            </div>
+                            <div class="trek-body">
+                                <h3 class="trek-title">Grand Mgoun avec Ali</h3>
+                                <p class="trek-region"><i class="fas fa-map-marker-alt"></i> Massif du Mgoun • 4068m</p>
+                                <ul class="trek-features">
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_mgoun_f1">Ascension du Jbel Mgoun (4068m)</span></li>
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_mgoun_f2">Vallée d'Aït Bougmez "Vallée Heureuse"</span></li>
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_mgoun_f3">Nuits en bivouac sous les étoiles</span></li>
+                                </ul>
+                                <div class="trek-footer">
+                                    <a href="pages/booking.html" class="btn btn-primary btn-block"><i class="fab fa-whatsapp"></i> <span data-i18n="trek_book">Réserver</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trek 4: Désert -->
+                    <div class="swiper-slide">
+                        <div class="trek-card">
+                            <div class="trek-image trek-gradient-desert">
+                                <div class="trek-gradient-placeholder"><i class="fas fa-sun"></i></div>
+                                <span class="trek-duration">10 Jours</span>
+                                <span class="trek-badge" data-i18n="trek_new">Nouveau</span>
+                            </div>
+                            <div class="trek-body">
+                                <h3 class="trek-title">Atlas & Désert avec Ali</h3>
+                                <p class="trek-region"><i class="fas fa-map-marker-alt"></i> Atlas • Merzouga • Oasis</p>
+                                <ul class="trek-features">
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_desert_f1">Montagne et désert en un seul voyage</span></li>
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_desert_f2">Nuit dans les dunes de Merzouga</span></li>
+                                    <li><i class="fas fa-check"></i> <span data-i18n="trek_desert_f3">Oasis et kasbahs historiques</span></li>
+                                </ul>
+                                <div class="trek-footer">
+                                    <a href="pages/booking.html" class="btn btn-primary btn-block"><i class="fab fa-whatsapp"></i> <span data-i18n="trek_book">Réserver</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            
+            <div class="section-footer" data-aos="fade-up">
+                <a href="pages/treks.html" class="btn btn-outline btn-lg"><span data-i18n="view_all_treks">Voir toutes les randonnées</span> <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge" data-i18n="testimonials_badge">Témoignages</span>
+                <h2 class="section-title" data-i18n="testimonials_title">Ce que disent nos voyageurs</h2>
+            </div>
+            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="200">
+                <div class="swiper-wrapper" id="testimonialsContainer"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section" id="cta">
+        <div class="container">
+            <div class="cta-card" data-aos="zoom-in">
+                <div class="cta-content">
+                    <h2 data-i18n="cta_title">Prêt pour l'aventure ?</h2>
+                    <p data-i18n="cta_desc">Contactez-moi directement sur WhatsApp pour créer votre voyage sur mesure. Je réponds personnellement en moins de 24h.</p>
+                    <div class="cta-buttons">
+                        <a href="https://wa.me/212661796117" class="btn btn-primary btn-lg pulse-animation" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="cta_whatsapp_fr">WhatsApp (FR)</span></a>
+                        <a href="https://wa.me/212633652721" class="btn btn-outline btn-lg" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-i18n="cta_whatsapp_en">WhatsApp (EN)</span></a>
+                    </div>
+                    <div class="cta-info">
+                        <p><i class="fas fa-clock"></i> <span data-i18n="cta_response">Réponse en moins de 24h</span></p>
+                        <p><i class="fas fa-lock"></i> <span data-i18n="cta_payment">Paiement après accord</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo"><i class="fas fa-mountain-sun"></i><span>Adventure Treks avec Ali</span></div>
+                    <p data-i18n="footer_desc">Votre guide personnel pour des aventures inoubliables dans l'Atlas et le désert marocain.</p>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                        <a href="mailto:aventuretreksmaroc@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_quick_links">Liens rapides</h4>
+                    <ul>
+                        <li><a href="pages/guide.html">Votre Guide</a></li>
+                        <li><a href="pages/treks.html">Randonnées</a></li>
+                        <li><a href="pages/gallery.html">Galerie</a></li>
+                        <li><a href="pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_contact">Contact</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone"></i><div><span>FR: +212 661-796117</span><span>EN: +212 633-652721</span></div></li>
+                        <li><i class="fas fa-envelope"></i><span>aventuretreksmaroc@gmail.com</span></li>
+                        <li><i class="fas fa-map-marker-alt"></i><span>Vallée des Roses, Ouarzazate, Maroc</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2024 Adventure Treks avec Ali. Tous droits réservés.</p></div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" defer></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/i18n.js" defer></script>
+    <script src="js/security.js" defer></script>
+    <script src="js/main.js" defer></script>
+</body>
+</html>
