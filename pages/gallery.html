@@ -16,7 +16,6 @@
     
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/css/lightgallery-bundle.min.css">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/main.css">
@@ -25,66 +24,128 @@
     <link rel="stylesheet" href="../css/responsive.css">
     
     <style>
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: var(--space-4);
-            margin-top: var(--space-8);
+        .gallery-horizontal {
+            position: relative;
+            max-width: 100%;
+            margin: var(--space-8) auto;
+            overflow: hidden;
         }
         
-        .gallery-item {
-            position: relative;
+        .gallery-track {
+            display: flex;
+            gap: var(--space-4);
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: var(--space-4) 0;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .gallery-track::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .gallery-slide {
+            flex: 0 0 auto;
+            width: 500px;
+            height: 400px;
             border-radius: var(--radius-xl);
             overflow: hidden;
-            cursor: pointer;
-            aspect-ratio: 4/3;
-            background: var(--light-gray);
+            scroll-snap-align: start;
+            box-shadow: var(--shadow-lg);
+            transition: transform var(--transition-base);
+            position: relative;
         }
         
-        .gallery-item img {
+        .gallery-slide:hover {
+            transform: scale(1.02);
+        }
+        
+        .gallery-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform var(--transition-slow);
         }
         
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        .gallery-item-overlay {
+        .gallery-nav-btn {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            padding: var(--space-6) var(--space-4) var(--space-4);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--white);
+            border: none;
+            box-shadow: var(--shadow-xl);
+            cursor: pointer;
+            font-size: var(--text-2xl);
+            color: var(--primary);
+            z-index: 10;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-nav-btn:hover {
+            background: var(--primary);
             color: var(--white);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all var(--transition-base);
         }
         
-        .gallery-item:hover .gallery-item-overlay {
-            opacity: 1;
-            transform: translateY(0);
+        .gallery-nav-btn.prev {
+            left: var(--space-4);
         }
         
-        .lg-backdrop {
-            background-color: rgba(0, 0, 0, 0.9);
+        .gallery-nav-btn.next {
+            right: var(--space-4);
+        }
+        
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-2);
+            margin-top: var(--space-4);
+        }
+        
+        .gallery-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .gallery-dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
         }
         
         @media (max-width: 768px) {
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: var(--space-3);
+            .gallery-slide {
+                width: 350px;
+                height: 280px;
+            }
+            
+            .gallery-nav-btn {
+                width: 45px;
+                height: 45px;
+                font-size: var(--text-lg);
             }
         }
         
         @media (max-width: 480px) {
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: var(--space-2);
+            .gallery-slide {
+                width: 280px;
+                height: 220px;
+            }
+            
+            .gallery-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: var(--text-base);
             }
         }
     </style>
@@ -154,163 +215,65 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
+    <!-- Gallery Horizontal -->
     <section class="section" style="padding-top: 0;">
         <div class="container">
-            <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-horizontal" id="galleryHorizontal" data-aos="fade-up">
                 
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1kJArxL_PVpVKcL1HHh-H94khN4WHWFIy&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1kJArxL_PVpVKcL1HHh-H94khN4WHWFIy&sz=w800" alt="Montagnes de l'Atlas" loading="lazy">
-                </div>
+                <button class="gallery-nav-btn prev" onclick="scrollGallery(-1)" aria-label="Précédent">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
                 
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1uBVW1zqQC4ckilniLVUEF07jDPl-02k7&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1uBVW1zqQC4ckilniLVUEF07jDPl-02k7&sz=w800" alt="Sommet enneigé" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1IxIoUOYFQvz-CyBKA_IVWf5Grd2uWDWq&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1IxIoUOYFQvz-CyBKA_IVWf5Grd2uWDWq&sz=w800" alt="Crêtes rocheuses" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1wGgrut5u5T_ndgt5sVQ3BcfcU9F3b29R&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1wGgrut5u5T_ndgt5sVQ3BcfcU9F3b29R&sz=w800" alt="Randonnée en montagne" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1x-UvYpakJ-rFmTx8UMDFcwMd24wDwj-B&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1x-UvYpakJ-rFmTx8UMDFcwMd24wDwj-B&sz=w800" alt="Vue du sommet" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1Mse6VN-ibjrIBImmSH_d3W2yz7AQ1KFt&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1Mse6VN-ibjrIBImmSH_d3W2yz7AQ1KFt&sz=w800" alt="Dunes de Merzouga" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1EFjwpAq-V25DlBQzPVXn0NnVwW8JrSXI&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1EFjwpAq-V25DlBQzPVXn0NnVwW8JrSXI&sz=w800" alt="Coucher de soleil désert" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1PYT8U5BzskW36obyxElI59D4nLg6cuDb&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1PYT8U5BzskW36obyxElI59D4nLg6cuDb&sz=w800" alt="Campement saharien" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1n1CkIAMmmMswyZnkbw82cAEjw_K4jwsF&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1n1CkIAMmmMswyZnkbw82cAEjw_K4jwsF&sz=w800" alt="Caravane de chameaux" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1RggQA9IBuwiPwiCQgoWqcsAkOX0ilsSh&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1RggQA9IBuwiPwiCQgoWqcsAkOX0ilsSh&sz=w800" alt="Lever de soleil" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1hej3XOOvJcME2wRii6_Ms0a-vKfOlC_l&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1hej3XOOvJcME2wRii6_Ms0a-vKfOlC_l&sz=w800" alt="Vallée verdoyante" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1o0bc-KNDOKjI-idnrfbs_Ww1euBWUOky&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1o0bc-KNDOKjI-idnrfbs_Ww1euBWUOky&sz=w800" alt="Gorges de Dades" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1WRIsDqzjx6LiUAkqrxvAsF0I0BixFSWW&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1WRIsDqzjx6LiUAkqrxvAsF0I0BixFSWW&sz=w800" alt="Palmeraie" loading="lazy">
+                <div class="gallery-track" id="galleryTrack">
+                    
+                    <!-- صورك -->
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1kJArxL_PVpVKcL1HHh-H94khN4WHWFIy&sz=w1200" alt="Montagnes de l'Atlas" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1uBVW1zqQC4ckilniLVUEF07jDPl-02k7&sz=w1200" alt="Sommet enneigé" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1IxIoUOYFQvz-CyBKA_IVWf5Grd2uWDWq&sz=w1200" alt="Crêtes rocheuses" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1wGgrut5u5T_ndgt5sVQ3BcfcU9F3b29R&sz=w1200" alt="Randonnée en montagne" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1x-UvYpakJ-rFmTx8UMDFcwMd24wDwj-B&sz=w1200" alt="Vue du sommet" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1Mse6VN-ibjrIBImmSH_d3W2yz7AQ1KFt&sz=w1200" alt="Dunes de Merzouga" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1EFjwpAq-V25DlBQzPVXn0NnVwW8JrSXI&sz=w1200" alt="Coucher de soleil" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1PYT8U5BzskW36obyxElI59D4nLg6cuDb&sz=w1200" alt="Campement saharien" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1n1CkIAMmmMswyZnkbw82cAEjw_K4jwsF&sz=w1200" alt="Caravane de chameaux" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1RggQA9IBuwiPwiCQgoWqcsAkOX0ilsSh&sz=w1200" alt="Lever de soleil" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1hej3XOOvJcME2wRii6_Ms0a-vKfOlC_l&sz=w1200" alt="Vallée verdoyante" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1o0bc-KNDOKjI-idnrfbs_Ww1euBWUOky&sz=w1200" alt="Gorges de Dades" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1WRIsDqzjx6LiUAkqrxvAsF0I0BixFSWW&sz=w1200" alt="Palmeraie" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1DrMnzVJCGKhnlejieBX63EJGMSU_0Yqn&sz=w1200" alt="Rivière de montagne" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1eKOBpYCguoWhuJEuQdR2oWKtk-AvRNBs&sz=w1200" alt="Village berbère" loading="lazy"></div>
+                    
+                    <!-- صور إضافية من الكود الأصلي -->
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=17j0rL9qOahrMQ1sjIRD1P0mcy8Cgv3pU&sz=w1200" alt="Trekking dans l'Atlas" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1NMvh2owxnkTk00whGR7m1WYzWut65I3S&sz=w1200" alt="Montagne du Toubkal" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1-B4bwqHUiutwq1RlpZFuVWS01MVnbeXP&sz=w1200" alt="Gorges de Dades" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1Gzz6GCVzomb5EDBA4M-aFRqrfVr9rmAk&sz=w1200" alt="Coucher de soleil Atlas" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1VwbEvHSQFA8L2yciQ6lN8zh3oaT6cHPh&sz=w1200" alt="Village berbère" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1PvG4Ewe9tJxiu0bEy5HbyfioWdgXiJhB&sz=w1200" alt="Randonnée en groupe" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1vQlBIsXR2jcqO2NV8fllG3JFzDExog8T&sz=w1200" alt="Campement désert" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=19aQMiurnH7CIFpMWeGynaZIY6Rv6lXiq&sz=w1200" alt="Paysage montagneux" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1tLbosAEv8fuZdFeG-rGvI_zHjv-e3_qr&sz=w1200" alt="Oasis marocain" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1PzI_p770pFSXmBusRv7gpX786aqGg6_9&sz=w1200" alt="Dunes de sable" loading="lazy"></div>
+                    
+                    <!-- المزيد من صورك -->
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1S4hbDursxryIZb_nSMu3D7dRtPtF3oG3&sz=w1200" alt="Ali avec des voyageurs" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=17YAQXt6xsHY4BUqwWBuI5Dm4riikr6ZW&sz=w1200" alt="Groupe en randonnée" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1qg1X8grizd5eQHMeDGB4b56jGK4qYVHM&sz=w1200" alt="Sentier de montagne" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1zyLX3xRoa1lWpQe_mUs35BLqGZxUGPGT&sz=w1200" alt="Dunes infinies" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1roUOIiKoEJF_oWFxZ3VcB4ocwxRbrcta&sz=w1200" alt="Kasbah" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1BHQDvNYpTHFSsKUCzqyNbTfSImcfg9KO&sz=w1200" alt="Randonneurs au sommet" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1HWIgaPVYQ29WwvZ9H7MqL10BPhI4I3rv&sz=w1200" alt="Tente saharienne" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=19kQq_2IgetkkJ7dWMNfnCkfpxhO-o229&sz=w1200" alt="Fleurs de la vallée" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1uGrDQmDkpGjV-KM7FF7zYJy-czYFCsK7&sz=w1200" alt="Nuit étoilée" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="https://drive.google.com/thumbnail?id=1vW9fDYGMTNkkP56Y_Z_JCyXjfqSz4T-p&sz=w1200" alt="Souvenir de voyage" loading="lazy"></div>
+                    
                 </div>
                 
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1DrMnzVJCGKhnlejieBX63EJGMSU_0Yqn&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1DrMnzVJCGKhnlejieBX63EJGMSU_0Yqn&sz=w800" alt="Rivière de montagne" loading="lazy">
-                </div>
+                <button class="gallery-nav-btn next" onclick="scrollGallery(1)" aria-label="Suivant">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
                 
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1eKOBpYCguoWhuJEuQdR2oWKtk-AvRNBs&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1eKOBpYCguoWhuJEuQdR2oWKtk-AvRNBs&sz=w800" alt="Village berbère" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1S4hbDursxryIZb_nSMu3D7dRtPtF3oG3&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1S4hbDursxryIZb_nSMu3D7dRtPtF3oG3&sz=w800" alt="Ali avec des voyageurs" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=17YAQXt6xsHY4BUqwWBuI5Dm4riikr6ZW&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=17YAQXt6xsHY4BUqwWBuI5Dm4riikr6ZW&sz=w800" alt="Groupe en randonnée" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=19_-BwKn_lCgj1GlJkWMDiTKij2F_Ml5b&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=19_-BwKn_lCgj1GlJkWMDiTKij2F_Ml5b&sz=w800" alt="Pause thé berbère" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1PDebkN2-lg32skok2prHXkT2m6QeHjz9&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1PDebkN2-lg32skok2prHXkT2m6QeHjz9&sz=w800" alt="Repas en montagne" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1qH0DV12HKmM5jgIKPl-VIhXBD6Djp26u&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1qH0DV12HKmM5jgIKPl-VIhXBD6Djp26u&sz=w800" alt="Rencontre avec les locaux" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1qg1X8grizd5eQHMeDGB4b56jGK4qYVHM&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1qg1X8grizd5eQHMeDGB4b56jGK4qYVHM&sz=w800" alt="Sentier de montagne" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1zyLX3xRoa1lWpQe_mUs35BLqGZxUGPGT&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1zyLX3xRoa1lWpQe_mUs35BLqGZxUGPGT&sz=w800" alt="Dunes infinies" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1roUOIiKoEJF_oWFxZ3VcB4ocwxRbrcta&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1roUOIiKoEJF_oWFxZ3VcB4ocwxRbrcta&sz=w800" alt="Kasbah" loading="lazy">
-                </div>
-                
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1BHQDvNYpTHFSsKUCzqyNbTfSImcfg9KO&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1BHQDvNYpTHFSsKUCzqyNbTfSImcfg9KO&sz=w800" alt="Randonneurs au sommet" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1Q_vDdtpXXTTmYv2AbQyQP6YI0oC7PLyB&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1Q_vDdtpXXTTmYv2AbQyQP6YI0oC7PLyB&sz=w800" alt="Guide et voyageurs" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1HWIgaPVYQ29WwvZ9H7MqL10BPhI4I3rv&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1HWIgaPVYQ29WwvZ9H7MqL10BPhI4I3rv&sz=w800" alt="Tente saharienne" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=19kQq_2IgetkkJ7dWMNfnCkfpxhO-o229&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=19kQq_2IgetkkJ7dWMNfnCkfpxhO-o229&sz=w800" alt="Fleurs de la vallée" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1gz0Y6j_s6oMG09dKdm6X5prB5AP5wyrV&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1gz0Y6j_s6oMG09dKdm6X5prB5AP5wyrV&sz=w800" alt="Refuge de montagne" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=10VQYNKeyzVucYgJnv_dTNWVD9x4j_nPD&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=10VQYNKeyzVucYgJnv_dTNWVD9x4j_nPD&sz=w800" alt="Trace dans le sable" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1UVP03HQx1I_B3cjH_EcGw_by5rFHxPSC&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1UVP03HQx1I_B3cjH_EcGw_by5rFHxPSC&sz=w800" alt="Partage culturel" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1tdc-_XJ-1_REmjcqLsanFWYBH3cSpmXU&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1tdc-_XJ-1_REmjcqLsanFWYBH3cSpmXU&sz=w800" alt="Col enneigé" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1AEQpf3w8sDni1KIMUMVCcpA2jR_3LToA&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1AEQpf3w8sDni1KIMUMVCcpA2jR_3LToA&sz=w800" alt="Vue sur la vallée" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=12bxE-nIPj4JRosmLW-U9c77NhbRGsOI_&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=12bxE-nIPj4JRosmLW-U9c77NhbRGsOI_&sz=w800" alt="Coucher de soleil doré" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1V4dQM_d5y3JHNRLgSN-l4YZHVqIPdWzv&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1V4dQM_d5y3JHNRLgSN-l4YZHVqIPdWzv&sz=w800" alt="Moment de convivialité" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=170QxRIcKOqgttuBjWsQpzJ3wSKUFAWHk&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=170QxRIcKOqgttuBjWsQpzJ3wSKUFAWHk&sz=w800" alt="Paroi rocheuse" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1GeN_Gs7banvcBN2wi-KOx83Xw632hRx-&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1GeN_Gs7banvcBN2wi-KOx83Xw632hRx-&sz=w800" alt="Gorges de Todra" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1uGrDQmDkpGjV-KM7FF7zYJy-czYFCsK7&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1uGrDQmDkpGjV-KM7FF7zYJy-czYFCsK7&sz=w800" alt="Nuit étoilée" loading="lazy">
-                </div>
-
-                <div class="gallery-item" data-aos="fade-up" data-src="https://drive.google.com/thumbnail?id=1vW9fDYGMTNkkP56Y_Z_JCyXjfqSz4T-p&sz=w2000">
-                    <img src="https://drive.google.com/thumbnail?id=1vW9fDYGMTNkkP56Y_Z_JCyXjfqSz4T-p&sz=w800" alt="Souvenir de voyage" loading="lazy">
-                </div>
-
+                <div class="gallery-dots" id="galleryDots"></div>
             </div>
         </div>
     </section>
@@ -371,30 +334,82 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/zoom/lg-zoom.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/thumbnail/lg-thumbnail.min.js" defer></script>
     <script src="../js/config.js" defer></script>
     <script src="../js/i18n.js" defer></script>
     <script src="../js/security.js" defer></script>
     <script src="../js/main.js" defer></script>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof lightGallery !== 'undefined') {
-                lightGallery(document.getElementById('galleryGrid'), {
-                    selector: '.gallery-item',
-                    plugins: [lgZoom, lgThumbnail],
-                    speed: 500,
-                    download: false,
-                    counter: true,
-                    mode: 'lg-slide',
-                    zoom: true,
-                    thumbnail: true,
-                    animateThumb: true,
-                    showZoomInOutIcons: true,
-                    actualSize: false
-                });
+        // معرض أفقي مع التنقل
+        const galleryTrack = document.getElementById('galleryTrack');
+        const galleryDots = document.getElementById('galleryDots');
+        const slides = galleryTrack.querySelectorAll('.gallery-slide');
+        let currentSlide = 0;
+        
+        // إنشاء النقاط
+        slides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.className = 'gallery-dot';
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            galleryDots.appendChild(dot);
+        });
+        
+        const dots = galleryDots.querySelectorAll('.gallery-dot');
+        
+        function scrollGallery(direction) {
+            const slideWidth = slides[0].offsetWidth + 16; // 16 = gap
+            currentSlide += direction;
+            
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+            
+            galleryTrack.scrollTo({
+                left: currentSlide * slideWidth,
+                behavior: 'smooth'
+            });
+            
+            updateDots();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            const slideWidth = slides[0].offsetWidth + 16;
+            
+            galleryTrack.scrollTo({
+                left: currentSlide * slideWidth,
+                behavior: 'smooth'
+            });
+            
+            updateDots();
+        }
+        
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        // تحديث currentSlide عند التمرير اليدوي
+        galleryTrack.addEventListener('scroll', () => {
+            const slideWidth = slides[0].offsetWidth + 16;
+            currentSlide = Math.round(galleryTrack.scrollLeft / slideWidth);
+            updateDots();
+        });
+        
+        // دعم اللمس للهاتف
+        let touchStartX = 0;
+        
+        galleryTrack.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        
+        galleryTrack.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > 50) {
+                scrollGallery(diff > 0 ? 1 : -1);
             }
         });
     </script>
