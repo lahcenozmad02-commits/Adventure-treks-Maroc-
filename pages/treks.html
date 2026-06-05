@@ -75,13 +75,38 @@
         .trek-detail-image {
             position: relative;
             min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+            overflow: hidden;
         }
         
-        .trek-detail-image img {
+        .trek-detail-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><path fill="rgba(255,255,255,0.05)" d="M0 150 Q50 100 100 150 Q150 200 200 150 Q250 100 300 150 Q350 200 400 150 L400 300 L0 300 Z"/></svg>');
+            background-size: cover;
         }
+        
+        .trek-detail-image i {
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        /* تدرجات */
+        .gradient-toubkal { background: linear-gradient(135deg, #1E3A5F, #2E5A88, #4A90D9, #87CEEB); }
+        .gradient-roses { background: linear-gradient(135deg, #8B2252, #C71585, #E8A0BF, #FADADD); }
+        .gradient-mgoun { background: linear-gradient(135deg, #3E2723, #5D4037, #8B4513, #D2691E); }
+        .gradient-desert { background: linear-gradient(135deg, #E65100, #F57C00, #FFB74D, #FFE0B2); }
+        .gradient-draa { background: linear-gradient(135deg, #004D40, #00695C, #26A69A, #80CBC4); }
+        .gradient-sud { background: linear-gradient(135deg, #4A148C, #6A1B9A, #AB47BC, #CE93D8); }
         
         .trek-detail-body {
             padding: var(--space-6);
@@ -132,7 +157,8 @@
             }
             
             .trek-detail-image {
-                height: 250px;
+                height: 200px;
+                font-size: 3rem;
             }
         }
     </style>
@@ -141,10 +167,7 @@
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <div class="preloader-content">
-            <div class="preloader-logo">
-                <i class="fas fa-mountain"></i>
-                <span>Adventure Treks</span>
-            </div>
+            <div class="preloader-logo"><i class="fas fa-mountain"></i><span>Adventure Treks</span></div>
             <div class="preloader-bar"><div class="preloader-progress"></div></div>
         </div>
     </div>
@@ -152,9 +175,7 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="container">
-            <div class="top-bar-left">
-                <span class="badge-certified"><i class="fas fa-shield-alt"></i> Guide Certifié • 30+ ans</span>
-            </div>
+            <div class="top-bar-left"><span class="badge-certified"><i class="fas fa-shield-alt"></i> Guide Certifié • 30+ ans</span></div>
             <div class="top-bar-right">
                 <div class="language-switcher">
                     <button class="lang-btn active" data-lang="fr">FR</button>
@@ -174,10 +195,7 @@
             <div class="container">
                 <a href="../index.html" class="logo">
                     <div class="logo-icon"><i class="fas fa-mountain-sun"></i></div>
-                    <div class="logo-text">
-                        <span class="logo-title">Adventure Treks</span>
-                        <span class="logo-subtitle">avec Ali</span>
-                    </div>
+                    <div class="logo-text"><span class="logo-title">Adventure Treks</span><span class="logo-subtitle">avec Ali</span></div>
                 </a>
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="../index.html" class="nav-link">Accueil</a></li>
@@ -198,11 +216,7 @@
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <div class="container">
-            <nav class="breadcrumb-nav">
-                <a href="../index.html">Accueil</a>
-                <span class="separator">›</span>
-                <span class="current">Randonnées</span>
-            </nav>
+            <nav class="breadcrumb-nav"><a href="../index.html">Accueil</a><span class="separator">›</span><span class="current">Randonnées</span></nav>
         </div>
     </div>
 
@@ -225,18 +239,15 @@
     <!-- Treks Section -->
     <section class="section" style="padding-top: 0;">
         <div class="container">
+            
             <!-- Trek 1: Toubkal -->
             <div class="trek-detail-card" data-category="short" id="toubkal" data-aos="fade-up">
-                <div class="trek-detail-image">
-                    <img src="https://drive.google.com/thumbnail?id=17j0rL9qOahrMQ1sjIRD1P0mcy8Cgv3pU&sz=w800" alt="Toubkal" loading="lazy">
-                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">4 Jours</span>
+                <div class="trek-detail-image gradient-toubkal">
+                    <i class="fas fa-mountain"></i>
                 </div>
                 <div class="trek-detail-body">
                     <h3>Toubkal Express avec Ali</h3>
-                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
-                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
-                        Haut Atlas - Massif du Toubkal
-                    </p>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> Haut Atlas - Massif du Toubkal</p>
                     <div class="trek-meta">
                         <span class="trek-meta-item"><i class="fas fa-mountain"></i> 4167m</span>
                         <span class="trek-meta-item"><i class="fas fa-clock"></i> 4-5h/jour</span>
@@ -250,26 +261,19 @@
                         <li>✅ Villages traditionnels d'Imlil et Armed</li>
                         <li>✅ Accompagnement personnalisé avec Ali</li>
                     </ul>
-                    <div style="margin-top:auto;">
-                        <a href="booking.html" class="btn btn-primary">
-                            <i class="fab fa-whatsapp"></i> Réserver ce circuit
-                        </a>
-                    </div>
+                    <div style="margin-top:auto;"><span style="background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-size:var(--text-sm);">4 Jours</span></div>
+                    <div style="margin-top:var(--space-4);"><a href="booking.html" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Réserver ce circuit</a></div>
                 </div>
             </div>
 
             <!-- Trek 2: Vallée des Roses -->
             <div class="trek-detail-card" data-category="short" id="vallee-roses" data-aos="fade-up">
-                <div class="trek-detail-image">
-                    <img src="https://drive.google.com/thumbnail?id=1xRX5S_f4Hbg9snrmAoYIxqArNNrallQP&sz=w800" alt="Vallée des Roses" loading="lazy">
-                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">5 Jours</span>
+                <div class="trek-detail-image gradient-roses">
+                    <i class="fas fa-leaf"></i>
                 </div>
                 <div class="trek-detail-body">
                     <h3>Vallée des Roses avec Guide Personnel</h3>
-                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
-                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
-                        Drâa-Tafilalet - Kelaat M'gouna
-                    </p>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> Drâa-Tafilalet - Kelaat M'gouna</p>
                     <div class="trek-meta">
                         <span class="trek-meta-item"><i class="fas fa-clock"></i> 4-5h/jour</span>
                         <span class="trek-meta-item"><i class="fas fa-signal"></i> Facile à Modéré</span>
@@ -282,26 +286,19 @@
                         <li>✅ Rencontre avec la population locale berbère</li>
                         <li>✅ Paysages spectaculaires et kasbahs</li>
                     </ul>
-                    <div style="margin-top:auto;">
-                        <a href="booking.html" class="btn btn-primary">
-                            <i class="fab fa-whatsapp"></i> Réserver ce circuit
-                        </a>
-                    </div>
+                    <div style="margin-top:auto;"><span style="background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-size:var(--text-sm);">5 Jours</span></div>
+                    <div style="margin-top:var(--space-4);"><a href="booking.html" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Réserver ce circuit</a></div>
                 </div>
             </div>
 
             <!-- Trek 3: Mgoun -->
             <div class="trek-detail-card" data-category="medium" id="mgoun" data-aos="fade-up">
-                <div class="trek-detail-image">
-                    <img src="https://drive.google.com/thumbnail?id=1NMvh2owxnkTk00whGR7m1WYzWut65I3S&sz=w800" alt="Mgoun" loading="lazy">
-                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">8 Jours</span>
+                <div class="trek-detail-image gradient-mgoun">
+                    <i class="fas fa-hiking"></i>
                 </div>
                 <div class="trek-detail-body">
                     <h3>Grand Mgoun avec Votre Guide</h3>
-                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
-                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
-                        Massif du Mgoun - Haut Atlas
-                    </p>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> Massif du Mgoun - Haut Atlas</p>
                     <div class="trek-meta">
                         <span class="trek-meta-item"><i class="fas fa-mountain"></i> 4068m</span>
                         <span class="trek-meta-item"><i class="fas fa-clock"></i> 5-6h/jour</span>
@@ -315,26 +312,19 @@
                         <li>✅ Villages berbères authentiques</li>
                         <li>✅ Nuits sous les étoiles en bivouac</li>
                     </ul>
-                    <div style="margin-top:auto;">
-                        <a href="booking.html" class="btn btn-primary">
-                            <i class="fab fa-whatsapp"></i> Réserver ce circuit
-                        </a>
-                    </div>
+                    <div style="margin-top:auto;"><span style="background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-size:var(--text-sm);">8 Jours</span></div>
+                    <div style="margin-top:var(--space-4);"><a href="booking.html" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Réserver ce circuit</a></div>
                 </div>
             </div>
 
             <!-- Trek 4: Atlas & Désert -->
             <div class="trek-detail-card" data-category="medium" id="atlas-desert" data-aos="fade-up">
-                <div class="trek-detail-image">
-                    <img src="https://drive.google.com/thumbnail?id=1mfvWu486bDY5Cl7dQIjY2GLL-ZiHT4rF&sz=w800" alt="Atlas & Désert" loading="lazy">
-                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">10 Jours</span>
+                <div class="trek-detail-image gradient-desert">
+                    <i class="fas fa-sun"></i>
                 </div>
                 <div class="trek-detail-body">
                     <h3>Atlas & Désert avec Guide Personnel</h3>
-                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
-                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
-                        Haut Atlas - Vallée du Drâa - Merzouga
-                    </p>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> Haut Atlas - Vallée du Drâa - Merzouga</p>
                     <div class="trek-meta">
                         <span class="trek-meta-item"><i class="fas fa-clock"></i> 4-6h/jour</span>
                         <span class="trek-meta-item"><i class="fas fa-signal"></i> Modéré</span>
@@ -347,26 +337,19 @@
                         <li>✅ Kasbahs et villages fortifiés</li>
                         <li>✅ Dunes de Merzouga (optionnel)</li>
                     </ul>
-                    <div style="margin-top:auto;">
-                        <a href="booking.html" class="btn btn-primary">
-                            <i class="fab fa-whatsapp"></i> Réserver ce circuit
-                        </a>
-                    </div>
+                    <div style="margin-top:auto;"><span style="background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-size:var(--text-sm);">10 Jours</span></div>
+                    <div style="margin-top:var(--space-4);"><a href="booking.html" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Réserver ce circuit</a></div>
                 </div>
             </div>
 
             <!-- Trek 5: Expédition Drâa -->
             <div class="trek-detail-card" data-category="long" id="expedition-draa" data-aos="fade-up">
-                <div class="trek-detail-image">
-                    <img src="https://drive.google.com/thumbnail?id=1Gzz6GCVzomb5EDBA4M-aFRqrfVr9rmAk&sz=w800" alt="Expédition Drâa" loading="lazy">
-                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">12 Jours</span>
+                <div class="trek-detail-image gradient-draa">
+                    <i class="fas fa-water"></i>
                 </div>
                 <div class="trek-detail-body">
                     <h3>Expédition Drâa avec Votre Guide</h3>
-                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
-                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
-                        Région Complète Drâa-Tafilalet
-                    </p>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> Région Complète Drâa-Tafilalet</p>
                     <div class="trek-meta">
                         <span class="trek-meta-item"><i class="fas fa-mountain"></i> 4068m max</span>
                         <span class="trek-meta-item"><i class="fas fa-clock"></i> 5-6h/jour</span>
@@ -378,48 +361,37 @@
                         <li>✅ 2 nuits désert de Merzouga</li>
                         <li>✅ Oasis de Fint, Zagora et Tazzarine</li>
                         <li>✅ Vallée du Drâa et ses ksours</li>
-                        <li>✅ Visite sites historiques et culturels</li>
                     </ul>
-                    <div style="margin-top:auto;">
-                        <a href="booking.html" class="btn btn-primary">
-                            <i class="fab fa-whatsapp"></i> Demander le programme détaillé
-                        </a>
-                    </div>
+                    <div style="margin-top:auto;"><span style="background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-size:var(--text-sm);">12 Jours</span></div>
+                    <div style="margin-top:var(--space-4);"><a href="booking.html" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Demander le programme</a></div>
                 </div>
             </div>
 
             <!-- Trek 6: Grand Sud -->
             <div class="trek-detail-card" data-category="long" id="grand-sud" data-aos="fade-up">
-                <div class="trek-detail-image">
-                    <img src="https://drive.google.com/thumbnail?id=1VwbEvHSQFA8L2yciQ6lN8zh3oaT6cHPh&sz=w800" alt="Grand Sud" loading="lazy">
-                    <span class="trek-duration" style="position:absolute;top:var(--space-4);right:var(--space-4);background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);">15 Jours</span>
+                <div class="trek-detail-image gradient-sud">
+                    <i class="fas fa-globe-africa"></i>
                 </div>
                 <div class="trek-detail-body">
                     <h3>Grand Sud Marocain avec Guide Personnel</h3>
-                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);">
-                        <i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> 
-                        Drâa-Tafilalet + Extensions
-                    </p>
+                    <p style="color:var(--dark-gray);margin-bottom:var(--space-3);"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> Drâa-Tafilalet + Extensions</p>
                     <div class="trek-meta">
                         <span class="trek-meta-item"><i class="fas fa-clock"></i> 4-6h/jour</span>
                         <span class="trek-meta-item"><i class="fas fa-image"></i> Multi-paysages</span>
                         <span class="trek-meta-item"><i class="fas fa-car"></i> Transport privé</span>
                     </div>
                     <ul class="trek-detail-features">
-                        <li>✅ Circuit complet Drâa-Tafilalet avec votre guide</li>
+                        <li>✅ Circuit complet Drâa-Tafilalet</li>
                         <li>✅ Extension Ouarzazate & Aït Benhaddou</li>
                         <li>✅ Désert de Chegaga optionnel</li>
                         <li>✅ Vallée du Ziz et palmeraies</li>
-                        <li>✅ Rencontres culturelles approfondies</li>
-                        <li>✅ Programme entièrement personnalisable</li>
+                        <li>✅ Programme personnalisable</li>
                     </ul>
-                    <div style="margin-top:auto;">
-                        <a href="booking.html" class="btn btn-primary">
-                            <i class="fab fa-whatsapp"></i> Demander un devis personnalisé
-                        </a>
-                    </div>
+                    <div style="margin-top:auto;"><span style="background:var(--primary);color:white;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-size:var(--text-sm);">15 Jours</span></div>
+                    <div style="margin-top:var(--space-4);"><a href="booking.html" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Demander un devis</a></div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -438,12 +410,7 @@
                 </div>
                 <div class="footer-col">
                     <h4>Liens rapides</h4>
-                    <ul>
-                        <li><a href="guide.html">Votre Guide</a></li>
-                        <li><a href="treks.html">Randonnées</a></li>
-                        <li><a href="gallery.html">Galerie</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
+                    <ul><li><a href="guide.html">Votre Guide</a></li><li><a href="treks.html">Randonnées</a></li><li><a href="gallery.html">Galerie</a></li><li><a href="contact.html">Contact</a></li></ul>
                 </div>
                 <div class="footer-col">
                     <h4>Contact</h4>
@@ -469,12 +436,10 @@
     <script src="../js/main.js" defer></script>
     
     <script>
-        // Filtrage des randonnées
         document.addEventListener('DOMContentLoaded', function() {
             const filterBtns = document.querySelectorAll('.filter-btn');
             const trekCards = document.querySelectorAll('.trek-detail-card');
             
-            // Vérifier si un hash est présent dans l'URL
             const hash = window.location.hash;
             if (hash) {
                 const filter = hash.replace('#', '');
@@ -485,8 +450,6 @@
                 btn.addEventListener('click', function() {
                     const filter = this.dataset.filter;
                     activateFilter(filter);
-                    
-                    // Mettre à jour l'URL
                     if (filter === 'all') {
                         history.pushState(null, null, 'treks.html');
                     } else {
@@ -496,25 +459,15 @@
             });
             
             function activateFilter(filter) {
-                // Mettre à jour les boutons
                 filterBtns.forEach(b => b.classList.remove('active'));
                 const activeBtn = document.querySelector(`[data-filter="${filter}"]`);
                 if (activeBtn) activeBtn.classList.add('active');
                 
-                // Filtrer les cartes
                 trekCards.forEach(card => {
                     if (filter === 'all' || card.dataset.category === filter) {
                         card.style.display = 'grid';
-                        setTimeout(() => {
-                            card.style.opacity = '1';
-                            card.style.transform = 'translateY(0)';
-                        }, 50);
                     } else {
-                        card.style.opacity = '0';
-                        card.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            card.style.display = 'none';
-                        }, 300);
+                        card.style.display = 'none';
                     }
                 });
             }
