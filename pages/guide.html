@@ -445,54 +445,6 @@
     <script src="../js/i18n.js" defer></script>
     <script src="../js/security.js" defer></script>
     <script src="../js/main.js" defer></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // إصلاح أزرار اللغة
-        document.querySelectorAll('.lang-btn').forEach(function(btn) {
-            btn.onclick = function() {
-                var lang = this.getAttribute('data-lang');
-                if (lang === 'en') {
-                    localStorage.setItem('at_lang', 'en');
-                    document.querySelectorAll('[data-i18n]').forEach(function(el) {
-                        var key = el.getAttribute('data-i18n');
-                        if (key === 'nav_home') el.textContent = 'Home';
-                        if (key === 'nav_guide') el.textContent = 'Your Guide';
-                        if (key === 'nav_treks') el.textContent = 'Treks';
-                        if (key === 'nav_gallery') el.textContent = 'Gallery';
-                        if (key === 'nav_reviews') el.textContent = 'Reviews';
-                        if (key === 'nav_contact') el.textContent = 'Contact';
-                        if (key === 'book_now') el.textContent = 'Book Now';
-                        if (key === 'certified_guide') el.textContent = 'Certified Guide • 30+ years';
-                    });
-                    document.querySelectorAll('.lang-btn').forEach(function(b) {
-                        b.classList.toggle('active', b.getAttribute('data-lang') === 'en');
-                    });
-                } else {
-                    localStorage.setItem('at_lang', 'fr');
-                    location.reload();
-                }
-            };
-        });
-        
-        // تطبيق اللغة المحفوظة
-        var savedLang = localStorage.getItem('at_lang');
-        if (savedLang === 'en') {
-            document.querySelectorAll('[data-i18n]').forEach(function(el) {
-                var key = el.getAttribute('data-i18n');
-                if (key === 'nav_home') el.textContent = 'Home';
-                if (key === 'nav_guide') el.textContent = 'Your Guide';
-                if (key === 'nav_treks') el.textContent = 'Treks';
-                if (key === 'nav_gallery') el.textContent = 'Gallery';
-                if (key === 'nav_reviews') el.textContent = 'Reviews';
-                if (key === 'nav_contact') el.textContent = 'Contact';
-                if (key === 'book_now') el.textContent = 'Book Now';
-                if (key === 'certified_guide') el.textContent = 'Certified Guide • 30+ years';
-            });
-            document.querySelectorAll('.lang-btn').forEach(function(b) {
-                b.classList.toggle('active', b.getAttribute('data-lang') === 'en');
-            });
-        }
-    });
-</script>
+    
 </body>
 </html>
