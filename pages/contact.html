@@ -4,558 +4,192 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO -->
-    <title>Contact | Adventure Treks avec Ali</title>
-    <meta name="description" content="Contactez Ali Ouzemmad directement. WhatsApp, email, Instagram. Réponse garantie en moins de 24h. Guide expert Vallée des Roses, Maroc.">
+    <title>Contact | Trek Maroc avec Ali</title>
+    <meta name="description" content="Contactez Ali pour votre trekking et hiking au Maroc. WhatsApp, email, Instagram. Réponse en moins de 24h.">
     
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- CSS Libraries -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/responsive.css">
     
     <style>
-        /* Styles spécifiques à la page contact */
-        .contact-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--space-6);
-            margin-top: var(--space-8);
-        }
-        
-        .contact-option-card {
-            background: var(--white);
-            border: 2px solid var(--light-gray);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8);
-            text-align: center;
-            transition: all var(--transition-base);
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        
-        .contact-option-card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-xl);
-            transform: translateY(-5px);
-        }
-        
-        .contact-option-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto var(--space-4);
-            font-size: var(--text-3xl);
-        }
-        
-        .icon-whatsapp {
-            background: rgba(37, 211, 102, 0.1);
-            color: #25D366;
-        }
-        
-        .icon-email {
-            background: rgba(46, 125, 50, 0.1);
-            color: var(--primary);
-        }
-        
-        .icon-instagram {
-            background: rgba(228, 64, 95, 0.1);
-            color: #E4405F;
-        }
-        
-        .contact-option-card h3 {
-            font-size: var(--text-xl);
-            margin-bottom: var(--space-2);
-        }
-        
-        .contact-option-card .contact-detail {
-            font-size: var(--text-lg);
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: var(--space-2);
-        }
-        
-        .contact-option-card .contact-subtitle {
-            font-size: var(--text-sm);
-            color: var(--dark-gray);
-        }
-        
-        .contact-form-section {
-            background: var(--off-white);
-        }
-        
-        .contact-form-wrapper {
-            max-width: 700px;
-            margin: 0 auto;
-            background: var(--white);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .response-time-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-2);
-            background: rgba(40, 167, 69, 0.1);
-            color: var(--success);
-            padding: var(--space-2) var(--space-4);
-            border-radius: var(--radius-full);
-            font-size: var(--text-sm);
-            font-weight: 600;
-            margin-bottom: var(--space-6);
-        }
-        
-        .map-placeholder {
-            width: 100%;
-            height: 400px;
-            background: var(--light-gray);
-            border-radius: var(--radius-xl);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark-gray);
-            font-size: var(--text-lg);
-        }
+        .contact-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); margin-top: var(--space-8); }
+        .contact-option-card { background: var(--white); border: 2px solid var(--light-gray); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; transition: all var(--transition-base); cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .contact-option-card:hover { border-color: var(--primary); box-shadow: var(--shadow-xl); transform: translateY(-5px); }
+        .contact-option-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-3xl); }
+        .icon-whatsapp { background: rgba(37, 211, 102, 0.1); color: #25D366; }
+        .icon-email { background: rgba(46, 125, 50, 0.1); color: var(--primary); }
+        .icon-instagram { background: rgba(228, 64, 95, 0.1); color: #E4405F; }
+        .contact-option-card h3 { font-size: var(--text-xl); margin-bottom: var(--space-2); }
+        .contact-option-card .contact-detail { font-size: var(--text-lg); font-weight: 600; color: var(--dark); margin-bottom: var(--space-2); }
+        .contact-option-card .contact-subtitle { font-size: var(--text-sm); color: var(--dark-gray); }
+        .contact-form-wrapper { max-width: 700px; margin: 0 auto; background: var(--white); border-radius: var(--radius-xl); padding: var(--space-8); box-shadow: var(--shadow-lg); }
+        .response-time-badge { display: inline-flex; align-items: center; gap: var(--space-2); background: rgba(40, 167, 69, 0.1); color: var(--success); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-6); }
     </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <div class="preloader-logo">
-                <i class="fas fa-mountain"></i>
-                <span>Adventure Treks</span>
-            </div>
-            <div class="preloader-bar">
-                <div class="preloader-progress"></div>
-            </div>
-        </div>
-    </div>
+    <div class="preloader" id="preloader"><div class="preloader-content"><div class="preloader-logo"><i class="fas fa-mountain"></i><span>Trek Maroc</span></div><div class="preloader-bar"><div class="preloader-progress"></div></div></div></div>
 
-    <!-- Top Bar -->
     <div class="top-bar">
         <div class="container">
-            <div class="top-bar-left">
-                <span class="badge-certified">
-                    <i class="fas fa-shield-alt"></i>
-                    <span data-i18n="certified_guide">Guide Certifié • 30+ ans</span>
-                </span>
-            </div>
+            <div class="top-bar-left"><span class="badge-certified"><i class="fas fa-shield-alt"></i> Guide Certifié • +30 ans</span></div>
             <div class="top-bar-right">
-                <div class="language-switcher">
-                    <button class="lang-btn active" data-lang="fr" aria-label="Passer en Français">
-                        <span>FR</span>
-                    </button>
-                    <button class="lang-btn" data-lang="en" aria-label="Switch to English">
-                        <span>EN</span>
-                    </button>
-                </div>
-                <div class="social-mini">
-                    <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://wa.me/212661796117" target="_blank" rel="noopener" aria-label="WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                </div>
+                <div class="language-switcher"><button class="lang-btn active" data-lang="fr">FR</button><button class="lang-btn" data-lang="en">EN</button></div>
+                <div class="social-mini"><a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a><a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></div>
             </div>
         </div>
     </div>
 
-    <!-- Header & Navigation -->
     <header class="header" id="header">
         <nav class="navbar">
             <div class="container">
-                <a href="../index.html" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-mountain-sun"></i>
-                    </div>
-                    <div class="logo-text">
-                        <span class="logo-title">Adventure Treks</span>
-                        <span class="logo-subtitle">avec Ali</span>
-                    </div>
-                </a>
-                
+                <a href="../index.html" class="logo"><div class="logo-icon"><i class="fas fa-mountain-sun"></i></div><div class="logo-text"><span class="logo-title">Trek Maroc</span><span class="logo-subtitle">avec Ali</span></div></a>
                 <ul class="nav-menu" id="navMenu">
-                    <li class="nav-item">
-                        <a href="../index.html" class="nav-link" data-i18n="nav_home">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="guide.html" class="nav-link" data-i18n="nav_guide">Votre Guide</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="treks.html" class="nav-link" data-i18n="nav_treks">Randonnées</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="treks.html#short" data-i18n="nav_short">2-6 Jours</a></li>
-                            <li><a href="treks.html#medium" data-i18n="nav_medium">7-11 Jours</a></li>
-                            <li><a href="treks.html#long" data-i18n="nav_long">12-15 Jours</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Galerie</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="reviews.html" class="nav-link" data-i18n="nav_reviews">Avis</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="contact.html" class="nav-link active" data-i18n="nav_contact">Contact</a>
-                    </li>
+                    <li><a href="../index.html" class="nav-link">Accueil</a></li>
+                    <li><a href="guide.html" class="nav-link">Votre Guide</a></li>
+                    <li><a href="treks.html" class="nav-link">Randonnées</a></li>
+                    <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+                    <li><a href="reviews.html" class="nav-link">Avis</a></li>
+                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
                 </ul>
-                
-                <div class="nav-actions">
-                    <a href="booking.html" class="btn btn-primary btn-sm">
-                        <i class="fab fa-whatsapp"></i>
-                        <span data-i18n="book_now">Réserver</span>
-                    </a>
-                    <button class="hamburger" id="hamburger" aria-label="Menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
+                <div class="nav-actions"><a href="booking.html" class="btn btn-primary btn-sm"><i class="fab fa-whatsapp"></i> Réserver</a><button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div>
             </div>
         </nav>
     </header>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        <div class="container">
-            <nav class="breadcrumb-nav">
-                <a href="../index.html" data-i18n="nav_home">Accueil</a>
-                <span class="separator">›</span>
-                <span class="current" data-i18n="nav_contact">Contact</span>
-            </nav>
-        </div>
-    </div>
+    <div class="breadcrumb"><div class="container"><nav class="breadcrumb-nav"><a href="../index.html">Accueil</a><span class="separator">›</span><span class="current">Contact</span></nav></div></div>
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1 data-i18n="contact_title">Contactez-moi</h1>
-            <p data-i18n="contact_subtitle">Je réponds personnellement à chaque message en moins de 24 heures</p>
-        </div>
-    </section>
+    <section class="page-header"><div class="container"><h1>Contactez-moi</h1><p>Je réponds personnellement à chaque message en moins de 24 heures</p></div></section>
 
-    <!-- Contact Options -->
     <section class="section">
         <div class="container">
             <div class="contact-options">
-                <!-- WhatsApp FR -->
-                <a href="https://wa.me/212661796117?text=Bonjour%20Ali,%20je%20suis%20int%C3%A9ress%C3%A9%20par%20vos%20services%20de%20guide" 
-                   class="contact-option-card" 
-                   target="_blank" 
-                   rel="noopener"
-                   data-aos="fade-up" 
-                   data-aos-delay="100">
-                    <div class="contact-option-icon icon-whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                    </div>
-                    <h3>WhatsApp (Français)</h3>
-                    <p class="contact-detail">+212 661-796117</p>
-                    <p class="contact-subtitle">Cliquez pour ouvrir la conversation</p>
+                <a href="https://wa.me/212661796117?text=Bonjour%20Ali" class="contact-option-card" target="_blank" rel="noopener" data-aos="fade-up" data-aos-delay="100">
+                    <div class="contact-option-icon icon-whatsapp"><i class="fab fa-whatsapp"></i></div>
+                    <h3>WhatsApp (Français)</h3><p class="contact-detail">+212 661-796117</p><p class="contact-subtitle">Cliquez pour ouvrir la conversation</p>
                 </a>
-                
-                <!-- WhatsApp EN -->
-                <a href="https://wa.me/212633652721?text=Hello%20Ali,%20I%20am%20interested%20in%20your%20guide%20services" 
-                   class="contact-option-card" 
-                   target="_blank" 
-                   rel="noopener"
-                   data-aos="fade-up" 
-                   data-aos-delay="200">
-                    <div class="contact-option-icon icon-whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                    </div>
-                    <h3>WhatsApp (English)</h3>
-                    <p class="contact-detail">+212 633-652721</p>
-                    <p class="contact-subtitle">Click to open conversation</p>
+                <a href="https://wa.me/212633652721?text=Hello%20Ali" class="contact-option-card" target="_blank" rel="noopener" data-aos="fade-up" data-aos-delay="200">
+                    <div class="contact-option-icon icon-whatsapp"><i class="fab fa-whatsapp"></i></div>
+                    <h3>WhatsApp (English)</h3><p class="contact-detail">+212 633-652721</p><p class="contact-subtitle">Click to open conversation</p>
                 </a>
-                
-                <!-- Email -->
-                <a href="mailto:aventuretreksmaroc@gmail.com" 
-                   class="contact-option-card"
-                   data-aos="fade-up" 
-                   data-aos-delay="300">
-                    <div class="contact-option-icon icon-email">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3>Email</h3>
-                    <p class="contact-detail">aventuretreksmaroc@gmail.com</p>
-                    <p class="contact-subtitle">Réponse en 24h maximum</p>
+                <a href="mailto:aventuretreksmaroc@gmail.com" class="contact-option-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="contact-option-icon icon-email"><i class="fas fa-envelope"></i></div>
+                    <h3>Email</h3><p class="contact-detail">aventuretreksmaroc@gmail.com</p><p class="contact-subtitle">Réponse en 24h maximum</p>
                 </a>
-                
-                <!-- Instagram -->
-                <a href="https://instagram.com/adventure.treks.maroc" 
-                   class="contact-option-card" 
-                   target="_blank" 
-                   rel="noopener"
-                   data-aos="fade-up" 
-                   data-aos-delay="400">
-                    <div class="contact-option-icon icon-instagram">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                    <h3>Instagram</h3>
-                    <p class="contact-detail">@adventure.treks.maroc</p>
-                    <p class="contact-subtitle">Suivez mes aventures</p>
+                <a href="https://instagram.com/adventure.treks.maroc" class="contact-option-card" target="_blank" rel="noopener" data-aos="fade-up" data-aos-delay="400">
+                    <div class="contact-option-icon icon-instagram"><i class="fab fa-instagram"></i></div>
+                    <h3>Instagram</h3><p class="contact-detail">@adventure.treks.maroc</p><p class="contact-subtitle">Suivez mes aventures</p>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form Section -->
-    <section class="section contact-form-section">
+    <section class="section" style="background: var(--off-white);">
         <div class="container">
             <div class="contact-form-wrapper" data-aos="fade-up">
                 <div class="section-header">
-                    <span class="response-time-badge">
-                        <i class="fas fa-clock"></i>
-                        Réponse en moins de 24h garantie
-                    </span>
+                    <span class="response-time-badge"><i class="fas fa-clock"></i> Réponse en moins de 24h garantie</span>
                     <h2 class="section-title">Envoyez-moi un message</h2>
-                    <p class="section-subtitle">Je vous répondrai personnellement</p>
+                    <p class="section-subtitle">Le message sera envoyé directement sur WhatsApp</p>
                 </div>
                 
-                <form id="contactForm" class="contact-form">
+                <form id="contactForm">
                     <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label" for="contactName">
-                                Votre nom <span class="required">*</span>
-                            </label>
-                            <input type="text" 
-                                   id="contactName" 
-                                   name="name" 
-                                   class="form-input" 
-                                   data-validate="name"
-                                   required 
-                                   placeholder="Votre nom complet">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="contactEmail">
-                                Email <span class="required">*</span>
-                            </label>
-                            <input type="email" 
-                                   id="contactEmail" 
-                                   name="email" 
-                                   class="form-input" 
-                                   required 
-                                   placeholder="votre@email.com">
-                        </div>
+                        <div class="form-group"><label class="form-label">Votre nom <span class="required">*</span></label><input type="text" id="contactName" class="form-input" required placeholder="Votre nom complet"></div>
+                        <div class="form-group"><label class="form-label">Téléphone <span class="required">*</span></label><input type="tel" id="contactPhone" class="form-input" required placeholder="+212 6XX-XXXXXX"></div>
                     </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label" for="contactPhone">
-                                Téléphone
-                            </label>
-                            <input type="tel" 
-                                   id="contactPhone" 
-                                   name="phone" 
-                                   class="form-input" 
-                                   data-validate="phone"
-                                   placeholder="+212 6XX-XXXXXX">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="contactSubject">
-                                Sujet
-                            </label>
-                            <select id="contactSubject" name="subject" class="form-select">
-                                <option value="">Choisir un sujet</option>
-                                <option value="trek">Randonnée / Trek</option>
-                                <option value="custom">Circuit personnalisé</option>
-                                <option value="info">Demande d'information</option>
-                                <option value="other">Autre</option>
-                            </select>
-                        </div>
-                    </div>
+                    <div class="form-group"><label class="form-label">Votre message <span class="required">*</span></label><textarea id="contactMessage" class="form-textarea" rows="5" required placeholder="Décrivez votre projet, vos dates, le nombre de personnes..."></textarea></div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="contactMessage">
-                            Votre message <span class="required">*</span>
-                        </label>
-                        <textarea id="contactMessage" 
-                                  name="message" 
-                                  class="form-textarea" 
-                                  data-validate="message"
-                                  required 
-                                  rows="5" 
-                                  placeholder="Décrivez votre projet, vos dates, le nombre de personnes..."></textarea>
+                        <label class="form-label">Choisir le contact</label>
+                        <div class="form-row">
+                            <label class="trek-select-card" style="flex:1;cursor:pointer;padding:var(--space-3);border:2px solid var(--light-gray);border-radius:var(--radius-lg);text-align:center;" data-phone="212661796117">
+                                <input type="radio" name="whatsappNumber" value="212661796117" style="display:none;" checked>
+                                <strong>🇫🇷 WhatsApp FR</strong>
+                                <p style="font-size:0.8rem;color:var(--dark-gray);">+212 661-796117</p>
+                            </label>
+                            <label class="trek-select-card" style="flex:1;cursor:pointer;padding:var(--space-3);border:2px solid var(--light-gray);border-radius:var(--radius-lg);text-align:center;" data-phone="212633652721">
+                                <input type="radio" name="whatsappNumber" value="212633652721" style="display:none;">
+                                <strong>🇬🇧 WhatsApp EN</strong>
+                                <p style="font-size:0.8rem;color:var(--dark-gray);">+212 633-652721</p>
+                            </label>
+                        </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">
-                        <i class="fas fa-paper-plane"></i>
-                        Envoyer le message
+                    <button type="submit" class="btn btn-primary btn-lg btn-block pulse-animation">
+                        <i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp
                     </button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Location Section -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-badge">Localisation</span>
-                <h2 class="section-title">Où me trouver</h2>
-                <p class="section-subtitle">Basé dans la Vallée des Roses, je guide dans tout le sud marocain</p>
-            </div>
-            
-            <div class="map-placeholder" data-aos="fade-up">
-                <div style="text-align: center;">
-                    <i class="fas fa-map-marker-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: var(--space-4);"></i>
-                    <h3>Vallée des Roses - Ouarzazate</h3>
-                    <p>Maroc</p>
-                    <p style="margin-top: var(--space-4);">
-                        <a href="https://maps.google.com/?q=Vallée+des+Roses+Ouarzazate+Maroc" 
-                           target="_blank" 
-                           rel="noopener"
-                           class="btn btn-outline">
-                            <i class="fas fa-map-marked-alt"></i>
-                            Ouvrir dans Google Maps
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="section cta-section"><div class="container"><div class="cta-card" data-aos="zoom-in"><div class="cta-content"><h2>Prêt pour l'aventure ?</h2><p>Rejoignez-moi pour votre trekking ou hiking au Maroc.</p><div class="cta-buttons"><a href="booking.html" class="btn btn-primary btn-lg pulse-animation"><i class="fab fa-whatsapp"></i> Réserver</a></div></div></div></div></section>
 
-    <!-- FAQ Section -->
-    <section class="section" style="background: var(--off-white);">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-badge">FAQ</span>
-                <h2 class="section-title">Questions fréquentes</h2>
-            </div>
-            
-            <div class="accordion" data-aos="fade-up">
-                <div class="accordion-header">
-                    <span>Quel est le meilleur moment pour une randonnée ?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="accordion-body">
-                    <p>Le printemps (mars à mai) et l'automne (septembre à novembre) sont les périodes idéales. Les températures sont agréables et les paysages sont magnifiques. L'été est possible en altitude, et l'hiver pour les amateurs de neige.</p>
-                </div>
-            </div>
-            
-            <div class="accordion" data-aos="fade-up">
-                <div class="accordion-header">
-                    <span>Comment se passe la réservation ?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="accordion-body">
-                    <p>Contactez-moi via WhatsApp ou le formulaire. Nous discutons de vos envies, je vous propose un itinéraire personnalisé. Un acompte de 30% est demandé pour confirmer, le reste se paie pendant ou après la randonnée.</p>
-                </div>
-            </div>
-            
-            <div class="accordion" data-aos="fade-up">
-                <div class="accordion-header">
-                    <span>Que comprend le prix ?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="accordion-body">
-                    <p>Tout est inclus : mon accompagnement personnel, le transport, l'hébergement (gîtes, bivouacs), tous les repas, l'équipement de camping, les mulets pour porter les bagages. Vous n'avez rien à prévoir de plus.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <i class="fas fa-mountain-sun"></i>
-                        <span>Adventure Treks avec Ali</span>
-                    </div>
-                    <p data-i18n="footer_desc">Votre guide personnel pour des aventures inoubliables dans l'Atlas et le désert marocain.</p>
-                    <div class="footer-social">
-                        <a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://wa.me/212661796117" target="_blank" rel="noopener" aria-label="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="mailto:aventuretreksmaroc@gmail.com" aria-label="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h4 data-i18n="footer_quick_links">Liens rapides</h4>
-                    <ul>
-                        <li><a href="guide.html" data-i18n="nav_guide">Votre Guide</a></li>
-                        <li><a href="treks.html" data-i18n="nav_treks">Randonnées</a></li>
-                        <li><a href="gallery.html" data-i18n="nav_gallery">Galerie</a></li>
-                        <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4 data-i18n="footer_contact">Contact</h4>
-                    <ul class="footer-contact">
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <span>FR: +212 661-796117</span>
-                                <span>EN: +212 633-652721</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>aventuretreksmaroc@gmail.com</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Vallée des Roses, Ouarzazate, Maroc</span>
-                        </li>
-                    </ul>
-                </div>
+                <div class="footer-col"><div class="footer-logo"><i class="fas fa-mountain-sun"></i><span>Trek Maroc avec Ali</span></div><p>Trekking & Hiking au Maroc avec guide expert local.</p><div class="footer-social"><a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a><a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a><a href="mailto:aventuretreksmaroc@gmail.com"><i class="fas fa-envelope"></i></a></div></div>
+                <div class="footer-col"><h4>Liens rapides</h4><ul><li><a href="guide.html">Votre Guide</a></li><li><a href="treks.html">Randonnées</a></li><li><a href="gallery.html">Galerie</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+                <div class="footer-col"><h4>Contact</h4><ul class="footer-contact"><li><i class="fas fa-phone"></i><div><span>FR: +212 661-796117</span><span>EN: +212 633-652721</span></div></li><li><i class="fas fa-envelope"></i><span>aventuretreksmaroc@gmail.com</span></li><li><i class="fas fa-map-marker-alt"></i><span>Vallée des Roses, Ouarzazate, Maroc</span></li></ul></div>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 Adventure Treks avec Ali. Tous droits réservés.</p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2024 Trek Maroc avec Ali. Tous droits réservés.</p></div>
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
-    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-    
     <script src="../js/config.js" defer></script>
     <script src="../js/i18n.js" defer></script>
     <script src="../js/security.js" defer></script>
     <script src="../js/main.js" defer></script>
     
     <script>
-        // Initialisation des accordéons
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', function() {
-                    const accordion = this.parentElement;
-                    accordion.classList.toggle('active');
+        // اختيار رقم الواتساب
+        document.querySelectorAll('.trek-select-card[data-phone]').forEach(card => {
+            card.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // تحديث التنسيق
+                document.querySelectorAll('.trek-select-card[data-phone]').forEach(c => {
+                    c.style.borderColor = 'var(--light-gray)';
+                    c.style.background = 'white';
                 });
+                this.style.borderColor = 'var(--primary)';
+                this.style.background = 'rgba(46, 125, 50, 0.05)';
             });
+        });
+        
+        // إرسال النموذج إلى واتساب
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('contactName').value.trim();
+            const phone = document.getElementById('contactPhone').value.trim();
+            const message = document.getElementById('contactMessage').value.trim();
+            const whatsappNumber = document.querySelector('input[name="whatsappNumber"]:checked').value;
+            
+            if (!name || !phone || !message) {
+                alert('Veuillez remplir tous les champs obligatoires.');
+                return;
+            }
+            
+            // إنشاء رسالة واتساب
+            const whatsappMessage = `Bonjour Ali,%0A%0AJe m'appelle ${name}.%0ATéléphone : ${phone}%0A%0A${message}%0A%0AMerci de me recontacter !`;
+            
+            // فتح واتساب
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+            window.open(whatsappUrl, '_blank');
+            
+            // إعادة تعيين النموذج
+            this.reset();
+            alert('✅ Message envoyé sur WhatsApp ! Ali vous répondra dans les 24h.');
         });
     </script>
 </body>
