@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Avis Clients | Trek Maroc avec Ali</title>
     <meta name="description" content="Avis et témoignages des voyageurs. Laissez votre avis sur votre expérience de trekking et hiking au Maroc avec Ali.">
     
@@ -84,17 +83,12 @@
                                 <div class="form-group"><label class="form-label">Mot de passe *</label><input type="password" id="authPassword" class="form-input" required minlength="6" placeholder="Minimum 6 caractères"></div>
                                 <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i> Créer un compte / Se connecter</button>
                             </form>
-                            <p style="margin-top:var(--space-4);font-size:var(--text-xs);color:var(--dark-gray);">
-                                Si vous avez déjà un compte, il sera automatiquement connecté.
-                            </p>
                         </div>
                         
                         <div id="googleAuth" class="auth-form">
                             <p style="margin-bottom:var(--space-4);color:var(--dark-gray);">Connexion rapide avec Google</p>
                             <button class="btn btn-block" onclick="signInWithGoogle()" style="background:#4285F4;color:white;"><i class="fab fa-google"></i> Se connecter avec Google</button>
-                            <p style="margin-top:var(--space-4);font-size:var(--text-xs);color:var(--dark-gray);">
-                                ⚠️ Si Google ne fonctionne pas, utilisez l'onglet Email.
-                            </p>
+                            <p style="margin-top:var(--space-4);font-size:var(--text-xs);color:var(--dark-gray);">⚠️ Si Google ne fonctionne pas, utilisez l'onglet Email.</p>
                         </div>
                     </div>
                 </div>
@@ -137,7 +131,6 @@
 
     <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-col"><div class="footer-logo"><i class="fas fa-mountain-sun"></i><span>Trek Maroc avec Ali</span></div><p>Trekking & Hiking au Maroc.</p><div class="footer-social"><a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a><a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a><a href="mailto:aventuretreksmaroc@gmail.com"><i class="fas fa-envelope"></i></a></div></div><div class="footer-col"><h4>Liens rapides</h4><ul><li><a href="guide.html">Votre Guide</a></li><li><a href="treks.html">Randonnées</a></li><li><a href="gallery.html">Galerie</a></li><li><a href="contact.html">Contact</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul class="footer-contact"><li><i class="fas fa-phone"></i><div><span>FR: +212 661-796117</span><span>EN: +212 633-652721</span></div></li><li><i class="fas fa-envelope"></i><span>aventuretreksmaroc@gmail.com</span></li><li><i class="fas fa-map-marker-alt"></i><span>Vallée des Roses, Ouarzazate</span></li></ul></div></div><div class="footer-bottom"><p>&copy; 2024 Trek Maroc avec Ali.</p></div></div></footer>
 
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -145,246 +138,174 @@
     <script src="../js/main.js" defer></script>
 
     <script>
-        // FIREBASE INIT
-        const firebaseConfig = {
+        // INIT
+        if (!firebase.apps.length) firebase.initializeApp({
             apiKey: "AIzaSyCgfGwHACxx_SRsjo4qKoOJsUUXxc-b7eE",
             authDomain: "adventure-treks-comments.firebaseapp.com",
             projectId: "adventure-treks-comments",
             storageBucket: "adventure-treks-comments.firebasestorage.app",
             messagingSenderId: "792729535477",
             appId: "1:792729535477:web:17af8772f5da73ff4cd6bc"
-        };
-        
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-        
-        var currentUser = null;
-        var selectedRating = 0;
-        var lastVisible = null;
-        const PAGE_SIZE = 5;
-        
-        // AUTH STATE
-        auth.onAuthStateChanged(function(user) {
-            currentUser = user;
-            updateUI(user);
         });
         
-        function updateUI(user) {
-            document.getElementById('loginSection').style.display = user ? 'none' : 'block';
-            document.getElementById('userInfo').style.display = user ? 'block' : 'none';
-            document.getElementById('reviewFormContainer').style.display = user ? 'block' : 'none';
-            if (user) {
-                document.getElementById('userNameDisplay').textContent = user.displayName || user.email || 'Utilisateur';
-                document.getElementById('userAvatar').textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+        var currentUser = null, selectedRating = 0, lastVisible = null;
+        const PAGE_SIZE = 5;
+        
+        auth.onAuthStateChanged(u => { currentUser = u; updateUI(u); });
+        
+        function updateUI(u) {
+            document.getElementById('loginSection').style.display = u ? 'none' : 'block';
+            document.getElementById('userInfo').style.display = u ? 'block' : 'none';
+            document.getElementById('reviewFormContainer').style.display = u ? 'block' : 'none';
+            if (u) {
+                document.getElementById('userNameDisplay').textContent = u.displayName || u.email || 'Utilisateur';
+                document.getElementById('userAvatar').textContent = (u.displayName || u.email || 'U').charAt(0).toUpperCase();
             }
         }
         
-        function showTab(tab) {
-            document.querySelectorAll('.auth-tab').forEach(function(t) { t.classList.remove('active'); });
-            document.querySelectorAll('.auth-form').forEach(function(f) { f.classList.remove('active'); });
+        function showTab(t) {
+            document.querySelectorAll('.auth-tab').forEach(x => x.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(x => x.classList.remove('active'));
             event.target.classList.add('active');
-            document.getElementById(tab + 'Auth').classList.add('active');
+            document.getElementById(t + 'Auth').classList.add('active');
         }
         
-        // SIGN UP / SIGN IN
         async function signUp(e) {
             e.preventDefault();
-            var name = document.getElementById('authName').value.trim();
-            var email = document.getElementById('authEmail').value.trim();
-            var password = document.getElementById('authPassword').value;
-            
-            if (!name || !email || !password) return alert('Veuillez remplir tous les champs.');
-            if (password.length < 6) return alert('Mot de passe: minimum 6 caractères.');
-            
+            var n = document.getElementById('authName').value.trim();
+            var em = document.getElementById('authEmail').value.trim();
+            var pw = document.getElementById('authPassword').value;
+            if (!n || !em || !pw) return alert('Tous les champs requis.');
+            if (pw.length < 6) return alert('Mot de passe: 6 caractères min.');
             try {
-                try {
-                    var cred = await auth.createUserWithEmailAndPassword(email, password);
-                    await cred.user.updateProfile({ displayName: name });
-                } catch(err) {
-                    if (err.code === 'auth/email-already-in-use') {
-                        await auth.signInWithEmailAndPassword(email, password);
-                    } else {
-                        throw err;
-                    }
-                }
+                try { var c = await auth.createUserWithEmailAndPassword(em, pw); await c.user.updateProfile({displayName:n}); }
+                catch(err) { if (err.code === 'auth/email-already-in-use') await auth.signInWithEmailAndPassword(em, pw); else throw err; }
                 alert('✅ Connecté!');
-            } catch(err) {
-                alert('Erreur: ' + (err.message || 'Connexion échouée'));
-            }
+            } catch(err) { alert('Erreur: ' + err.message); }
         }
         
         async function signInWithGoogle() {
-            try {
-                var provider = new firebase.auth.GoogleAuthProvider();
-                await auth.signInWithPopup(provider);
-                alert('✅ Connecté avec Google!');
-            } catch(err) {
-                if (err.code === 'auth/operation-not-allowed') {
-                    alert('⚠️ Connexion Google non activée.\n\nAllez dans Firebase Console > Authentication > Sign-in method > Activez Google.\n\nUtilisez l\'onglet Email en attendant.');
-                } else {
-                    alert('Erreur: ' + err.message);
-                }
-            }
+            try { await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); alert('✅ Connecté!'); }
+            catch(err) { alert(err.code === 'auth/operation-not-allowed' ? 'Google non activé. Utilisez Email.' : err.message); }
         }
         
-        async function signOut() {
-            await auth.signOut();
-            alert('Déconnecté.');
-        }
+        async function signOut() { await auth.signOut(); alert('Déconnecté.'); }
         
         // STARS
-        (function() {
-            var stars = document.querySelectorAll('#starRating span');
-            stars.forEach(function(star) {
-                star.addEventListener('click', function() {
-                    selectedRating = parseInt(this.dataset.value);
-                    document.getElementById('ratingValue').value = selectedRating;
-                    stars.forEach(function(s, i) { s.classList.toggle('active', i < selectedRating); });
-                });
+        document.querySelectorAll('#starRating span').forEach(s => {
+            s.addEventListener('click', function() {
+                selectedRating = +this.dataset.value;
+                document.getElementById('ratingValue').value = selectedRating;
+                document.querySelectorAll('#starRating span').forEach((x,i) => x.classList.toggle('active', i < selectedRating));
             });
-        })();
+        });
         
-        // SUBMIT REVIEW
         async function submitReview(e) {
             e.preventDefault();
-            if (!currentUser) return alert('Connectez-vous d\'abord.');
-            if (selectedRating === 0) return alert('Sélectionnez une note.');
-            var text = document.getElementById('reviewText').value.trim();
-            if (!text) return alert('Écrivez votre avis.');
+            if (!currentUser) return alert('Connectez-vous.');
+            if (!selectedRating) return alert('Donnez une note.');
+            var t = document.getElementById('reviewText').value.trim();
+            if (!t) return alert('Écrivez votre avis.');
             
-            try {
-                await db.collection('comments').add({
-                    authorName: currentUser.displayName || currentUser.email,
-                    userId: currentUser.uid,
-                    rating: selectedRating,
-                    text: text,
-                    replies: [],
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                document.getElementById('reviewText').value = '';
-                selectedRating = 0;
-                document.getElementById('ratingValue').value = '0';
-                document.querySelectorAll('#starRating span').forEach(function(s) { s.classList.remove('active'); });
-                
-                alert('✅ Avis publié!');
-                lastVisible = null;
-                loadReviews();
-            } catch(err) {
-                alert('Erreur: ' + err.message);
-            }
+            await db.collection('comments').add({
+                authorName: currentUser.displayName || currentUser.email,
+                userId: currentUser.uid,
+                rating: selectedRating,
+                text: t,
+                replies: [],
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            
+            document.getElementById('reviewText').value = '';
+            selectedRating = 0;
+            document.getElementById('ratingValue').value = '0';
+            document.querySelectorAll('#starRating span').forEach(s => s.classList.remove('active'));
+            alert('✅ Avis publié!');
+            lastVisible = null; loadReviews();
         }
         
-        // LOAD REVIEWS
         async function loadReviews() {
-            var container = document.getElementById('reviewsContainer');
-            container.innerHTML = '<div class="empty-reviews"><i class="fas fa-spinner fa-spin"></i><p>Chargement...</p></div>';
-            
+            var c = document.getElementById('reviewsContainer');
+            c.innerHTML = '<div class="empty-reviews"><i class="fas fa-spinner fa-spin"></i><p>Chargement...</p></div>';
             try {
-                var snapshot = await db.collection('comments').orderBy('createdAt', 'desc').limit(PAGE_SIZE).get();
-                
-                if (snapshot.empty) {
-                    container.innerHTML = '<div class="empty-reviews"><i class="fas fa-star-half-alt"></i><p>Soyez le premier à laisser un avis!</p></div>';
-                    document.getElementById('loadMoreContainer').style.display = 'none';
-                    return;
-                }
-                
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                container.innerHTML = '';
-                snapshot.docs.forEach(function(doc) { container.appendChild(createCard(doc)); });
-                
-                document.getElementById('loadMoreContainer').style.display = snapshot.docs.length >= PAGE_SIZE ? 'block' : 'none';
-            } catch(err) {
-                container.innerHTML = '<div class="empty-reviews"><i class="fas fa-exclamation-circle"></i><p>Erreur de chargement.</p></div>';
-            }
+                var s = await db.collection('comments').orderBy('createdAt','desc').limit(PAGE_SIZE).get();
+                if (s.empty) { c.innerHTML = '<div class="empty-reviews"><i class="fas fa-star-half-alt"></i><p>Soyez le premier!</p></div>'; document.getElementById('loadMoreContainer').style.display='none'; return; }
+                lastVisible = s.docs[s.docs.length-1];
+                c.innerHTML = ''; s.docs.forEach(d => c.appendChild(card(d)));
+                document.getElementById('loadMoreContainer').style.display = s.docs.length >= PAGE_SIZE ? 'block' : 'none';
+            } catch(err) { c.innerHTML = '<div class="empty-reviews"><p>Erreur.</p></div>'; }
         }
         
         async function loadMore() {
-            var btn = document.getElementById('loadMoreBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            
-            try {
-                var snapshot = await db.collection('comments').orderBy('createdAt', 'desc').startAfter(lastVisible).limit(PAGE_SIZE).get();
-                if (snapshot.empty) { document.getElementById('loadMoreContainer').style.display = 'none'; return; }
-                
-                lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                snapshot.docs.forEach(function(doc) { document.getElementById('reviewsContainer').appendChild(createCard(doc)); });
-                if (snapshot.docs.length < PAGE_SIZE) document.getElementById('loadMoreContainer').style.display = 'none';
-            } catch(err) {}
-            
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-chevron-down"></i> Charger plus';
+            var b = document.getElementById('loadMoreBtn'); b.disabled = true; b.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            var s = await db.collection('comments').orderBy('createdAt','desc').startAfter(lastVisible).limit(PAGE_SIZE).get();
+            if (s.empty) { document.getElementById('loadMoreContainer').style.display='none'; return; }
+            lastVisible = s.docs[s.docs.length-1];
+            s.docs.forEach(d => document.getElementById('reviewsContainer').appendChild(card(d)));
+            if (s.docs.length < PAGE_SIZE) document.getElementById('loadMoreContainer').style.display='none';
+            b.disabled = false; b.innerHTML = '<i class="fas fa-chevron-down"></i> Charger plus';
         }
         
-        // CREATE REVIEW CARD
-        function createCard(doc) {
-            var r = doc.data();
-            var id = doc.id;
-            var isOwner = currentUser && r.userId === currentUser.uid;
-            var date = r.createdAt ? new Date(r.createdAt.toDate()).toLocaleDateString('fr-FR', {year:'numeric',month:'long',day:'numeric'}) : '';
+        function card(doc) {
+            var r = doc.data(), id = doc.id, isOwner = currentUser && r.userId === currentUser.uid;
+            var date = r.createdAt ? new Date(r.createdAt.toDate()).toLocaleDateString('fr-FR',{year:'numeric',month:'long',day:'numeric'}) : '';
+            var stars = ''; for (var i=0;i<5;i++) stars += i < r.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
             
-            var stars = '';
-            for (var i = 0; i < 5; i++) stars += i < r.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
-            
-            var div = document.createElement('div');
-            div.className = 'review-card';
+            var div = document.createElement('div'); div.className = 'review-card';
             div.innerHTML = 
-                '<div class="review-header">' +
-                    '<div class="review-author"><div class="review-avatar">' + (r.authorName||'A').charAt(0).toUpperCase() + '</div><div><strong>' + (r.authorName||'Anonyme') + '</strong><div class="review-date">' + date + '</div></div></div>' +
-                    '<div class="review-stars">' + stars + ' (' + r.rating + '/5)</div>' +
-                '</div>' +
-                '<p class="review-text">' + r.text.replace(/</g,'&lt;') + '</p>' +
-                (isOwner ? '<div class="review-actions"><button class="btn-edit" onclick="editReview(\'' + id + '\',\'' + r.text.replace(/'/g,"\\'") + '\')"><i class="fas fa-edit"></i> Modifier</button><button class="btn-delete" onclick="deleteReview(\'' + id + '\')"><i class="fas fa-trash"></i> Supprimer</button></div>' : '') +
-                (currentUser && !isOwner ? '<div class="review-actions"><button class="btn-reply" onclick="replyReview(\'' + id + '\')"><i class="fas fa-reply"></i> Répondre</button></div>' : '');
+                '<div class="review-header"><div class="review-author"><div class="review-avatar">'+(r.authorName||'A').charAt(0).toUpperCase()+'</div><div><strong>'+(r.authorName||'Anonyme')+'</strong><div class="review-date">'+date+'</div></div></div><div class="review-stars">'+stars+' ('+r.rating+'/5)</div></div>'+
+                '<p class="review-text">'+r.text.replace(/</g,'&lt;')+'</p>'+
+                (isOwner ? '<div class="review-actions"><button class="btn-edit" onclick="editReview(\''+id+'\',\''+r.text.replace(/'/g,"\\'")+'\')"><i class="fas fa-edit"></i> Modifier</button><button class="btn-delete" onclick="deleteReview(\''+id+'\')"><i class="fas fa-trash"></i> Supprimer</button></div>' : '')+
+                (currentUser && !isOwner ? '<div class="review-actions"><button class="btn-reply" onclick="replyReview(\''+id+'\')"><i class="fas fa-reply"></i> Répondre</button></div>' : '');
             
-            // Réponses
-            if (r.replies && r.replies.length > 0) {
-                r.replies.forEach(function(reply) {
-                    var rep = document.createElement('div');
-                    rep.className = 'reply-card';
-                    rep.innerHTML = '<strong><i class="fas fa-user-check"></i> Ali (Guide)</strong><p style="margin-top:var(--space-2);">' + reply.text.replace(/</g,'&lt;') + '</p><div class="review-date">' + (reply.date||'') + '</div>';
+            if (r.replies && r.replies.length) {
+                r.replies.forEach(rp => {
+                    var rep = document.createElement('div'); rep.className = 'reply-card';
+                    rep.innerHTML = '<strong><i class="fas fa-user-check"></i> Ali (Guide)</strong><p style="margin-top:var(--space-2);">'+rp.text.replace(/</g,'&lt;')+'</p><div class="review-date">'+(rp.date||'')+'</div>';
                     div.appendChild(rep);
                 });
             }
-            
             return div;
         }
         
-        // EDIT
-        async function editReview(id, text) {
-            var t = prompt('Modifier:', text);
-            if (t && t !== text) {
-                await db.collection('comments').doc(id).update({ text: t, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
-                lastVisible = null; loadReviews();
-            }
-        }
+        async function editReview(id, txt) { var t = prompt('Modifier:', txt); if (t && t!==txt) { await db.collection('comments').doc(id).update({text:t, updatedAt:firebase.firestore.FieldValue.serverTimestamp()}); lastVisible=null; loadReviews(); } }
+        async function deleteReview(id) { if (confirm('Supprimer?')) { await db.collection('comments').doc(id).delete(); lastVisible=null; loadReviews(); } }
         
-        // DELETE
-        async function deleteReview(id) {
-            if (confirm('Supprimer?')) {
-                await db.collection('comments').doc(id).delete();
-                lastVisible = null; loadReviews();
-            }
-        }
-        
-        // REPLY (Ali - mot de passe)
         async function replyReview(id) {
             var pw = prompt('Mot de passe guide:');
-            if (pw !== 'trekmaroc2024') return alert('Mot de passe incorrect.');
-            var reply = prompt('Votre réponse:');
-            if (reply) {
+            if (pw !== 'trekmaroc2024') return alert('Incorrect.');
+            var rp = prompt('Votre réponse:');
+            if (rp) {
                 var ref = db.collection('comments').doc(id);
                 var doc = await ref.get();
                 var replies = doc.data().replies || [];
-                replies.push({ text: reply, date: new Date().toLocaleDateString('fr-FR') });
-                await ref.update({ replies: replies });
+                replies.push({text: rp, date: new Date().toLocaleDateString('fr-FR')});
+                await ref.update({replies: replies});
                 lastVisible = null; loadReviews();
             }
         }
         
-        // INIT
+        // AJOUTER AVIS DÉMO (une seule fois)
+        async function addDemos() {
+            var s = await db.collection('comments').limit(1).get();
+            if (!s.empty) return;
+            
+            var demos = [
+                {authorName:"Sophie Martin",userId:"demo1",rating:5,text:"Une expérience inoubliable! Ali est un guide exceptionnel qui connaît chaque recoin de la Vallée des Roses. Les paysages étaient à couper le souffle et l'organisation parfaite. Je recommande à 100%!",createdAt:new Date('2024-11-15'),replies:[{text:"Merci beaucoup Sophie! C'était un plaisir de vous guider dans ma région natale. À bientôt!",date:"15 novembre 2024"}]},
+                {authorName:"Pierre Dubois",userId:"demo2",rating:5,text:"Le trek du Toubkal avec Ali restera gravé dans ma mémoire. Son professionnalisme, sa gentillesse et sa connaissance de la montagne sont remarquables.",createdAt:new Date('2024-10-28'),replies:[{text:"Merci Pierre! J'espère vous revoir pour le Mgoun!",date:"28 octobre 2024"}]},
+                {authorName:"Emma & John",userId:"demo3",rating:5,text:"We did the Atlas & Desert trek and it was absolutely amazing! Ali is not just a guide, he became our friend. The night in Merzouga dunes was magical.",createdAt:new Date('2024-10-10'),replies:[{text:"Thank you! Come back for the Draa expedition!",date:"10 octobre 2024"}]},
+                {authorName:"Marc Lefevre",userId:"demo4",rating:4,text:"Très belle randonnée dans la Vallée des Roses. Ali est un guide passionné qui partage volontiers ses connaissances sur la culture berbère.",createdAt:new Date('2024-09-22'),replies:[{text:"Merci Marc! Au plaisir!",date:"22 septembre 2024"}]},
+                {authorName:"Claire Fontaine",userId:"demo5",rating:5,text:"Ali est tout simplement le meilleur guide que j'ai rencontré au Maroc! 30 ans d'expérience ça se voit. J'ai déjà réservé mon prochain trek avec lui.",createdAt:new Date('2024-09-05'),replies:[{text:"Merci Claire! Le tajine sera prêt 😊",date:"5 septembre 2024"}]},
+                {authorName:"Thomas Schmidt",userId:"demo6",rating:5,text:"Ali ist ein ausgezeichneter Guide! Die Mgoun-Tour war wunderschön. Absolut empfehlenswert!",createdAt:new Date('2024-08-18'),replies:[]},
+                {authorName:"Marie & Paul",userId:"demo7",rating:5,text:"Deuxième trek avec Ali et toujours aussi satisfaits! Les enfants ont adoré!",createdAt:new Date('2024-08-01'),replies:[{text:"Quelle joie de vous revoir! À la prochaine!",date:"1 août 2024"}]}
+            ];
+            
+            for (var d of demos) { d.createdAt = firebase.firestore.Timestamp.fromDate(d.createdAt); await db.collection('comments').add(d); }
+        }
+        
+        addDemos().then(() => { lastVisible = null; loadReviews(); });
         loadReviews();
     </script>
 </body>
