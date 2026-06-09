@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Avis Clients | Trek Maroc avec Ali</title>
-    <meta name="description" content="Découvrez les avis et témoignages des voyageurs qui ont vécu l'expérience Trek Maroc avec Ali. Laissez votre propre avis.">
+    <meta name="description" content="Découvrez les avis et témoignages des voyageurs. Laissez votre propre avis.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,329 +19,192 @@
     
     <style>
         .reviews-container { max-width: 800px; margin: 0 auto; }
-        .review-card { background: var(--white); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-4); box-shadow: var(--shadow-md); border-left: 4px solid var(--primary); transition: all var(--transition-base); }
-        .review-card:hover { box-shadow: var(--shadow-lg); transform: translateX(5px); }
+        .review-card { background: var(--white); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-4); box-shadow: var(--shadow-md); border-left: 4px solid var(--primary); }
         .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-3); }
         .review-author { display: flex; align-items: center; gap: var(--space-3); }
         .review-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: var(--text-xl); }
         .review-author-info h4 { font-size: var(--text-base); margin-bottom: 0; }
         .review-author-info span { font-size: var(--text-xs); color: var(--dark-gray); }
         .review-stars { color: #FFD700; font-size: var(--text-lg); }
-        .review-text { color: var(--dark); line-height: 1.7; font-size: var(--text-base); }
+        .review-text { color: var(--dark); line-height: 1.7; }
         .review-actions { margin-top: var(--space-3); display: flex; gap: var(--space-2); justify-content: flex-end; }
-        .review-actions button { padding: var(--space-1) var(--space-3); border-radius: var(--radius-md); font-size: var(--text-xs); cursor: pointer; transition: all var(--transition-fast); }
-        .btn-edit { background: var(--info); color: var(--white); }
-        .btn-delete { background: var(--danger); color: var(--white); }
+        .review-actions button { padding: var(--space-1) var(--space-3); border-radius: var(--radius-md); font-size: var(--text-xs); cursor: pointer; color: white; border: none; }
+        .btn-edit { background: #17A2B8; }
+        .btn-delete { background: #DC3545; }
         .auth-section { background: var(--white); border-radius: var(--radius-xl); padding: var(--space-8); margin-bottom: var(--space-6); box-shadow: var(--shadow-md); text-align: center; }
         .auth-tabs { display: flex; justify-content: center; gap: var(--space-2); margin-bottom: var(--space-6); }
-        .auth-tab { padding: var(--space-3) var(--space-6); border: 2px solid var(--light-gray); border-radius: var(--radius-full); background: var(--white); font-weight: 600; cursor: pointer; transition: all var(--transition-fast); }
+        .auth-tab { padding: var(--space-3) var(--space-6); border: 2px solid var(--light-gray); border-radius: var(--radius-full); background: var(--white); font-weight: 600; cursor: pointer; }
         .auth-tab.active { border-color: var(--primary); background: var(--primary); color: var(--white); }
         .auth-form { display: none; max-width: 400px; margin: 0 auto; }
         .auth-form.active { display: block; }
         .review-form-container { background: var(--white); border-radius: var(--radius-xl); padding: var(--space-8); margin-bottom: var(--space-6); box-shadow: var(--shadow-md); }
         .star-rating-input { display: flex; gap: var(--space-1); font-size: var(--text-3xl); justify-content: center; margin-bottom: var(--space-4); }
-        .star-rating-input .star { cursor: pointer; color: var(--light-gray); transition: color var(--transition-fast); }
+        .star-rating-input .star { cursor: pointer; color: var(--light-gray); }
         .star-rating-input .star.active, .star-rating-input .star:hover { color: #FFD700; }
         .load-more-container { text-align: center; margin-top: var(--space-6); }
         .empty-reviews { text-align: center; padding: var(--space-12); color: var(--dark-gray); }
-        .empty-reviews i { font-size: 4rem; color: var(--light-gray); margin-bottom: var(--space-4); display: block; }
     </style>
 </head>
 <body>
     <div class="preloader" id="preloader"><div class="preloader-content"><div class="preloader-logo"><i class="fas fa-mountain"></i><span>Trek Maroc</span></div><div class="preloader-bar"><div class="preloader-progress"></div></div></div></div>
-
     <div class="top-bar"><div class="container"><div class="top-bar-left"><span class="badge-certified"><i class="fas fa-shield-alt"></i> Guide Certifié • +30 ans</span></div><div class="top-bar-right"><div class="language-switcher"><button class="lang-btn active" data-lang="fr">FR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="social-mini"><a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a><a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></div></div></div></div>
-
     <header class="header" id="header"><nav class="navbar"><div class="container"><a href="../index.html" class="logo"><div class="logo-icon"><i class="fas fa-mountain-sun"></i></div><div class="logo-text"><span class="logo-title">Trek Maroc</span><span class="logo-subtitle">avec Ali</span></div></a><ul class="nav-menu" id="navMenu"><li><a href="../index.html" class="nav-link">Accueil</a></li><li><a href="guide.html" class="nav-link">Votre Guide</a></li><li><a href="treks.html" class="nav-link">Randonnées</a></li><li><a href="gallery.html" class="nav-link">Galerie</a></li><li><a href="reviews.html" class="nav-link active">Avis</a></li><li><a href="contact.html" class="nav-link">Contact</a></li></ul><div class="nav-actions"><a href="booking.html" class="btn btn-primary btn-sm"><i class="fab fa-whatsapp"></i> Réserver</a><button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></div></nav></header>
-
     <div class="breadcrumb"><div class="container"><nav class="breadcrumb-nav"><a href="../index.html">Accueil</a><span class="separator">›</span><span class="current">Avis</span></nav></div></div>
-
     <section class="page-header"><div class="container"><h1>Avis des voyageurs</h1><p>Découvrez les expériences vécues par nos voyageurs</p></div></section>
 
-    <section class="section" style="padding-top: 0;">
-        <div class="container"><div class="reviews-container">
-            
-            <div class="auth-section" id="authSection" data-aos="fade-up">
-                <div id="userInfo" style="display: none;">
-                    <div style="display: flex; align-items: center; gap: var(--space-3); justify-content: center; margin-bottom: var(--space-4);">
-                        <div class="review-avatar" id="userAvatar" style="width: 40px; height: 40px; font-size: var(--text-base);">U</div>
-                        <div style="text-align: left;"><strong id="userNameDisplay">Utilisateur</strong><div style="font-size: 0.85rem; color: var(--dark-gray);">Connecté</div></div>
-                    </div>
-                    <button class="btn btn-outline btn-sm" onclick="reviewsSystem.signOut()" style="background: var(--danger); color: white; border-color: var(--danger);">Déconnexion</button>
+    <section class="section" style="padding-top: 0;"><div class="container"><div class="reviews-container">
+        
+        <div class="auth-section" id="authSection" data-aos="fade-up">
+            <div id="userInfo" style="display:none;">
+                <div style="display:flex;align-items:center;gap:var(--space-3);justify-content:center;margin-bottom:var(--space-4);">
+                    <div class="review-avatar" id="userAvatar" style="width:40px;height:40px;font-size:var(--text-base);">U</div>
+                    <div style="text-align:left;"><strong id="userNameDisplay"></strong><div style="font-size:.85rem;color:var(--dark-gray);">Connecté</div></div>
                 </div>
-                
-                <div id="loginSection">
-                    <h3 style="margin-bottom: var(--space-4);">Connectez-vous pour laisser un avis</h3>
-                    <div class="auth-tabs">
-                        <button class="auth-tab active" onclick="reviewsSystem.showTab('email')"><i class="fas fa-envelope"></i> Email</button>
-                        <button class="auth-tab" onclick="reviewsSystem.showTab('google')"><i class="fab fa-google"></i> Google</button>
-                    </div>
-                    
-                    <div id="emailAuth" class="auth-form active">
-                        <form id="emailAuthForm">
-                            <div class="form-group"><label class="form-label">Nom complet *</label><input type="text" id="authName" class="form-input" required placeholder="Votre nom"></div>
-                            <div class="form-group"><label class="form-label">Email *</label><input type="email" id="authEmail" class="form-input" required placeholder="votre@email.com"></div>
-                            <div class="form-group"><label class="form-label">Mot de passe *</label><input type="password" id="authPassword" class="form-input" required minlength="6" placeholder="Minimum 6 caractères"></div>
-                            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i> Créer un compte / Se connecter</button>
-                        </form>
-                    </div>
-                    
-                    <div id="googleAuth" class="auth-form">
-                        <p style="margin-bottom: var(--space-4); color: var(--dark-gray);">Connectez-vous rapidement avec votre compte Google</p>
-                        <button class="btn btn-block" onclick="reviewsSystem.signInWithGoogle()" style="background: #4285F4; color: white;"><i class="fab fa-google"></i> Se connecter avec Google</button>
-                        <p style="font-size:12px;color:gray;margin-top:10px;">Si Google ne fonctionne pas, utilisez Email.</p>
-                    </div>
+                <button class="btn btn-outline btn-sm" onclick="signOut()" style="color:var(--danger);border-color:var(--danger);">Déconnexion</button>
+            </div>
+            <div id="loginSection">
+                <h3 style="margin-bottom:var(--space-4);">Connectez-vous pour laisser un avis</h3>
+                <div class="auth-tabs"><button class="auth-tab active" onclick="showTab('email')"><i class="fas fa-envelope"></i> Email</button><button class="auth-tab" onclick="showTab('google')"><i class="fab fa-google"></i> Google</button></div>
+                <div id="emailAuth" class="auth-form active">
+                    <form onsubmit="signUp(event)">
+                        <input type="text" id="authName" class="form-input" required placeholder="Nom" style="margin-bottom:10px;">
+                        <input type="email" id="authEmail" class="form-input" required placeholder="Email" style="margin-bottom:10px;">
+                        <input type="password" id="authPassword" class="form-input" required minlength="6" placeholder="Mot de passe (6+)" style="margin-bottom:10px;">
+                        <button type="submit" class="btn btn-primary btn-block">Créer / Connecter</button>
+                    </form>
+                </div>
+                <div id="googleAuth" class="auth-form">
+                    <button class="btn btn-block" onclick="signInWithGoogle()" style="background:#4285F4;color:white;">Google</button>
                 </div>
             </div>
-            
-            <div class="review-form-container" id="reviewFormContainer" style="display: none;" data-aos="fade-up">
-                <h3 style="text-align: center; margin-bottom: var(--space-6);">Laissez votre avis</h3>
-                <form id="reviewForm">
-                    <div class="form-group" style="text-align: center;">
-                        <label class="form-label">Votre note</label>
-                        <div class="star-rating-input" id="starRating">
-                            <span class="star" data-value="1"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="2"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="3"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="4"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="5"><i class="fas fa-star"></i></span>
-                        </div>
-                        <input type="hidden" id="ratingValue" name="rating" value="0">
-                    </div>
-                    <div class="form-group"><label class="form-label" for="reviewText">Votre expérience avec Ali</label><textarea id="reviewText" class="form-textarea" rows="4" required placeholder="Partagez votre expérience..."></textarea></div>
-                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-paper-plane"></i> Publier votre avis</button>
+        </div>
+        
+        <div id="reviewFormContainer" style="display:none;" data-aos="fade-up">
+            <div class="review-form-container">
+                <h3 style="text-align:center;margin-bottom:var(--space-4);">Laissez votre avis</h3>
+                <form onsubmit="submitReview(event)">
+                    <div class="star-rating-input" id="starRating"><span class="star" data-value="1"><i class="fas fa-star"></i></span><span class="star" data-value="2"><i class="fas fa-star"></i></span><span class="star" data-value="3"><i class="fas fa-star"></i></span><span class="star" data-value="4"><i class="fas fa-star"></i></span><span class="star" data-value="5"><i class="fas fa-star"></i></span></div>
+                    <input type="hidden" id="ratingValue" value="0">
+                    <textarea id="reviewText" class="form-textarea" rows="4" required placeholder="Votre expérience..." style="margin-bottom:10px;"></textarea>
+                    <button type="submit" class="btn btn-primary btn-block">Publier</button>
                 </form>
             </div>
-            
-            <div id="reviewsList" data-aos="fade-up">
-                <h3 style="text-align: center; margin-bottom: var(--space-6);">⭐ Avis des Clients sur Ali</h3>
-                <div id="reviewsContainer"><div class="empty-reviews"><i class="fas fa-star-half-alt"></i><p>Soyez le premier à laisser un avis sur Ali!</p></div></div>
-            </div>
-            
-            <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-                <button class="btn btn-outline" id="loadMoreBtn" onclick="reviewsSystem.loadMore()"><i class="fas fa-chevron-down"></i> Charger plus d'avis</button>
-            </div>
-            
-        </div></div>
-    </section>
+        </div>
+        
+        <h3 style="text-align:center;margin:var(--space-6) 0;">⭐ Avis Clients</h3>
+        <div id="reviewsContainer"><div class="empty-reviews"><p>Chargement...</p></div></div>
+        <div class="load-more-container" id="loadMoreContainer" style="display:none;"><button class="btn btn-outline" id="loadMoreBtn" onclick="loadMore()">Plus d'avis</button></div>
+        
+    </div></div></section>
 
-    <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-col"><div class="footer-logo"><i class="fas fa-mountain-sun"></i><span>Trek Maroc avec Ali</span></div><p>Votre guide personnel pour des aventures inoubliables.</p><div class="footer-social"><a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a><a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a><a href="mailto:aventuretreksmaroc@gmail.com"><i class="fas fa-envelope"></i></a></div></div><div class="footer-col"><h4>Liens rapides</h4><ul><li><a href="guide.html">Votre Guide</a></li><li><a href="treks.html">Randonnées</a></li><li><a href="gallery.html">Galerie</a></li><li><a href="contact.html">Contact</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul class="footer-contact"><li><i class="fas fa-phone"></i><div><span>FR: +212 661-796117</span><span>EN: +212 633-652721</span></div></li><li><i class="fas fa-envelope"></i><span>aventuretreksmaroc@gmail.com</span></li><li><i class="fas fa-map-marker-alt"></i><span>Vallée des Roses, Ouarzazate, Maroc</span></li></ul></div></div><div class="footer-bottom"><p>&copy; 2024 Trek Maroc avec Ali. Tous droits réservés.</p></div></div></footer>
+    <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-col"><div class="footer-logo"><i class="fas fa-mountain-sun"></i><span>Trek Maroc avec Ali</span></div><p>Trekking & Hiking au Maroc.</p><div class="footer-social"><a href="https://instagram.com/adventure.treks.maroc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a><a href="https://wa.me/212661796117" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a><a href="mailto:aventuretreksmaroc@gmail.com"><i class="fas fa-envelope"></i></a></div></div><div class="footer-col"><h4>Liens rapides</h4><ul><li><a href="guide.html">Votre Guide</a></li><li><a href="treks.html">Randonnées</a></li><li><a href="gallery.html">Galerie</a></li><li><a href="contact.html">Contact</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul class="footer-contact"><li><i class="fas fa-phone"></i><div><span>FR: +212 661-796117</span><span>EN: +212 633-652721</span></div></li><li><i class="fas fa-envelope"></i><span>aventuretreksmaroc@gmail.com</span></li><li><i class="fas fa-map-marker-alt"></i><span>Vallée des Roses, Ouarzazate</span></li></ul></div></div><div class="footer-bottom"><p>&copy; 2024 Trek Maroc avec Ali.</p></div></div></footer>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../js/config.js"></script>
-    <script src="../js/security.js"></script>
-    <script src="../js/main.js"></script>
-    
+
     <script>
-        const reviewsSystem = {
-            currentUser: null, selectedRating: 0, lastVisible: null, limit: 5,
-            
-            init: function() {
-                this.initFirebase();
-                this.initStarRating();
-                this.initForms();
-                this.loadReviews();
-                this.setupAuthListener();
-            },
-            
-            initFirebase: function() {
-                try {
-                    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
-                    this.db = firebase.firestore();
-                    this.auth = firebase.auth();
-                } catch(e) {}
-            },
-            
-            setupAuthListener: function() {
-                this.auth.onAuthStateChanged((user) => {
-                    this.currentUser = user;
-                    this.updateAuthUI(user);
-                });
-            },
-            
-            updateAuthUI: function(user) {
-                const loginSection = document.getElementById('loginSection');
-                const userInfo = document.getElementById('userInfo');
-                const reviewFormContainer = document.getElementById('reviewFormContainer');
-                if (user) {
-                    if(loginSection) loginSection.style.display = 'none';
-                    if(userInfo) userInfo.style.display = 'block';
-                    if(reviewFormContainer) reviewFormContainer.style.display = 'block';
-                    document.getElementById('userNameDisplay').textContent = user.displayName || user.email;
-                    document.getElementById('userAvatar').textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
-                } else {
-                    if(loginSection) loginSection.style.display = 'block';
-                    if(userInfo) userInfo.style.display = 'none';
-                    if(reviewFormContainer) reviewFormContainer.style.display = 'none';
-                }
-            },
-            
-            showTab: function(tabName) {
-                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-                event.target.closest('.auth-tab').classList.add('active');
-                document.getElementById(tabName + 'Auth').classList.add('active');
-            },
-            
-            initStarRating: function() {
-                const stars = document.querySelectorAll('#starRating .star');
-                stars.forEach(star => {
-                    star.addEventListener('click', function() {
-                        this.selectedRating = parseInt(this.dataset.value);
-                        document.getElementById('ratingValue').value = this.selectedRating;
-                        stars.forEach(s => s.classList.remove('active'));
-                        stars.forEach(s => { if(parseInt(s.dataset.value) <= this.selectedRating) s.classList.add('active'); });
-                    }.bind(this));
-                });
-            },
-            
-            initForms: function() {
-                document.getElementById('emailAuthForm').addEventListener('submit', function(e) { e.preventDefault(); this.signUpWithEmail(); }.bind(this));
-                document.getElementById('reviewForm').addEventListener('submit', function(e) { e.preventDefault(); this.submitReview(); }.bind(this));
-            },
-            
-            signUpWithEmail: async function() {
-                const name = document.getElementById('authName').value.trim();
-                const email = document.getElementById('authEmail').value.trim();
-                const password = document.getElementById('authPassword').value;
-                if(!name||!email||!password) return alert('Veuillez remplir tous les champs.');
-                if(password.length < 6) return alert('Le mot de passe doit contenir au moins 6 caractères.');
-                try {
-                    try {
-                        const userCredential = await this.auth.createUserWithEmailAndPassword(email, password);
-                        await userCredential.user.updateProfile({ displayName: name });
-                    } catch(error) {
-                        if(error.code === 'auth/email-already-in-use') await this.auth.signInWithEmailAndPassword(email, password);
-                        else throw error;
-                    }
-                    alert('✅ Connecté ! Vous pouvez maintenant laisser un avis.');
-                } catch(error) { alert('Erreur : ' + (error.message || 'Une erreur est survenue')); }
-            },
-            
-            signInWithGoogle: async function() {
-                try {
-                    const provider = new firebase.auth.GoogleAuthProvider();
-                    await this.auth.signInWithPopup(provider);
-                    alert('✅ Connecté avec Google !');
-                } catch(error) { alert('Google non disponible. Utilisez Email.'); }
-            },
-            
-            signOut: async function() { try { await this.auth.signOut(); } catch(e) {} },
-            
-            submitReview: async function() {
-                if(!this.currentUser) return alert('Connectez-vous.');
-                const rating = parseInt(document.getElementById('ratingValue').value);
-                const text = document.getElementById('reviewText').value.trim();
-                if(!rating||rating<1||rating>5) return alert('Sélectionnez une note.');
-                if(!text) return alert('Écrivez votre avis.');
-                try {
-                    await this.db.collection('comments').add({
-                        authorName: this.currentUser.displayName || this.currentUser.email,
-                        authorEmail: this.currentUser.email,
-                        userId: this.currentUser.uid,
-                        rating: rating,
-                        text: text,
-                        replies: [],
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    document.getElementById('reviewForm').reset();
-                    document.getElementById('ratingValue').value = '0';
-                    this.selectedRating = 0;
-                    document.querySelectorAll('#starRating .star').forEach(s => s.classList.remove('active'));
-                    alert('✅ Avis publié !');
-                    this.lastVisible = null;
-                    this.loadReviews();
-                } catch(e) { alert('Erreur lors de la publication.'); }
-            },
-            
-            loadReviews: async function() {
-                const container = document.getElementById('reviewsContainer');
-                container.innerHTML = '<div class="empty-reviews"><i class="fas fa-spinner fa-spin"></i><p>Chargement...</p></div>';
-                try {
-                    let query = this.db.collection('comments').orderBy('createdAt', 'desc').limit(this.limit);
-                    const snapshot = await query.get();
-                    if(snapshot.empty) {
-                        container.innerHTML = '<div class="empty-reviews"><i class="fas fa-star-half-alt"></i><p>Soyez le premier à laisser un avis!</p></div>';
-                        document.getElementById('loadMoreContainer').style.display = 'none';
-                        return;
-                    }
-                    this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                    this.displayReviews(snapshot.docs);
-                    document.getElementById('loadMoreContainer').style.display = snapshot.docs.length >= this.limit ? 'block' : 'none';
-                } catch(e) { container.innerHTML = '<div class="empty-reviews"><i class="fas fa-exclamation-circle"></i><p>Erreur.</p></div>'; }
-            },
-            
-            loadMore: async function() {
-                try {
-                    let query = this.db.collection('comments').orderBy('createdAt', 'desc').startAfter(this.lastVisible).limit(this.limit);
-                    const snapshot = await query.get();
-                    if(snapshot.empty) { document.getElementById('loadMoreContainer').style.display = 'none'; return; }
-                    this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                    this.displayReviews(snapshot.docs, true);
-                    if(snapshot.docs.length < this.limit) document.getElementById('loadMoreContainer').style.display = 'none';
-                } catch(e) {}
-            },
-            
-            displayReviews: function(docs, append = false) {
-                const container = document.getElementById('reviewsContainer');
-                if(!append) container.innerHTML = '';
-                docs.forEach(doc => {
-                    const review = doc.data();
-                    const reviewId = doc.id;
-                    const isOwner = this.currentUser && review.userId === this.currentUser.uid;
-                    const date = review.createdAt ? new Date(review.createdAt.toDate()).toLocaleDateString('fr-FR', {year:'numeric',month:'long',day:'numeric'}) : '';
-                    const starsHtml = Array.from({length:5}, (_, i) => i < review.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>').join('');
-                    const reviewCard = document.createElement('div');
-                    reviewCard.className = 'review-card';
-                    reviewCard.innerHTML = `
-                        <div class="review-header"><div class="review-author"><div class="review-avatar">${(review.authorName||'A').charAt(0).toUpperCase()}</div><div class="review-author-info"><h4>${review.authorName||'Anonyme'}</h4><span>${date}</span></div></div><div class="review-stars">${starsHtml} (${review.rating}/5)</div></div>
-                        <p class="review-text">${review.text}</p>
-                        ${isOwner ? `<div class="review-actions"><button class="btn-edit" onclick="reviewsSystem.editReview('${reviewId}','${review.text.replace(/'/g,"\\'")}')">Modifier</button><button class="btn-delete" onclick="reviewsSystem.deleteReview('${reviewId}')">Supprimer</button></div>` : ''}
-                        ${review.replies && review.replies.length ? review.replies.map(r => `<div style="margin-left:30px;border-left:3px solid orange;padding:10px;margin-top:10px;background:#f9f9f9;border-radius:8px;"><strong>Ali (Guide)</strong><p>${r.text}</p></div>`).join('') : ''}
-                    `;
-                    container.appendChild(reviewCard);
-                });
-            },
-            
-            editReview: async function(reviewId, currentText) {
-                const newText = prompt('Modifier:', currentText);
-                if(newText && newText !== currentText) {
-                    await this.db.collection('comments').doc(reviewId).update({text: newText, updatedAt: firebase.firestore.FieldValue.serverTimestamp()});
-                    this.lastVisible = null; this.loadReviews();
-                }
-            },
-            
-            deleteReview: async function(reviewId) {
-                if(confirm('Supprimer ?')) { await this.db.collection('comments').doc(reviewId).delete(); this.lastVisible = null; this.loadReviews(); }
-            }
-        };
+        // INIT
+        if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+        var db = firebase.firestore();
+        var auth = firebase.auth();
+        var currentUser = null, selectedRating = 0, lastVisible = null;
         
-        // Ajouter des avis de démonstration
-        async function addDemos() {
-            if (!reviewsSystem.db) return;
-            var s = await reviewsSystem.db.collection('comments').limit(1).get();
-            if (!s.empty) return;
-            var demos = [
-                {authorName:"Sophie Martin",userId:"d1",rating:5,text:"Ali est un guide exceptionnel! La Vallée des Roses était magnifique. Je recommande à 100%!",replies:[{text:"Merci Sophie! À bientôt!"}],createdAt:firebase.firestore.Timestamp.fromDate(new Date('2024-11-15'))},
-                {authorName:"Pierre Dubois",userId:"d2",rating:5,text:"Le trek du Toubkal avec Ali restera gravé dans ma mémoire. Professionnalisme et gentillesse.",replies:[],createdAt:firebase.firestore.Timestamp.fromDate(new Date('2024-10-28'))},
-                {authorName:"Emma & John",userId:"d3",rating:5,text:"Amazing trek! Ali is the best guide in Morocco. The desert night was magical.",replies:[{text:"Thank you! Come back soon!"}],createdAt:firebase.firestore.Timestamp.fromDate(new Date('2024-10-10'))},
-                {authorName:"Claire Fontaine",userId:"d4",rating:5,text:"Ali connaît tout! Tajine délicieux et paysages magnifiques.",replies:[],createdAt:firebase.firestore.Timestamp.fromDate(new Date('2024-09-05'))},
-                {authorName:"Marc Lefevre",userId:"d5",rating:4,text:"Très belle expérience dans la Vallée des Roses.",replies:[],createdAt:firebase.firestore.Timestamp.fromDate(new Date('2024-09-22'))}
-            ];
-            for(var d of demos) await reviewsSystem.db.collection('comments').add(d);
+        auth.onAuthStateChanged(function(u) {
+            currentUser = u;
+            document.getElementById('loginSection').style.display = u ? 'none' : 'block';
+            document.getElementById('userInfo').style.display = u ? 'block' : 'none';
+            document.getElementById('reviewFormContainer').style.display = u ? 'block' : 'none';
+            if (u) document.getElementById('userNameDisplay').textContent = u.displayName || u.email;
+        });
+        
+        function showTab(t) {
+            document.querySelectorAll('.auth-tab').forEach(function(x){ x.classList.remove('active'); });
+            document.querySelectorAll('.auth-form').forEach(function(x){ x.classList.remove('active'); });
+            event.target.classList.add('active');
+            document.getElementById(t+'Auth').classList.add('active');
         }
         
-        document.addEventListener('DOMContentLoaded', function() {
-            reviewsSystem.init();
-            setTimeout(function() { addDemos().then(function() { reviewsSystem.lastVisible = null; reviewsSystem.loadReviews(); }); }, 500);
+        async function signUp(e) {
+            e.preventDefault();
+            var n = document.getElementById('authName').value.trim();
+            var em = document.getElementById('authEmail').value.trim();
+            var pw = document.getElementById('authPassword').value;
+            if (!n || !em || !pw) return alert('Tous les champs requis.');
+            try {
+                try { var c = await auth.createUserWithEmailAndPassword(em, pw); await c.user.updateProfile({displayName:n}); }
+                catch(err) { if (err.code === 'auth/email-already-in-use') await auth.signInWithEmailAndPassword(em, pw); else throw err; }
+            } catch(err) { alert('Erreur: '+err.message); }
+        }
+        
+        async function signInWithGoogle() {
+            try { await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
+            catch(err) { alert('Utilisez Email.'); }
+        }
+        
+        async function signOut() { await auth.signOut(); }
+        
+        document.querySelectorAll('#starRating .star').forEach(function(s) {
+            s.addEventListener('click', function() {
+                selectedRating = parseInt(this.dataset.value);
+                document.getElementById('ratingValue').value = selectedRating;
+                document.querySelectorAll('#starRating .star').forEach(function(x,i){ x.classList.toggle('active', i < selectedRating); });
+            });
         });
-// اختبار
-console.log('Script chargé');
-console.log('FIREBASE_CONFIG:', FIREBASE_CONFIG);
-console.log('reviewsSystem:', reviewsSystem);
+        
+        async function submitReview(e) {
+            e.preventDefault();
+            if (!currentUser) return alert('Connectez-vous.');
+            if (!selectedRating) return alert('Note requise.');
+            var t = document.getElementById('reviewText').value.trim();
+            if (!t) return alert('Écrivez votre avis.');
+            await db.collection('comments').add({authorName:currentUser.displayName||currentUser.email,userId:currentUser.uid,rating:selectedRating,text:t,replies:[],createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+            document.getElementById('reviewText').value = '';
+            selectedRating = 0;
+            document.getElementById('ratingValue').value = '0';
+            document.querySelectorAll('#starRating .star').forEach(function(x){ x.classList.remove('active'); });
+            lastVisible = null; loadReviews();
+        }
+        
+        async function loadReviews() {
+            var c = document.getElementById('reviewsContainer');
+            c.innerHTML = '<p style="text-align:center;">Chargement...</p>';
+            try {
+                var s = await db.collection('comments').orderBy('createdAt','desc').limit(5).get();
+                if (s.empty) { c.innerHTML = '<p style="text-align:center;">⭐ Aucun avis.</p>'; return; }
+                lastVisible = s.docs[s.docs.length-1];
+                c.innerHTML = '';
+                s.docs.forEach(function(doc){ c.appendChild(card(doc)); });
+                document.getElementById('loadMoreContainer').style.display = s.docs.length >= 5 ? 'block' : 'none';
+            } catch(err) { c.innerHTML = '<p style="text-align:center;">Erreur: '+err.message+'</p>'; }
+        }
+        
+        async function loadMore() {
+            var s = await db.collection('comments').orderBy('createdAt','desc').startAfter(lastVisible).limit(5).get();
+            if (s.empty) { document.getElementById('loadMoreContainer').style.display='none'; return; }
+            lastVisible = s.docs[s.docs.length-1];
+            s.docs.forEach(function(doc){ document.getElementById('reviewsContainer').appendChild(card(doc)); });
+            if (s.docs.length < 5) document.getElementById('loadMoreContainer').style.display='none';
+        }
+        
+        function card(doc) {
+            var r = doc.data(), id = doc.id;
+            var isOwner = currentUser && r.userId === currentUser.uid;
+            var date = r.createdAt ? new Date(r.createdAt.toDate()).toLocaleDateString('fr-FR',{year:'numeric',month:'long',day:'numeric'}) : '';
+            var stars = ''; for (var i=0;i<5;i++) stars += i < r.rating ? '★' : '☆';
+            
+            var div = document.createElement('div');
+            div.className = 'review-card';
+            div.innerHTML = '<div class="review-header"><div class="review-author"><div class="review-avatar">'+(r.authorName||'A').charAt(0).toUpperCase()+'</div><div><strong>'+(r.authorName||'Anonyme')+'</strong><div style="font-size:12px;color:gray;">'+date+'</div></div></div><div class="review-stars">'+stars+' ('+r.rating+'/5)</div></div><p class="review-text">'+r.text.replace(/</g,'&lt;')+'</p>'+(isOwner?'<div class="review-actions"><button class="btn-edit" onclick="editR(\''+id+'\',\''+r.text.replace(/'/g,"\\'")+'\')">Modifier</button><button class="btn-delete" onclick="delR(\''+id+'\')">Supprimer</button></div>':'');
+            return div;
+        }
+        
+        async function editR(id, txt) { var t = prompt('Modifier:', txt); if (t && t !== txt) { await db.collection('comments').doc(id).update({text:t}); lastVisible = null; loadReviews(); } }
+        async function delR(id) { if (confirm('Supprimer?')) { await db.collection('comments').doc(id).delete(); lastVisible = null; loadReviews(); } }
+        
+        loadReviews();
     </script>
 </body>
 </html>
