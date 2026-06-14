@@ -1,7 +1,7 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Garder tout le HEAD identique -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -25,68 +25,6 @@
     <link rel="stylesheet" href="../css/responsive.css">
     
     <style>
-        /* Ajout pour les messages d'erreur */
-        .error-message {
-            background: #fee2e2;
-            border: 1px solid #ef4444;
-            color: #991b1b;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            display: none;
-            font-size: 0.9rem;
-            animation: slideDown 0.3s ease;
-        }
-        
-        .error-message.show {
-            display: block;
-        }
-        
-        .success-message {
-            background: #dcfce7;
-            border: 1px solid #22c55e;
-            color: #166534;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            display: none;
-            font-size: 0.9rem;
-            animation: slideDown 0.3s ease;
-        }
-        
-        .success-message.show {
-            display: block;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .btn-forgot {
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            font-size: 0.85rem;
-            text-decoration: underline;
-            padding: 8px 0;
-            display: block;
-            text-align: center;
-            width: 100%;
-        }
-        
-        .btn-forgot:hover {
-            color: var(--primary-dark);
-        }
-        
-        /* Le reste du style reste identique */
         .reviews-container {
             max-width: 800px;
             margin: 0 auto;
@@ -268,7 +206,6 @@
     </style>
 </head>
 <body>
-    <!-- Tout le HTML reste identique jusqu'à la section auth -->
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <div class="preloader-content">
@@ -345,32 +282,20 @@
         </div>
     </section>
 
-    <!-- Reviews Section - MODIFIÉ avec ajout de messages d'erreur/succès -->
+    <!-- Reviews Section -->
     <section class="section" style="padding-top: 0;">
         <div class="container">
             <div class="reviews-container">
                 <!-- Section Authentification -->
                 <div class="auth-section" id="authSection" data-aos="fade-up">
-                    <!-- Messages -->
-                    <div class="error-message" id="authError"></div>
-                    <div class="success-message" id="authSuccess"></div>
-                    
                     <!-- Utilisateur connecté -->
                     <div id="userInfo" style="display: none;">
                         <div style="display: flex; align-items: center; gap: var(--space-3); justify-content: center; margin-bottom: var(--space-4);">
                             <div class="review-avatar" id="userAvatar" style="width: 40px; height: 40px; font-size: var(--text-base);">U</div>
                             <div style="text-align: left;">
                                 <strong id="userNameDisplay">Utilisateur</strong>
-                                <div style="font-size: 0.85rem; color: var(--dark-gray);" id="userStatusText">Connecté</div>
+                                <div style="font-size: 0.85rem; color: var(--dark-gray);">Connecté</div>
                             </div>
-                        </div>
-                        <div id="emailVerificationWarning" style="display: none; margin-bottom: 12px;">
-                            <p style="color: #f59e0b; font-size: 0.85rem; margin-bottom: 8px;">
-                                ⚠️ Votre email n'est pas vérifié. 
-                                <button class="btn-forgot" onclick="reviewsSystem.sendVerificationEmail()" style="display: inline; width: auto; padding: 0;">
-                                    Renvoyer l'email de vérification
-                                </button>
-                            </p>
                         </div>
                         <button class="btn btn-outline btn-sm" onclick="reviewsSystem.signOut()" style="background: var(--danger); color: white; border-color: var(--danger);">
                             <i class="fas fa-sign-out-alt"></i> Déconnexion
@@ -407,9 +332,6 @@
                                 <button type="submit" class="btn btn-primary btn-block">
                                     <i class="fas fa-user-plus"></i> Créer un compte / Se connecter
                                 </button>
-                                <button type="button" class="btn-forgot" onclick="reviewsSystem.resetPassword()">
-                                    Mot de passe oublié ?
-                                </button>
                             </form>
                         </div>
                         
@@ -426,8 +348,6 @@
                 <!-- Formulaire d'avis -->
                 <div class="review-form-container" id="reviewFormContainer" style="display: none;" data-aos="fade-up">
                     <h3 style="text-align: center; margin-bottom: var(--space-6);" data-i18n="leave_review">Laissez votre avis</h3>
-                    <div class="error-message" id="reviewError"></div>
-                    <div class="success-message" id="reviewSuccess"></div>
                     <form id="reviewForm">
                         <div class="form-group" style="text-align: center;">
                             <label class="form-label" data-i18n="your_rating">Votre note</label>
@@ -474,7 +394,7 @@
         </div>
     </section>
 
-    <!-- Footer - IDENTIQUE -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -521,7 +441,7 @@
     
     <script>
         // ============================================
-        // SYSTÈME D'AVIS - CORRIGÉ
+        // SYSTÈME D'AVIS
         // ============================================
         const reviewsSystem = {
             currentUser: null,
@@ -544,18 +464,8 @@
                     }
                     this.db = firebase.firestore();
                     this.auth = firebase.auth();
-                    
-                    // Activer la persistance pour une meilleure expérience mobile
-                    this.db.enablePersistence().catch((err) => {
-                        if (err.code === 'failed-precondition') {
-                            console.warn('Persistence failed: multiple tabs open');
-                        } else if (err.code === 'unimplemented') {
-                            console.warn('Persistence not supported in this browser');
-                        }
-                    });
                 } catch (e) {
                     console.error('Firebase init error:', e);
-                    this.showError('Erreur d\'initialisation. Veuillez rafraîchir la page.');
                 }
             },
             
@@ -563,13 +473,6 @@
                 this.auth.onAuthStateChanged((user) => {
                     this.currentUser = user;
                     this.updateAuthUI(user);
-                    
-                    // Vérifier si l'utilisateur Google a besoin de mettre à jour son profil
-                    if (user && !user.displayName && user.providerData[0]?.providerId === 'google.com') {
-                        // Essayer de récupérer le nom depuis Google
-                        const googleName = user.providerData[0]?.displayName || 'Utilisateur Google';
-                        user.updateProfile({ displayName: googleName }).catch(() => {});
-                    }
                 });
             },
             
@@ -577,30 +480,13 @@
                 const loginSection = document.getElementById('loginSection');
                 const userInfo = document.getElementById('userInfo');
                 const reviewFormContainer = document.getElementById('reviewFormContainer');
-                const emailVerificationWarning = document.getElementById('emailVerificationWarning');
                 
                 if (user) {
                     if (loginSection) loginSection.style.display = 'none';
                     if (userInfo) userInfo.style.display = 'block';
+                    if (reviewFormContainer) reviewFormContainer.style.display = 'block';
                     
-                    // Vérifier si l'email est vérifié
-                    if (user.emailVerified) {
-                        if (reviewFormContainer) reviewFormContainer.style.display = 'block';
-                        if (emailVerificationWarning) emailVerificationWarning.style.display = 'none';
-                        document.getElementById('userStatusText').textContent = 'Connecté ✓';
-                    } else {
-                        // Pour Google Auth, l'email est automatiquement vérifié
-                        if (user.providerData[0]?.providerId === 'google.com') {
-                            if (reviewFormContainer) reviewFormContainer.style.display = 'block';
-                            if (emailVerificationWarning) emailVerificationWarning.style.display = 'none';
-                        } else {
-                            if (reviewFormContainer) reviewFormContainer.style.display = 'none';
-                            if (emailVerificationWarning) emailVerificationWarning.style.display = 'block';
-                            document.getElementById('userStatusText').textContent = 'Email non vérifié ⚠️';
-                        }
-                    }
-                    
-                    document.getElementById('userNameDisplay').textContent = user.displayName || user.email || 'Utilisateur';
+                    document.getElementById('userNameDisplay').textContent = user.displayName || user.email;
                     document.getElementById('userAvatar').textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
                 } else {
                     if (loginSection) loginSection.style.display = 'block';
@@ -615,33 +501,6 @@
                 
                 event.target.closest('.auth-tab').classList.add('active');
                 document.getElementById(tabName + 'Auth').classList.add('active');
-                
-                // Cacher les messages d'erreur
-                this.hideMessages();
-            },
-            
-            showError: function(message, target = 'authError') {
-                const el = document.getElementById(target);
-                if (el) {
-                    el.textContent = message;
-                    el.classList.add('show');
-                    setTimeout(() => el.classList.remove('show'), 5000);
-                }
-            },
-            
-            showSuccess: function(message, target = 'authSuccess') {
-                const el = document.getElementById(target);
-                if (el) {
-                    el.textContent = message;
-                    el.classList.add('show');
-                    setTimeout(() => el.classList.remove('show'), 5000);
-                }
-            },
-            
-            hideMessages: function() {
-                document.querySelectorAll('.error-message, .success-message').forEach(el => {
-                    el.classList.remove('show');
-                });
             },
             
             initStarRating: function() {
@@ -682,11 +541,13 @@
             },
             
             initForms: function() {
+                // Formulaire d'inscription email
                 document.getElementById('emailAuthForm').addEventListener('submit', function(e) {
                     e.preventDefault();
                     this.signUpWithEmail();
                 }.bind(this));
                 
+                // Formulaire d'avis
                 document.getElementById('reviewForm').addEventListener('submit', function(e) {
                     e.preventDefault();
                     this.submitReview();
@@ -694,182 +555,63 @@
             },
             
             signUpWithEmail: async function() {
-                this.hideMessages();
                 const name = document.getElementById('authName').value.trim();
                 const email = document.getElementById('authEmail').value.trim();
                 const password = document.getElementById('authPassword').value;
                 
                 if (!name || !email || !password) {
-                    this.showError('Veuillez remplir tous les champs.');
-                    return;
-                }
-                
-                if (name.length < 2) {
-                    this.showError('Le nom doit contenir au moins 2 caractères.');
+                    alert('Veuillez remplir tous les champs.');
                     return;
                 }
                 
                 if (password.length < 6) {
-                    this.showError('Le mot de passe doit contenir au moins 6 caractères.');
+                    alert('Le mot de passe doit contenir au moins 6 caractères.');
                     return;
                 }
                 
-                const submitBtn = document.querySelector('#emailAuthForm button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
-                
                 try {
+                    // Essayer de créer un compte
                     try {
                         const userCredential = await this.auth.createUserWithEmailAndPassword(email, password);
                         await userCredential.user.updateProfile({ displayName: name });
-                        
-                        // Envoyer l'email de vérification
-                        await userCredential.user.sendEmailVerification();
-                        this.showSuccess('✅ Compte créé ! Un email de vérification vous a été envoyé. Veuillez vérifier votre email avant de publier un avis.');
                     } catch (error) {
+                        // Si le compte existe déjà, essayer de se connecter
                         if (error.code === 'auth/email-already-in-use') {
                             await this.auth.signInWithEmailAndPassword(email, password);
-                            this.showSuccess('✅ Connecté avec succès !');
                         } else {
                             throw error;
                         }
                     }
+                    alert('✅ Vous êtes connecté ! Vous pouvez maintenant laisser un avis.');
                 } catch (error) {
                     console.error('Auth error:', error);
-                    let errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
-                    
-                    switch (error.code) {
-                        case 'auth/invalid-email':
-                            errorMessage = 'L\'adresse email n\'est pas valide.';
-                            break;
-                        case 'auth/weak-password':
-                            errorMessage = 'Le mot de passe est trop faible. Minimum 6 caractères.';
-                            break;
-                        case 'auth/user-not-found':
-                            errorMessage = 'Aucun compte trouvé avec cet email.';
-                            break;
-                        case 'auth/wrong-password':
-                            errorMessage = 'Mot de passe incorrect.';
-                            break;
-                    }
-                    
-                    this.showError(errorMessage);
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
+                    alert('Erreur : ' + (error.message || 'Une erreur est survenue'));
                 }
             },
             
             signInWithGoogle: async function() {
-                this.hideMessages();
-                const provider = new firebase.auth.GoogleAuthProvider();
-                provider.setCustomParameters({
-                    prompt: 'select_account'
-                });
-                
                 try {
-                    // Détection mobile pour utiliser redirect
-                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                    
-                    if (isMobile) {
-                        await this.auth.signInWithRedirect(provider);
-                        // Le résultat sera géré par getRedirectResult dans setupAuthListener
-                    } else {
-                        await this.auth.signInWithPopup(provider);
-                        this.showSuccess('✅ Connecté avec Google !');
-                    }
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    await this.auth.signInWithPopup(provider);
+                    alert('✅ Connecté avec Google !');
                 } catch (error) {
                     console.error('Google sign-in error:', error);
-                    
-                    if (error.code === 'auth/popup-blocked') {
-                        this.showError('Le popup a été bloqué. Veuillez autoriser les popups pour ce site, puis réessayer.');
-                        // Fallback: essayer avec redirect
-                        try {
-                            await this.auth.signInWithRedirect(provider);
-                        } catch (redirectError) {
-                            this.showError('Erreur de connexion. Veuillez réessayer.');
-                        }
-                    } else if (error.code === 'auth/popup-closed-by-user') {
-                        this.showError('Connexion annulée. Veuillez réessayer.');
-                    } else if (error.code === 'auth/unauthorized-domain') {
-                        this.showError('Ce domaine n\'est pas autorisé. Contactez l\'administrateur.');
-                    } else if (error.code === 'auth/operation-not-allowed') {
-                        this.showError('La connexion Google n\'est pas activée. Contactez l\'administrateur.');
-                    } else {
-                        this.showError('Erreur de connexion Google : ' + (error.message || 'Erreur inconnue'));
-                    }
-                }
-            },
-            
-            // Gérer le résultat de la redirection
-            getRedirectResult: async function() {
-                try {
-                    const result = await this.auth.getRedirectResult();
-                    if (result.user) {
-                        this.showSuccess('✅ Connecté avec Google !');
-                    }
-                } catch (error) {
-                    console.error('Redirect result error:', error);
-                    if (error.code !== 'auth/account-exists-with-different-credential') {
-                        this.showError('Erreur de connexion. Veuillez réessayer.');
-                    }
-                }
-            },
-            
-            sendVerificationEmail: async function() {
-                try {
-                    if (this.currentUser) {
-                        await this.currentUser.sendEmailVerification();
-                        this.showSuccess('✅ Email de vérification envoyé ! Vérifiez votre boîte de réception.');
-                    }
-                } catch (error) {
-                    this.showError('Erreur lors de l\'envoi de l\'email de vérification.');
-                }
-            },
-            
-            resetPassword: async function() {
-                const email = document.getElementById('authEmail').value.trim();
-                
-                if (!email) {
-                    this.showError('Veuillez entrer votre adresse email dans le champ Email ci-dessus.');
-                    return;
-                }
-                
-                try {
-                    await this.auth.sendPasswordResetEmail(email);
-                    this.showSuccess('✅ Email de réinitialisation envoyé ! Vérifiez votre boîte de réception.');
-                } catch (error) {
-                    let errorMessage = 'Erreur lors de l\'envoi de l\'email.';
-                    if (error.code === 'auth/user-not-found') {
-                        errorMessage = 'Aucun compte trouvé avec cet email.';
-                    } else if (error.code === 'auth/invalid-email') {
-                        errorMessage = 'L\'adresse email n\'est pas valide.';
-                    }
-                    this.showError(errorMessage);
+                    alert('Erreur de connexion Google : ' + error.message);
                 }
             },
             
             signOut: async function() {
                 try {
                     await this.auth.signOut();
-                    this.showSuccess('Vous êtes déconnecté.');
+                    alert('Vous êtes déconnecté.');
                 } catch (error) {
                     console.error('Sign out error:', error);
                 }
             },
             
             submitReview: async function() {
-                this.hideMessages();
-                
                 if (!this.currentUser) {
-                    this.showError('Veuillez vous connecter d\'abord.', 'reviewError');
-                    return;
-                }
-                
-                // Vérifier email vérifié (sauf pour Google)
-                if (!this.currentUser.emailVerified && this.currentUser.providerData[0]?.providerId !== 'google.com') {
-                    this.showError('Veuillez vérifier votre adresse email avant de publier un avis.', 'reviewError');
+                    alert('Veuillez vous connecter d\'abord.');
                     return;
                 }
                 
@@ -877,63 +619,41 @@
                 const text = document.getElementById('reviewText').value.trim();
                 
                 if (!rating || rating < 1 || rating > 5) {
-                    this.showError('Veuillez sélectionner une note.', 'reviewError');
+                    alert('Veuillez sélectionner une note.');
                     return;
                 }
                 
-                if (!text || text.length < 10) {
-                    this.showError('Votre avis doit contenir au moins 10 caractères.', 'reviewError');
+                if (!text) {
+                    alert('Veuillez écrire votre avis.');
                     return;
                 }
-                
-                if (text.length > 1000) {
-                    this.showError('Votre avis ne doit pas dépasser 1000 caractères.', 'reviewError');
-                    return;
-                }
-                
-                const submitBtn = document.querySelector('#reviewForm button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publication...';
                 
                 try {
-                    // Vérifier si l'utilisateur a déjà publié un avis
-                    const existingReviews = await this.db.collection('comments')
-                        .where('userId', '==', this.currentUser.uid)
-                        .get();
-                    
-                    if (!existingReviews.empty) {
-                        this.showError('Vous avez déjà publié un avis. Vous pouvez modifier votre avis existant.', 'reviewError');
-                        return;
-                    }
-                    
                     const reviewData = {
                         authorName: this.currentUser.displayName || this.currentUser.email,
                         authorEmail: this.currentUser.email,
                         userId: this.currentUser.uid,
                         rating: rating,
                         text: Security.sanitizeInput(text),
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        updatedAt: null
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     };
                     
                     await this.db.collection('comments').add(reviewData);
                     
+                    // Réinitialiser
                     document.getElementById('reviewForm').reset();
                     document.getElementById('ratingValue').value = '0';
                     this.selectedRating = 0;
                     document.querySelectorAll('#starRating .star').forEach(s => s.classList.remove('active'));
                     
-                    this.showSuccess('✅ Merci pour votre avis ! Il a été publié avec succès.', 'reviewSuccess');
+                    alert('✅ Merci pour votre avis ! Il a été publié avec succès.');
                     
+                    // Recharger les avis
                     this.lastVisible = null;
                     this.loadReviews();
                 } catch (error) {
                     console.error('Submit review error:', error);
-                    this.showError('Erreur lors de la publication. Veuillez réessayer.', 'reviewError');
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
+                    alert('Erreur lors de la publication de votre avis.');
                 }
             },
             
@@ -962,6 +682,7 @@
                     this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
                     this.displayReviews(snapshot.docs);
                     
+                    // Afficher/masquer le bouton "Charger plus"
                     if (snapshot.docs.length >= this.limit) {
                         document.getElementById('loadMoreContainer').style.display = 'block';
                     } else {
@@ -1039,7 +760,7 @@
                                 <div class="review-avatar">${(review.authorName || 'A').charAt(0).toUpperCase()}</div>
                                 <div class="review-author-info">
                                     <h4>${Security.sanitizeInput(review.authorName || 'Anonyme')}</h4>
-                                    <span>${date}${review.updatedAt ? ' (modifié)' : ''}</span>
+                                    <span>${date}</span>
                                 </div>
                             </div>
                             <div class="review-stars">${starsHtml} <span style="color:var(--dark-gray);font-size:0.85rem;">(${review.rating}/5)</span></div>
@@ -1047,7 +768,7 @@
                         <p class="review-text">${Security.sanitizeInput(review.text)}</p>
                         ${isOwner ? `
                             <div class="review-actions">
-                                <button class="btn-edit" onclick="reviewsSystem.editReview('${reviewId}', '${Security.sanitizeInput(review.text).replace(/'/g, "\\'")}')">
+                                <button class="btn-edit" onclick="reviewsSystem.editReview('${reviewId}', '${review.text.replace(/'/g, "\\'")}')">
                                     <i class="fas fa-edit"></i> Modifier
                                 </button>
                                 <button class="btn-delete" onclick="reviewsSystem.deleteReview('${reviewId}')">
@@ -1060,65 +781,40 @@
                     container.appendChild(reviewCard);
                 });
                 
+                // Réinitialiser AOS pour les nouveaux éléments
                 if (typeof AOS !== 'undefined') {
                     AOS.refresh();
                 }
             },
             
             editReview: async function(reviewId, currentText) {
-                // Vérifier que l'utilisateur est bien le propriétaire (double vérification)
-                try {
-                    const doc = await this.db.collection('comments').doc(reviewId).get();
-                    if (!doc.exists || doc.data().userId !== this.currentUser.uid) {
-                        this.showError('Vous ne pouvez pas modifier cet avis.', 'reviewError');
-                        return;
-                    }
-                } catch (error) {
-                    this.showError('Erreur de vérification. Veuillez réessayer.', 'reviewError');
-                    return;
-                }
-                
                 const newText = prompt('Modifiez votre avis :', currentText);
-                if (newText && newText.trim().length >= 10 && newText !== currentText) {
+                if (newText && newText !== currentText) {
                     try {
                         await this.db.collection('comments').doc(reviewId).update({
-                            text: Security.sanitizeInput(newText.trim()),
+                            text: Security.sanitizeInput(newText),
                             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                         });
-                        this.showSuccess('✅ Avis modifié avec succès !', 'reviewSuccess');
+                        alert('✅ Avis modifié avec succès !');
                         this.lastVisible = null;
                         this.loadReviews();
                     } catch (error) {
                         console.error('Edit error:', error);
-                        this.showError('Erreur lors de la modification.', 'reviewError');
+                        alert('Erreur lors de la modification.');
                     }
-                } else if (newText && newText.trim().length < 10) {
-                    this.showError('L\'avis doit contenir au moins 10 caractères.', 'reviewError');
                 }
             },
             
             deleteReview: async function(reviewId) {
-                // Vérifier que l'utilisateur est bien le propriétaire (double vérification)
-                try {
-                    const doc = await this.db.collection('comments').doc(reviewId).get();
-                    if (!doc.exists || doc.data().userId !== this.currentUser.uid) {
-                        this.showError('Vous ne pouvez pas supprimer cet avis.', 'reviewError');
-                        return;
-                    }
-                } catch (error) {
-                    this.showError('Erreur de vérification. Veuillez réessayer.', 'reviewError');
-                    return;
-                }
-                
-                if (confirm('Êtes-vous sûr de vouloir supprimer cet avis ? Cette action est irréversible.')) {
+                if (confirm('Êtes-vous sûr de vouloir supprimer cet avis ?')) {
                     try {
                         await this.db.collection('comments').doc(reviewId).delete();
-                        this.showSuccess('✅ Avis supprimé avec succès !', 'reviewSuccess');
+                        alert('✅ Avis supprimé avec succès !');
                         this.lastVisible = null;
                         this.loadReviews();
                     } catch (error) {
                         console.error('Delete error:', error);
-                        this.showError('Erreur lors de la suppression.', 'reviewError');
+                        alert('Erreur lors de la suppression.');
                     }
                 }
             }
@@ -1127,9 +823,6 @@
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
             reviewsSystem.init();
-            
-            // Vérifier le résultat de la redirection Google
-            reviewsSystem.getRedirectResult();
         });
     </script>
 </body>
