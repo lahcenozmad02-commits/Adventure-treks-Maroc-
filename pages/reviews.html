@@ -14,12 +14,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     
     <style>
+        /* ========== VARIABLES ========== */
         :root {
             --primary: #e67e22;
             --primary-dark: #d35400;
@@ -65,8 +69,8 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
-            min-height: 100vh;
+            background: #f5f7fa;
+            color: var(--dark);
         }
         
         .container {
@@ -75,7 +79,7 @@
             padding: 0 var(--space-5);
         }
         
-        /* Top Bar */
+        /* ========== TOP BAR ========== */
         .top-bar {
             background: var(--dark);
             color: var(--white);
@@ -113,7 +117,7 @@
             color: var(--primary);
         }
         
-        /* Header */
+        /* ========== HEADER ========== */
         .header {
             background: var(--white);
             box-shadow: var(--shadow-sm);
@@ -240,7 +244,7 @@
             border-radius: 3px;
         }
         
-        /* Breadcrumb */
+        /* ========== BREADCRUMB ========== */
         .breadcrumb {
             background: var(--white);
             padding: var(--space-3) 0;
@@ -265,7 +269,7 @@
             color: var(--dark-gray);
         }
         
-        /* Page Header */
+        /* ========== PAGE HEADER ========== */
         .page-header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--white);
@@ -278,7 +282,7 @@
             margin-bottom: var(--space-3);
         }
         
-        /* Reviews Section */
+        /* ========== REVIEWS SECTION ========== */
         .section {
             padding: var(--space-12) 0;
         }
@@ -557,7 +561,7 @@
             }
         }
         
-        /* Footer */
+        /* ========== FOOTER ========== */
         .footer {
             background: var(--dark);
             color: var(--white);
@@ -648,6 +652,58 @@
             font-size: var(--text-sm);
         }
         
+        /* ========== PRELOADER ========== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s;
+        }
+        
+        .preloader-content {
+            text-align: center;
+        }
+        
+        .preloader-logo {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: var(--space-4);
+        }
+        
+        .preloader-logo span {
+            display: block;
+            font-size: var(--text-base);
+        }
+        
+        .preloader-bar {
+            width: 200px;
+            height: 3px;
+            background: var(--light-gray);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .preloader-progress {
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            animation: loading 1.5s ease infinite;
+        }
+        
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+        
+        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
             .nav-menu {
                 position: fixed;
@@ -701,25 +757,15 @@
 </head>
 <body>
     <!-- Preloader -->
-    <div class="preloader" id="preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--white); z-index: 9999; display: flex; align-items: center; justify-content: center;">
-        <div class="preloader-content" style="text-align: center;">
-            <div class="preloader-logo" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;">
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
                 <i class="fas fa-mountain"></i>
-                <span style="display: block; font-size: 1rem;">Adventure Treks</span>
+                <span>Adventure Treks</span>
             </div>
-            <div class="preloader-bar" style="width: 200px; height: 3px; background: var(--light-gray); border-radius: 3px; overflow: hidden;">
-                <div class="preloader-progress" style="width: 0%; height: 100%; background: var(--primary); animation: loading 1.5s ease infinite;"></div>
-            </div>
+            <div class="preloader-bar"><div class="preloader-progress"></div></div>
         </div>
     </div>
-    
-    <style>
-        @keyframes loading {
-            0% { width: 0%; }
-            50% { width: 70%; }
-            100% { width: 100%; }
-        }
-    </style>
 
     <!-- Top Bar -->
     <div class="top-bar">
@@ -981,6 +1027,7 @@
                 auth.onAuthStateChanged((user) => {
                     this.currentUser = user;
                     this.updateAuthUI(user);
+                    this.loadReviews(); // Recharger les avis pour mettre à jour les boutons supprimer
                 });
             },
             
@@ -1111,13 +1158,26 @@
             
             signInWithGoogle: async function() {
                 try {
+                    // Configure Google provider with proper settings
                     const provider = new firebase.auth.GoogleAuthProvider();
-                    provider.setCustomParameters({ prompt: 'select_account' });
-                    await auth.signInWithPopup(provider);
+                    provider.setCustomParameters({
+                        prompt: 'select_account'
+                    });
+                    provider.addScope('email');
+                    provider.addScope('profile');
+                    
+                    const result = await auth.signInWithPopup(provider);
+                    console.log('Google sign-in success:', result.user);
                     this.showToast('✅ Connecté avec Google !', 'success');
                 } catch (error) {
                     console.error('Google sign-in error:', error);
-                    this.showToast('Erreur de connexion Google', 'error');
+                    let message = 'Erreur de connexion Google';
+                    if (error.code === 'auth/popup-blocked') {
+                        message = 'Popup bloqué par le navigateur. Veuillez autoriser les popups.';
+                    } else if (error.code === 'auth/unauthorized-domain') {
+                        message = 'Domaine non autorisé. Ajoutez votre domaine dans Firebase Console > Authentication > Settings > Authorized domains.';
+                    }
+                    this.showToast(message, 'error');
                 }
             },
             
