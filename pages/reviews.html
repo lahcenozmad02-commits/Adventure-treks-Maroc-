@@ -711,5 +711,36 @@
 
 })();
 </script>
+<div id="debugInfo" style="background:yellow;padding:20px;margin:20px;text-align:center;font-size:14px;position:fixed;bottom:0;left:0;right:0;z-index:9999;">
+    <p><strong>🔍 تشخيص النظام:</strong></p>
+    <p id="debug1">⏳ جاري التحميل...</p>
+    <p id="debug2"></p>
+    <p id="debug3"></p>
+    <button onclick="this.parentElement.remove()" style="background:red;color:white;padding:5px 10px;border:none;border-radius:5px;">إغلاق</button>
+</div>
+
+<script>
+setTimeout(function() {
+    try {
+        document.getElementById('debug1').textContent = '✅ FIREBASE_CONFIG: ' + (typeof FIREBASE_CONFIG !== 'undefined' ? FIREBASE_CONFIG.projectId : '❌ غير موجود');
+        
+        if (typeof firebase !== 'undefined') {
+            document.getElementById('debug2').textContent = '✅ Firebase: محمل (apps: ' + firebase.apps.length + ')';
+        } else {
+            document.getElementById('debug2').textContent = '❌ Firebase غير محمل';
+        }
+        
+        var authSection = document.getElementById('authSection');
+        if (authSection) {
+            document.getElementById('debug3').textContent = '✅ HTML موجود - authSection ظاهر: ' + (authSection.offsetParent !== null ? 'نعم' : 'مخفي');
+        } else {
+            document.getElementById('debug3').textContent = '❌ HTML مفقود';
+        }
+    } catch(e) {
+        document.getElementById('debug1').textContent = '❌ خطأ: ' + e.message;
+    }
+}, 2000);
+</script>
+
 </body>
 </html>
