@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -297,7 +296,7 @@
                                 <div style="font-size: 0.85rem; color: var(--dark-gray);">Connecté</div>
                             </div>
                         </div>
-                        <button class="btn btn-outline btn-sm" onclick="reviewsSystem.signOut()" style="background: var(--danger); color: white; border-color: var(--danger);">
+                        <button class="btn btn-outline btn-sm" onclick="signOutUser()" style="background: var(--danger); color: white; border-color: var(--danger);">
                             <i class="fas fa-sign-out-alt"></i> Déconnexion
                         </button>
                     </div>
@@ -306,10 +305,10 @@
                     <div id="loginSection">
                         <h3 style="margin-bottom: var(--space-4);">Connectez-vous pour laisser un avis</h3>
                         <div class="auth-tabs">
-                            <button class="auth-tab active" onclick="reviewsSystem.showTab('email')">
+                            <button class="auth-tab active" onclick="showTab('email')">
                                 <i class="fas fa-envelope"></i> Email
                             </button>
-                            <button class="auth-tab" onclick="reviewsSystem.showTab('google')">
+                            <button class="auth-tab" onclick="showTab('google')">
                                 <i class="fab fa-google"></i> Google
                             </button>
                         </div>
@@ -333,12 +332,15 @@
                                     <i class="fas fa-user-plus"></i> Créer un compte / Se connecter
                                 </button>
                             </form>
+                            <p style="margin-top:10px;font-size:12px;">
+                                <a href="#" onclick="forgotPassword();return false;" style="color:var(--primary);">Mot de passe oublié ?</a>
+                            </p>
                         </div>
                         
                         <!-- Connexion Google -->
                         <div id="googleAuth" class="auth-form">
                             <p style="margin-bottom: var(--space-4); color: var(--dark-gray);">Connectez-vous rapidement avec votre compte Google</p>
-                            <button class="btn btn-block" onclick="reviewsSystem.signInWithGoogle()" style="background: #4285F4; color: white;">
+                            <button class="btn btn-block" onclick="signInWithGoogle()" style="background: #4285F4; color: white;">
                                 <i class="fab fa-google"></i> Se connecter avec Google
                             </button>
                         </div>
@@ -385,7 +387,7 @@
                 
                 <!-- Charger plus -->
                 <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-                    <button class="btn btn-outline" id="loadMoreBtn" onclick="reviewsSystem.loadMore()">
+                    <button class="btn btn-outline" id="loadMoreBtn" onclick="loadMore()">
                         <i class="fas fa-chevron-down"></i>
                         <span data-i18n="load_more">Charger plus d'avis</span>
                     </button>
@@ -435,395 +437,279 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../js/config.js"></script>
-    <script src="../js/i18n.js"></script>
-    <script src="../js/security.js"></script>
     <script src="../js/main.js"></script>
     
     <script>
-        // ============================================
-        // SYSTÈME D'AVIS
-        // ============================================
-        const reviewsSystem = {
-            currentUser: null,
-            selectedRating: 0,
-            lastVisible: null,
-            limit: 3,
-            
-            init: function() {
-                this.initFirebase();
-                this.initStarRating();
-                this.initForms();
-                this.loadReviews();
-                this.setupAuthListener();
-            },
-            
-            initFirebase: function() {
-                try {
-                    if (!firebase.apps.length) {
-                        firebase.initializeApp(FIREBASE_CONFIG);
-                    }
-                    this.db = firebase.firestore();
-                    this.auth = firebase.auth();
-                } catch (e) {
-                    console.error('Firebase init error:', e);
-                }
-            },
-            
-            setupAuthListener: function() {
-                this.auth.onAuthStateChanged((user) => {
-                    this.currentUser = user;
-                    this.updateAuthUI(user);
-                });
-            },
-            
-            updateAuthUI: function(user) {
-                const loginSection = document.getElementById('loginSection');
-                const userInfo = document.getElementById('userInfo');
-                const reviewFormContainer = document.getElementById('reviewFormContainer');
-                
-                if (user) {
-                    if (loginSection) loginSection.style.display = 'none';
-                    if (userInfo) userInfo.style.display = 'block';
-                    if (reviewFormContainer) reviewFormContainer.style.display = 'block';
-                    
-                    document.getElementById('userNameDisplay').textContent = user.displayName || user.email;
-                    document.getElementById('userAvatar').textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
+// ============================================
+// SYSTÈME D'AVIS - Trek Maroc
+// ============================================
+(function() {
+    'use strict';
+
+    // --- Nettoyage de texte ---
+    function sanitize(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;')
+            .substring(0, 2000);
+    }
+
+    // --- Firebase ---
+    var db, auth;
+    try {
+        if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.firestore();
+        auth = firebase.auth();
+    } catch(e) {
+        alert('Erreur Firebase: ' + e.message);
+        return;
+    }
+
+    // --- Variables ---
+    var currentUser = null;
+    var selectedRating = 0;
+    var lastVisible = null;
+    var LIMIT = 5;
+
+    // --- Écouteur d'authentification ---
+    auth.onAuthStateChanged(function(user) {
+        currentUser = user;
+        document.getElementById('loginSection').style.display = user ? 'none' : 'block';
+        document.getElementById('userInfo').style.display = user ? 'block' : 'none';
+        document.getElementById('reviewFormContainer').style.display = user ? 'block' : 'none';
+        if (user) {
+            document.getElementById('userNameDisplay').textContent = user.displayName || user.email;
+            document.getElementById('userAvatar').textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
+            // Envoyer vérification email si pas encore vérifié
+            if (!user.emailVerified && user.providerData[0].providerId === 'password') {
+                user.sendEmailVerification().catch(function(){});
+            }
+        }
+    });
+
+    // --- Onglets ---
+    window.showTab = function(t) {
+        document.querySelectorAll('.auth-tab').forEach(function(x){ x.classList.remove('active'); });
+        document.querySelectorAll('.auth-form').forEach(function(x){ x.classList.remove('active'); });
+        var tab = document.querySelector('.auth-tab[onclick*="' + t + '"]');
+        if (tab) tab.classList.add('active');
+        var form = document.getElementById(t + 'Auth');
+        if (form) form.classList.add('active');
+    };
+
+    // --- Créer un compte / Se connecter ---
+    window.signUpWithEmail = async function(e) {
+        if (e) e.preventDefault();
+        var name = document.getElementById('authName').value.trim();
+        var email = document.getElementById('authEmail').value.trim();
+        var password = document.getElementById('authPassword').value;
+        if (!name || !email || !password) return alert('Veuillez remplir tous les champs.');
+        if (password.length < 6) return alert('Mot de passe: 6 caractères minimum.');
+        try {
+            try {
+                var cred = await auth.createUserWithEmailAndPassword(email, password);
+                await cred.user.updateProfile({ displayName: name });
+                await cred.user.sendEmailVerification();
+                alert('✅ Compte créé! Vérifiez votre boîte email.');
+            } catch(err) {
+                if (err.code === 'auth/email-already-in-use') {
+                    await auth.signInWithEmailAndPassword(email, password);
+                    alert('✅ Connecté!');
                 } else {
-                    if (loginSection) loginSection.style.display = 'block';
-                    if (userInfo) userInfo.style.display = 'none';
-                    if (reviewFormContainer) reviewFormContainer.style.display = 'none';
-                }
-            },
-            
-            showTab: function(tabName) {
-                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-                
-                event.target.closest('.auth-tab').classList.add('active');
-                document.getElementById(tabName + 'Auth').classList.add('active');
-            },
-            
-            initStarRating: function() {
-                const stars = document.querySelectorAll('#starRating .star');
-                
-                stars.forEach(star => {
-                    star.addEventListener('click', function() {
-                        this.selectedRating = parseInt(this.dataset.value);
-                        document.getElementById('ratingValue').value = this.selectedRating;
-                        
-                        stars.forEach(s => s.classList.remove('active'));
-                        stars.forEach(s => {
-                            if (parseInt(s.dataset.value) <= this.selectedRating) {
-                                s.classList.add('active');
-                            }
-                        });
-                    }.bind(this));
-                    
-                    star.addEventListener('mouseenter', function() {
-                        const value = parseInt(this.dataset.value);
-                        stars.forEach(s => s.classList.remove('active'));
-                        stars.forEach(s => {
-                            if (parseInt(s.dataset.value) <= value) {
-                                s.classList.add('active');
-                            }
-                        });
-                    });
-                });
-                
-                document.getElementById('starRating').addEventListener('mouseleave', function() {
-                    stars.forEach(s => s.classList.remove('active'));
-                    stars.forEach(s => {
-                        if (parseInt(s.dataset.value) <= this.selectedRating) {
-                            s.classList.add('active');
-                        }
-                    }.bind(this));
-                }.bind(this));
-            },
-            
-            initForms: function() {
-                // Formulaire d'inscription email
-                document.getElementById('emailAuthForm').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    this.signUpWithEmail();
-                }.bind(this));
-                
-                // Formulaire d'avis
-                document.getElementById('reviewForm').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    this.submitReview();
-                }.bind(this));
-            },
-            
-            signUpWithEmail: async function() {
-                const name = document.getElementById('authName').value.trim();
-                const email = document.getElementById('authEmail').value.trim();
-                const password = document.getElementById('authPassword').value;
-                
-                if (!name || !email || !password) {
-                    alert('Veuillez remplir tous les champs.');
-                    return;
-                }
-                
-                if (password.length < 6) {
-                    alert('Le mot de passe doit contenir au moins 6 caractères.');
-                    return;
-                }
-                
-                try {
-                    // Essayer de créer un compte
-                    try {
-                        const userCredential = await this.auth.createUserWithEmailAndPassword(email, password);
-                        await userCredential.user.updateProfile({ displayName: name });
-                    } catch (error) {
-                        // Si le compte existe déjà, essayer de se connecter
-                        if (error.code === 'auth/email-already-in-use') {
-                            await this.auth.signInWithEmailAndPassword(email, password);
-                        } else {
-                            throw error;
-                        }
-                    }
-                    alert('✅ Vous êtes connecté ! Vous pouvez maintenant laisser un avis.');
-                } catch (error) {
-                    console.error('Auth error:', error);
-                    alert('Erreur : ' + (error.message || 'Une erreur est survenue'));
-                }
-            },
-            
-            signInWithGoogle: async function() {
-                try {
-                    const provider = new firebase.auth.GoogleAuthProvider();
-                    await this.auth.signInWithPopup(provider);
-                    alert('✅ Connecté avec Google !');
-                } catch (error) {
-                    console.error('Google sign-in error:', error);
-                    alert('Erreur de connexion Google : ' + error.message);
-                }
-            },
-            
-            signOut: async function() {
-                try {
-                    await this.auth.signOut();
-                    alert('Vous êtes déconnecté.');
-                } catch (error) {
-                    console.error('Sign out error:', error);
-                }
-            },
-            
-            submitReview: async function() {
-                if (!this.currentUser) {
-                    alert('Veuillez vous connecter d\'abord.');
-                    return;
-                }
-                
-                const rating = parseInt(document.getElementById('ratingValue').value);
-                const text = document.getElementById('reviewText').value.trim();
-                
-                if (!rating || rating < 1 || rating > 5) {
-                    alert('Veuillez sélectionner une note.');
-                    return;
-                }
-                
-                if (!text) {
-                    alert('Veuillez écrire votre avis.');
-                    return;
-                }
-                
-                try {
-                    const reviewData = {
-                        authorName: this.currentUser.displayName || this.currentUser.email,
-                        authorEmail: this.currentUser.email,
-                        userId: this.currentUser.uid,
-                        rating: rating,
-                        text: Security.sanitizeInput(text),
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    };
-                    
-                    await this.db.collection('comments').add(reviewData);
-                    
-                    // Réinitialiser
-                    document.getElementById('reviewForm').reset();
-                    document.getElementById('ratingValue').value = '0';
-                    this.selectedRating = 0;
-                    document.querySelectorAll('#starRating .star').forEach(s => s.classList.remove('active'));
-                    
-                    alert('✅ Merci pour votre avis ! Il a été publié avec succès.');
-                    
-                    // Recharger les avis
-                    this.lastVisible = null;
-                    this.loadReviews();
-                } catch (error) {
-                    console.error('Submit review error:', error);
-                    alert('Erreur lors de la publication de votre avis.');
-                }
-            },
-            
-            loadReviews: async function() {
-                const container = document.getElementById('reviewsContainer');
-                container.innerHTML = '<div class="loading-container"><div class="spinner"></div></div>';
-                
-                try {
-                    let query = this.db.collection('comments')
-                        .orderBy('createdAt', 'desc')
-                        .limit(this.limit);
-                    
-                    const snapshot = await query.get();
-                    
-                    if (snapshot.empty) {
-                        container.innerHTML = `
-                            <div class="empty-reviews">
-                                <i class="fas fa-star-half-alt"></i>
-                                <p data-i18n="no_reviews_yet">Soyez le premier à laisser un avis sur Ali!</p>
-                            </div>
-                        `;
-                        document.getElementById('loadMoreContainer').style.display = 'none';
-                        return;
-                    }
-                    
-                    this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                    this.displayReviews(snapshot.docs);
-                    
-                    // Afficher/masquer le bouton "Charger plus"
-                    if (snapshot.docs.length >= this.limit) {
-                        document.getElementById('loadMoreContainer').style.display = 'block';
-                    } else {
-                        document.getElementById('loadMoreContainer').style.display = 'none';
-                    }
-                } catch (error) {
-                    console.error('Load reviews error:', error);
-                    container.innerHTML = `
-                        <div class="empty-reviews">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <p>Erreur de chargement des avis. Veuillez réessayer.</p>
-                        </div>
-                    `;
-                }
-            },
-            
-            loadMore: async function() {
-                const btn = document.getElementById('loadMoreBtn');
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement...';
-                
-                try {
-                    let query = this.db.collection('comments')
-                        .orderBy('createdAt', 'desc')
-                        .startAfter(this.lastVisible)
-                        .limit(this.limit);
-                    
-                    const snapshot = await query.get();
-                    
-                    if (snapshot.empty) {
-                        document.getElementById('loadMoreContainer').style.display = 'none';
-                        return;
-                    }
-                    
-                    this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                    this.displayReviews(snapshot.docs, true);
-                    
-                    if (snapshot.docs.length < this.limit) {
-                        document.getElementById('loadMoreContainer').style.display = 'none';
-                    }
-                } catch (error) {
-                    console.error('Load more error:', error);
-                } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-chevron-down"></i> Charger plus d\'avis';
-                }
-            },
-            
-            displayReviews: function(docs, append = false) {
-                const container = document.getElementById('reviewsContainer');
-                
-                if (!append) {
-                    container.innerHTML = '';
-                }
-                
-                docs.forEach(doc => {
-                    const review = doc.data();
-                    const reviewId = doc.id;
-                    const isOwner = this.currentUser && review.userId === this.currentUser.uid;
-                    const date = review.createdAt ? 
-                        new Date(review.createdAt.toDate()).toLocaleDateString('fr-FR', {
-                            year: 'numeric', month: 'long', day: 'numeric'
-                        }) : 'Date inconnue';
-                    
-                    const starsHtml = Array.from({length: 5}, (_, i) => 
-                        i < review.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>'
-                    ).join('');
-                    
-                    const reviewCard = document.createElement('div');
-                    reviewCard.className = 'review-card';
-                    reviewCard.setAttribute('data-aos', 'fade-up');
-                    reviewCard.innerHTML = `
-                        <div class="review-header">
-                            <div class="review-author">
-                                <div class="review-avatar">${(review.authorName || 'A').charAt(0).toUpperCase()}</div>
-                                <div class="review-author-info">
-                                    <h4>${Security.sanitizeInput(review.authorName || 'Anonyme')}</h4>
-                                    <span>${date}</span>
-                                </div>
-                            </div>
-                            <div class="review-stars">${starsHtml} <span style="color:var(--dark-gray);font-size:0.85rem;">(${review.rating}/5)</span></div>
-                        </div>
-                        <p class="review-text">${Security.sanitizeInput(review.text)}</p>
-                        ${isOwner ? `
-                            <div class="review-actions">
-                                <button class="btn-edit" onclick="reviewsSystem.editReview('${reviewId}', '${review.text.replace(/'/g, "\\'")}')">
-                                    <i class="fas fa-edit"></i> Modifier
-                                </button>
-                                <button class="btn-delete" onclick="reviewsSystem.deleteReview('${reviewId}')">
-                                    <i class="fas fa-trash"></i> Supprimer
-                                </button>
-                            </div>
-                        ` : ''}
-                    `;
-                    
-                    container.appendChild(reviewCard);
-                });
-                
-                // Réinitialiser AOS pour les nouveaux éléments
-                if (typeof AOS !== 'undefined') {
-                    AOS.refresh();
-                }
-            },
-            
-            editReview: async function(reviewId, currentText) {
-                const newText = prompt('Modifiez votre avis :', currentText);
-                if (newText && newText !== currentText) {
-                    try {
-                        await this.db.collection('comments').doc(reviewId).update({
-                            text: Security.sanitizeInput(newText),
-                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        alert('✅ Avis modifié avec succès !');
-                        this.lastVisible = null;
-                        this.loadReviews();
-                    } catch (error) {
-                        console.error('Edit error:', error);
-                        alert('Erreur lors de la modification.');
-                    }
-                }
-            },
-            
-            deleteReview: async function(reviewId) {
-                if (confirm('Êtes-vous sûr de vouloir supprimer cet avis ?')) {
-                    try {
-                        await this.db.collection('comments').doc(reviewId).delete();
-                        alert('✅ Avis supprimé avec succès !');
-                        this.lastVisible = null;
-                        this.loadReviews();
-                    } catch (error) {
-                        console.error('Delete error:', error);
-                        alert('Erreur lors de la suppression.');
-                    }
+                    throw err;
                 }
             }
+        } catch(err) {
+            alert('❌ ' + getErrorMessage(err.code));
+        }
+    };
+
+    // --- Mot de passe oublié ---
+    window.forgotPassword = async function() {
+        var email = prompt('Entrez votre email pour réinitialiser le mot de passe:');
+        if (!email) return;
+        try {
+            await auth.sendPasswordResetEmail(email.trim());
+            alert('✅ Email envoyé! Vérifiez votre boîte (y compris les spams).');
+        } catch(err) {
+            alert('❌ ' + getErrorMessage(err.code));
+        }
+    };
+
+    // --- Connexion Google ---
+    window.signInWithGoogle = async function() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+        try {
+            await auth.signInWithPopup(provider);
+        } catch(err) {
+            if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
+                alert('⚠️ Fenêtre bloquée. Autorisez les popups pour ce site.');
+            } else if (err.code === 'auth/operation-not-allowed') {
+                alert('⚠️ Google non activé. Allez dans Firebase Console > Authentication > Sign-in method > Activez Google.');
+            } else if (err.code === 'auth/unauthorized-domain') {
+                alert('⚠️ Domaine non autorisé. Ajoutez votre domaine dans Firebase Console > Authentication > Settings > Domaines autorisés.');
+            } else {
+                alert('❌ ' + getErrorMessage(err.code));
+            }
+        }
+    };
+
+    // --- Déconnexion ---
+    window.signOutUser = async function() {
+        await auth.signOut();
+    };
+
+    // --- Messages d'erreur en français ---
+    function getErrorMessage(code) {
+        var messages = {
+            'auth/email-already-in-use': 'Cet email est déjà utilisé.',
+            'auth/invalid-email': 'Email invalide.',
+            'auth/weak-password': 'Mot de passe trop faible (6 caractères minimum).',
+            'auth/user-not-found': 'Aucun compte trouvé avec cet email.',
+            'auth/wrong-password': 'Mot de passe incorrect.',
+            'auth/too-many-requests': 'Trop de tentatives. Réessayez plus tard.',
+            'auth/network-request-failed': 'Erreur réseau. Vérifiez votre connexion.',
+            'auth/popup-closed-by-user': 'Fenêtre fermée. Réessayez.',
+            'auth/operation-not-allowed': 'Cette méthode n\'est pas activée dans Firebase Console.',
+            'auth/unauthorized-domain': 'Domaine non autorisé dans Firebase.',
+            'auth/requires-recent-login': 'Veuillez vous reconnecter.'
         };
-        
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            reviewsSystem.init();
+        return messages[code] || code;
+    }
+
+    // --- Étoiles ---
+    var stars = document.querySelectorAll('#starRating .star');
+    stars.forEach(function(s) {
+        s.addEventListener('click', function() {
+            selectedRating = parseInt(this.dataset.value);
+            document.getElementById('ratingValue').value = selectedRating;
+            stars.forEach(function(x, i){ x.classList.toggle('active', i < selectedRating); });
         });
-    </script>
+    });
+
+    // --- Publier un avis ---
+    window.submitReview = async function(e) {
+        if (e) e.preventDefault();
+        if (!currentUser) return alert('Connectez-vous.');
+        if (!currentUser.emailVerified) return alert('Vérifiez votre email avant de publier.');
+        if (!selectedRating) return alert('Sélectionnez une note.');
+        var text = document.getElementById('reviewText').value.trim();
+        if (!text) return alert('Écrivez votre avis.');
+        if (text.length < 10) return alert('Minimum 10 caractères.');
+
+        // Vérifier si déjà publié
+        try {
+            var existing = await db.collection('comments')
+                .where('userId', '==', currentUser.uid)
+                .limit(1)
+                .get();
+            if (!existing.empty) return alert('Vous avez déjà publié un avis.');
+        } catch(err) {}
+
+        try {
+            await db.collection('comments').add({
+                authorName: currentUser.displayName || currentUser.email,
+                authorEmail: currentUser.email,
+                userId: currentUser.uid,
+                rating: selectedRating,
+                text: sanitize(text),
+                replies: [],
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedAt: null
+            });
+            document.getElementById('reviewText').value = '';
+            selectedRating = 0;
+            document.getElementById('ratingValue').value = '0';
+            stars.forEach(function(x){ x.classList.remove('active'); });
+            alert('✅ Avis publié!');
+            lastVisible = null;
+            loadReviews();
+        } catch(err) {
+            alert('❌ Erreur: ' + err.message);
+        }
+    };
+
+    // --- Charger les avis ---
+    async function loadReviews() {
+        var c = document.getElementById('reviewsContainer');
+        c.innerHTML = '<p style="text-align:center;">Chargement...</p>';
+        try {
+            var s = await db.collection('comments').orderBy('createdAt', 'desc').limit(LIMIT).get();
+            if (s.empty) {
+                c.innerHTML = '<div class="empty-reviews"><i class="fas fa-star-half-alt"></i><p>Soyez le premier!</p></div>';
+                return;
+            }
+            lastVisible = s.docs[s.docs.length - 1];
+            c.innerHTML = '';
+            s.docs.forEach(function(doc){ c.appendChild(createCard(doc)); });
+            document.getElementById('loadMoreContainer').style.display = s.docs.length >= LIMIT ? 'block' : 'none';
+        } catch(err) {
+            c.innerHTML = '<div class="empty-reviews"><p>Erreur: ' + err.message + '</p></div>';
+        }
+    }
+
+    // --- Charger plus ---
+    window.loadMore = async function() {
+        var s = await db.collection('comments').orderBy('createdAt', 'desc').startAfter(lastVisible).limit(LIMIT).get();
+        if (s.empty) { document.getElementById('loadMoreContainer').style.display = 'none'; return; }
+        lastVisible = s.docs[s.docs.length - 1];
+        s.docs.forEach(function(doc){ document.getElementById('reviewsContainer').appendChild(createCard(doc)); });
+        if (s.docs.length < LIMIT) document.getElementById('loadMoreContainer').style.display = 'none';
+    };
+
+    // --- Créer une carte avis ---
+    function createCard(doc) {
+        var r = doc.data(), id = doc.id;
+        var isOwner = currentUser && r.userId === currentUser.uid;
+        var date = r.createdAt ? new Date(r.createdAt.toDate()).toLocaleDateString('fr-FR', {year:'numeric',month:'long',day:'numeric'}) : '';
+        var starsHtml = '';
+        for (var i=0;i<5;i++) starsHtml += i < r.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+
+        var div = document.createElement('div');
+        div.className = 'review-card';
+        div.innerHTML =
+            '<div class="review-header"><div class="review-author"><div class="review-avatar">'+(r.authorName||'A').charAt(0).toUpperCase()+'</div><div class="review-author-info"><h4>'+sanitize(r.authorName||'Anonyme')+'</h4><span>'+date+'</span></div></div><div class="review-stars">'+starsHtml+' ('+r.rating+'/5)</div></div>'+
+            '<p class="review-text">'+sanitize(r.text)+'</p>'+
+            (isOwner ? '<div class="review-actions"><button class="btn-edit" onclick="editReview(\''+id+'\',\''+r.text.replace(/'/g,"\\'")+'\')">Modifier</button><button class="btn-delete" onclick="deleteReview(\''+id+'\')">Supprimer</button></div>' : '');
+        
+        if (r.replies && r.replies.length) {
+            r.replies.forEach(function(rp){
+                div.innerHTML += '<div style="margin-left:30px;border-left:3px solid orange;padding:10px;margin-top:10px;background:#f9f9f9;border-radius:8px;"><strong>Ali (Guide)</strong><p>'+sanitize(rp.text)+'</p></div>';
+            });
+        }
+        return div;
+    }
+
+    // --- Modifier avis ---
+    window.editReview = async function(id, txt) {
+        var t = prompt('Modifier:', txt);
+        if (t && t !== txt && t.trim().length >= 10) {
+            await db.collection('comments').doc(id).update({text: sanitize(t.trim()), updatedAt: firebase.firestore.FieldValue.serverTimestamp()});
+            lastVisible = null; loadReviews();
+        }
+    };
+
+    // --- Supprimer avis ---
+    window.deleteReview = async function(id) {
+        if (confirm('Supprimer?')) {
+            await db.collection('comments').doc(id).delete();
+            lastVisible = null; loadReviews();
+        }
+    };
+
+    // --- Lier les formulaires ---
+    document.getElementById('emailAuthForm').addEventListener('submit', signUpWithEmail);
+    document.getElementById('reviewForm').addEventListener('submit', submitReview);
+
+    // --- Démarrer ---
+    loadReviews();
+
+})();
+</script>
 </body>
 </html>
